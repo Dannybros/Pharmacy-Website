@@ -7,10 +7,11 @@ import ProductLIst from './components/Products/ProductList';
 import Product from './components/Products/Product';
 import Cart from './components/Cart/Cart';
 import Payment from './components/Payment/Payment'
+import Contact from './components/Contact/Contact'
 
 function App() {
   return (
-    <div>
+    <div style={{fontFamily:"Oswald"}}>
         <Nav/>
       <main>
         <Routes>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/product/:productId" element={<Product/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/cart/payment" element={<Payment/>}/>
+          <Route path="/about-us" element={<Contact/>}/>
         </Routes>
       </main>
     </div>
