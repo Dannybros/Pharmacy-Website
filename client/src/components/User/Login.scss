@@ -1,0 +1,41 @@
+.login_page{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../img/medicine.jpg"); 
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    form{
+        width: 500px;
+        height: auto;
+        background: rgba(218, 218, 218, 0.61);
+        text-align: center;
+        h1{
+            color: white;
+        }
+        p{
+            color: rgb(8, 44, 7);
+            margin-top: 20px;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+.login_input_field{
+    row-gap: 30px;
+    label{
+        float: left;
+        font-size: 20px;
+        font-weight: bold;
+        color:white;
+    }
+}
