@@ -27,10 +27,40 @@ function SignIn() {
             <input type="password" className='form-control' name='password' placeholder='password...'/>
           </Col>
           {signUpState &&
-             <Col md={12}>
-              <label><PersonIcon/> Username*</label>
-              <input type="password" className='form-control' name='password' placeholder='password...'/>
-            </Col>
+            <>
+              <Col md={6}>
+                <label><PersonIcon/> First Name*</label>
+                <input type="text" className='form-control' name='firstName' placeholder='First Name...'/>
+              </Col>
+              <Col md={6}>
+                <label><PersonIcon/> Second Name*</label>
+                <input type="text" className='form-control' name='secondName' placeholder='Second Name...'/>
+              </Col>
+              <Col md={6}>
+                <label><PersonIcon/> Age*</label>
+                <input type="text" className='form-control' name='age' placeholder='Age...'/>
+              </Col>
+              <Col md={6}>
+                <label><PersonIcon/> Contact Number*</label>
+                <input type="text" className='form-control' name='contact' placeholder='Contact Number...'/>
+              </Col>
+              <Col md={12}>
+                <label><PersonIcon/> Address*</label>
+                <input type="text" className='form-control' name='address' placeholder='Address...'/>
+              </Col>
+              <Col md={6}>
+                <label><PersonIcon/> UserName*</label>
+                <input type="text" className='form-control' name='contact' placeholder='UserName...'/>
+              </Col>
+              <Col md={6}>
+                <label><PersonIcon/> Password*</label>
+                <input type="password" className='form-control' name='password' placeholder='Password...'/>
+              </Col>
+              <Col md={6}>
+                <label><PersonIcon/> Confirm Password*</label>
+                <input type="password" className='form-control' name='cpassword' placeholder='Confirm Password...'/>
+              </Col>
+            </>
           }
         </Row>
         
