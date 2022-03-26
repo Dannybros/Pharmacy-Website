@@ -1,10 +1,12 @@
+$phone:480px;
+
 .login_page{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../img/medicine.jpg"); 
+    background: linear-gradient(to bottom right, #27c6da, #5b6cc0);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -15,27 +17,66 @@
     form{
         width: 500px;
         height: auto;
-        background: rgba(218, 218, 218, 0.61);
+        background: rgba(255, 255, 255, 0.63);
         text-align: center;
-        h1{
-            color: white;
+        animation: fade-in 1s linear;
+        @media (max-width:$phone) {
+            width: 90%;
+            background: rgba(255, 255, 255, 0.63);
+        }
+        input {
+            font-size: 16px;
+            font-weight: 500;
+            padding: 4px 0;
+            width: 100%;
+            background:none;
+            border: none;
+            border-bottom: 2px solid #aab8df;
+            transition: 500ms ease all;
+            text-indent: 10px;
+            &:focus{
+                transition: 500ms ease all;
+                outline: none;
+                box-shadow: 0 1px 0 0 #0b73e9;
+                border-color: rgb(167, 222, 245);
+            }
+            &::placeholder{
+                color:rgb(46, 45, 45)
+            }
+        }
+        h3{
+            color: #3a99d0;
+            text-transform: uppercase;
+            font-weight: bold;
         }
         p{
             color: rgb(8, 44, 7);
             margin-top: 20px;
+            margin-bottom: 0px;
             cursor: pointer;
             &:hover{
                 text-decoration: underline;
+                color: rgb(127, 30, 218);
             }
+        }
+        .login_input_field{
+            row-gap:25px;
+        }
+        .sign_btn_group{
+            gap:20px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
         }
     }
 }
-.login_input_field{
-    row-gap: 30px;
-    label{
-        float: left;
-        font-size: 20px;
-        font-weight: bold;
-        color:white;
+
+@keyframes fade-in {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
     }
 }
