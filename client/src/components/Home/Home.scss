@@ -1,0 +1,29 @@
+.tester{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background:rgb(0, 140, 255);
+    overflow: hidden;
+    .skew{
+        position:absolute;
+        bottom: -100%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background-color:rgb(58, 58, 58) ;
+        transform-origin: top left;  
+    }
+    .skew_two{
+        position:absolute;
+        bottom: -100%;
+        right: 50%;
+        width: 100%;
+        height: 100%;
+        background-color:rgb(58, 58, 58) ;
+        transform-origin: top right;  
+    }
+}
+.test2{
+    background: rgb(102, 75, 75);
+    height: 600px;
+}
