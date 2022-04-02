@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './NavBar.scss';
+import SideBar from './SideBar/SideBar';
 import {Button} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
@@ -12,6 +13,13 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 
 function NavBar() {
+
+  const [openSidebar, setOpenSidebar] = useState(false);
+
+  const handleSwitch=()=>{
+    setOpenSidebar(true);
+  }
+
   return (
     <div className='nav_wrapper'>
       <section className='logo_section'>
@@ -25,30 +33,39 @@ function NavBar() {
             <span className='sub_menu'><MailOutlineIcon className='sub_menu_icon'/> adfadssasdssdsfa@gmail.com</span>
           </div>
 
+          {/* only for phone size */}
           <select className='currency_tablet_selector'>
             <option value="">USD</option>
             <option value="">KIP</option>
           </select>
+          {/* end of phone size*/}
 
           <select className='lang_selector'>
             <option value="">Eng</option>
             <option value="">Lao</option>
           </select>
           
+          {/* only for phone size */}
           <div className='tablet_search_box'>
             <SearchIcon className='tablet_search_icon'/>
             Search
           </div>
+          {/* end of phone size*/}
+
           
           <div className='cart_box'>
             <ShoppingCartIcon className='cart_icon'/>
             <span className='cart_number'>0</span>
           </div>
 
-          <div className='bar_icon'>
+          {/* only for phone size */}
+          <div className='bar_icon' onClick={handleSwitch}>
             <MenuOpenSharpIcon/>
           </div>
+          {/* end of phone size*/}
+
         </div>
+
         <div className='menu_list'>
           <ul>
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/">
@@ -89,6 +106,11 @@ function NavBar() {
 
         </div>
       </section>
+
+      {/* sidebar only for phone size */}
+      {openSidebar&&
+        <SideBar click={()=>setOpenSidebar(false)}/>
+      }
     </div>
   )
 }

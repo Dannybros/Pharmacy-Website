@@ -22,9 +22,9 @@ $tablet:768px;
 }
 .side-bar{
     position: relative;
-    height: 100%;
-    background: rgb(208, 226, 252);
-    padding: 30px !important;
+    height: auto;
+    background: rgb(255, 255, 255);
+    padding: 10px;
     animation: slideLeftToRight 0.3s linear ;
     .closing_icon{
         position: absolute;
@@ -34,9 +34,28 @@ $tablet:768px;
         font-weight: bold;
         cursor: pointer;
     }
-    img{
-        width: auto;
-        height: 100px;
+    .user_info_box{
+        display: flex;
+        align-items: center;
+        padding: 5px 15px;
+        border-bottom: 1px solid;
+        .user__icon{
+            transform: scale(1.8);
+            margin-right: 20px;
+        }
+        .user__info{
+            font-size: 14px;
+            .user__info__email{
+                color: grey;
+                font-size: 10px;
+            }
+        }
+        .btn_log_in{
+            font-size: 12px;
+        }
+        .btn_sign_out{
+            transform: scale(0.7);
+        }
     }
     .nav_link{
         font-weight: bold;
@@ -48,11 +67,14 @@ $tablet:768px;
         li{
             background: white;
             border-radius: 5px;
-            margin: 10px 0;
+            margin-top: 10px;
             padding: 10px 0;
             text-align: center;
-            font-size: 18px;
+            font-size: 14px;
         }
+    }
+    .nav_link.active{
+        color: #5B96C0;
     }
 }
 

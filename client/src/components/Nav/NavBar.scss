@@ -75,6 +75,9 @@ $phone:500px;
                 font-size: 12px;
                 padding:5px 20px;
             }
+            @media (max-width:$phone) {
+                padding:5px 10px;
+            }
             .currency_tablet_selector{
                 width: 60px;
                 display: none;
