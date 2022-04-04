@@ -1,106 +1,193 @@
+$laptop:1024px;
+$tablet:780px;
 $phone:480px;
+
+@mixin btn-border-drawing($color: #ccc, $hover: black, $width: 2px, $vertical: top, $horizontal: left, $duration: 0.25s) {
+    box-shadow: inset 0 0 0 $width $color;
+    color: $color;
+    transition: color $duration $duration/3;
+    position: relative;
+
+    &::before,
+    &::after {
+        border: 0 solid transparent;
+        box-sizing: border-box;
+        content: '';
+        pointer-events: none;
+        position: absolute;
+        width: 0; height: 0;
+        
+        #{$vertical}: 0; 
+        #{$horizontal}: 0;
+    }
+
+    &::before {
+        $h-side: if($horizontal == 'left', 'right', 'left');
+        
+        border-#{$vertical}-width: $width;
+        border-#{$h-side}-width: $width;
+    }
+
+    &::after {
+        $v-side: if($vertical == 'top', 'bottom', 'top');
+        
+        border-#{$v-side}-width: $width;
+        border-#{$horizontal}-width: $width;
+    }
+
+    &:hover {
+        color: $hover;
+        
+        &::before,
+        &::after {
+        border-color: $hover;
+        transition: border-color 0s, width $duration, height $duration;
+        width: 100%;
+        height: 100%;
+        }
+        
+        &::before { transition-delay: 0s, 0s, $duration; }
+        
+        &::after { transition-delay: 0s, $duration, 0s; }
+    }
+}  
 
 .Hero{
     position: relative;
     width: 100%;
-    height: auto;
-    background: linear-gradient(to bottom right, #b4f5dc, #efffd0);
-    overflow: hidden;
-    padding-bottom: 50px !important;
-    .main_hero_image{
-        border-radius: 20px;
-        width: 100%;
-        height: 400px;
-        object-fit: cover;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url('../../img/pharmacy.jpg');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        @media (max-width:$phone) {
-            height: 150px;
-        }
+    height: calc(85vh - 100px);
+    background: linear-gradient(to bottom right, #30545fa6, #30545fa6), url('../../img/lemon.jpg');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size:cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    @media (max-width:$tablet) {
+        height:85vh;
+    }
+    .msg__hero{
+        text-align: center;
         button{
-            display: none;
-            border: none;
-            background: #7fd2a6d3;
-            padding: 20px 50px;
-            font-size: 20px;
-            font-weight: bold;
-            animation: slide-in 1s ease-in-out;
-            @media (max-width:$phone) {
-                font-size: 16px;
-                padding: 10px 30px;
-            }
+            border: 8px solid white;
+            background: none;
+            color: white;
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            padding: 10px 30px;
+            transition: all 0.5s ease;
             &:hover{
-                text-decoration: underline;
+                box-shadow: inset 6.9em 0 0 0 #52ADBA;
             }
-         }
-        &:hover{
-            background-image:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('../../img/pharmacy.jpg');
-            button{
-                display: block;
-                transition: all 1s ease;
+        }
+        p{
+            font-size: 20px;
+        }
+        h5{
+            text-transform: uppercase;
+            font-weight: bold;
+            font-family: "Sledge Regular" !important;
+            font-size: 30px;
+        }
+    }
+}
+
+.hero__tag{
+    width: 70%;
+    margin: -50px auto 50px;
+    @media (max-width:$laptop) {
+        width: 90%;
+    }
+    @media (max-width:$tablet) {
+        margin: -50px auto 30px;
+    }
+    @media (max-width:$phone) {
+        margin: -50px auto 20px;
+    }
+    .hero_msg_box{
+        padding: 0 20px;
+        z-index: 10 !important;
+        @media (max-width:$laptop) {
+            padding: 10px;
+        }
+        @media (max-width:$tablet) {
+            &:last-child{
+                .msg__tag{
+                    min-height: 100px !important;
+                    background: linear-gradient(#0596fd , #58d689);
+                }
+            }
+        }
+        @media (max-width:$phone) {
+            &:first-child{
+                .msg__tag{
+                    min-height: 100px !important;
+                    background: linear-gradient(#0596fd , #58d689);
+                }
+            }
+        }
+        .msg__tag{
+            background: linear-gradient(#00d68f , #0596fd);
+            min-height: 250px;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            @media (max-width:$laptop) {
+                padding: 10px 15px;
+                h4{ font-size: 18px; }
+                h5{ font-size: 16px; }
+                p, li{ font-size: 14px; }
+            }
+            @media (max-width:$tablet) {
+                min-height: 220px !important;
+                li{ font-size: 13px; }
+            }
+            @media (max-width:$phone) {
+                min-height: 100px !important;
+            }
+            .msg__tag_icon{
+                transform: scale(1.4);
+                margin-bottom: 20px;
+                @media (max-width:$laptop) {
+                    transform: scale(1.2);
+                }
+                @media (max-width:$phone) {
+                    transform: scale(1);
+                    margin-bottom: 10px;
+                }
+            }
+            .btn__msg_redirect{
+                @include btn-border-drawing(white, #ffe593, 2px, bottom, right);
+                background: none;
+                border: none;
+                cursor: pointer;
+                line-height: 1.5;
+                padding: 5px 20px;
+            }
+            li{
+                list-style: none;
+                border-bottom: 1px solid white;
+                text-align: left;
+                margin-bottom: 10px;
             }
         }
     }
-    .sub_img_box{
-        @media (max-width:$phone) {
-           display: flex;
-           column-gap: 10px;
-           margin-top: 10px;
-        }
-        .sub_img1{
-            background-image:linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url('../../img/tea.jpg');
-            &:hover{
-                background-image:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('../../img/tea.jpg');
-                button{
-                    display: block;
-                    transition: all 1s ease;
-                }
-            }
-        }
-        .sub_img2{
-            background-image:linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url('../../img/medicine.jpg');
-            &:hover{
-                background-image:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('../../img/medicine.jpg');
-                button{
-                    display: block;
-                    transition: all 1s ease;
-                }
-            }
-        }
-        .sub_hero_image{
-            border-radius: 20px;
-            width: 100%;
-            margin: 5px 0;
-            height: 48%;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: grid;
-            place-items: center;
-            button{
-                display: none;
-                border: none;
-                background: #7fd2a6d3;
-                padding: 10px 20px;
-                font-size: 20px;
-                font-weight: bold;
-                animation: fadeIn 0.5s ease-in-out;
-                &:hover{
-                    text-decoration: underline;
-                }
-             }
-            @media (max-width:$phone) {
-                height: 100px;
-                button{
-                    font-size: 14px;
-                }
-            }
-        }
+}
+
+.promo__product{
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    padding-top: 50px;
+    background-color: #FAFAFA;
+    border-top: 1px solid rgba(128, 128, 128, 0.288);
+    @media (max-width:$tablet) {
+        padding-top: 20px;
     }
     .skew{
         position:absolute;
@@ -121,19 +208,12 @@ $phone:480px;
         transform-origin: top right;  
     }
 }
-@keyframes slide-in {
+
+@keyframes slide-in{
     0%{
-        transform: translateX(-100%);
+        transform: translateX(-100px);
     }
     100%{
         transform: translateX(0);
-    }
-}
-@keyframes fadeIn {
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
     }
 }

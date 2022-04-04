@@ -9,6 +9,7 @@ $phone:500px;
     display: flex;
     padding: 0;
     position:relative;
+    border-bottom: 1px solid #90C6B8;
     @media (max-width:$tablet) {
         height: 80px;
     }
@@ -20,7 +21,7 @@ $phone:500px;
         position: absolute;
         bottom: -1px;
         left: 0;
-        background: #90C6B8;;
+        background: #171f1c;;
         width: 100%;
         height: 1px;
     }
