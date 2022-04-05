@@ -1,6 +1,6 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
+import './Home.scss';
 
 const CarouselBox=()=>{
     const responsive = {
@@ -31,10 +31,22 @@ const CarouselBox=()=>{
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
     >
-        <div style={{border:"1px solid"}}>Item 1</div>
-        <div style={{border:"1px solid"}}>Item 2</div>
-        <div style={{border:"1px solid"}}>Item 3</div>
-        <div style={{border:"1px solid"}}>Item 4</div>
+        <div className="carousel__item">
+            <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+            <div className="item_info_box">
+                <span>Title Title TitleTitle Title Title TitleTitle</span>
+                <span>(20$)</span>
+            </div>
+        </div>
+        <div className="carousel__item">
+           <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+        </div>
+        <div className="carousel__item">
+           <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+        </div>
+        <div className="carousel__item">
+           <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+        </div>
     </Carousel>
   )
 }
