@@ -176,6 +176,56 @@ function Home() {
       </section>
 
       <section className='footer'>
+        <Container style={{borderBottom:"1px solid grey"}}>
+          <Row>
+            <Col sm={12} md={6} className="px-4">
+              <h5>About</h5>
+              <p style={{textAlign:"justify"}}>
+                Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative  to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm.
+              </p>
+            </Col>
+
+            <Col xs={6} md={3} className="px-4">
+              <h5>Info</h5>
+              <ul className='footer__address'>
+                <li>
+                  PHONE:  020 539 283 33
+                </li>
+                <li>Email: example@gmail.com </li>
+                <li>Address: Somewhere Rd. Vientiane </li>
+              </ul>
+            </Col>
+
+            <Col xs={6} md={3} className="px-4">
+              <h5>Quick Links</h5>
+              <ul className='footer__links'>
+                <li><a href="/home">
+                    Home
+                </a></li>
+
+                <li><a href="/product/discover">
+                    Shop
+                </a></li>
+
+                <li><a href="/about-us">
+                    Contact
+                </a></li>
+
+                <li><a href="/cart">
+                    Check Out
+                </a></li>
+              </ul>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container>
+          <Row>
+            <p className='mt-2' style={{textAlign:"justify"}}>
+            Copyright &copy; 2022 All Rights Reserved by Danny
+            </p>
+          </Row>
+        </Container>
       </section>
     </div>
   )
