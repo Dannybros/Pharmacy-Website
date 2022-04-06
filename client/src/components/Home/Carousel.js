@@ -1,6 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import './Home.scss';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const CarouselBox=()=>{
     const responsive = {
@@ -32,20 +33,43 @@ const CarouselBox=()=>{
         itemClass="carousel-item-padding-40-px"
     >
         <div className="carousel__item">
-            <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+            <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}>
+                <button className="btn_view_item"><VisibilityIcon className="eye_icon"/> View Item</button>
+            </div>
             <div className="item_info_box">
                 <span>Title Title TitleTitle Title Title TitleTitle</span>
                 <span>(20$)</span>
             </div>
         </div>
+        
         <div className="carousel__item">
-           <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+            <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}>
+                <button className="btn_view_item"><VisibilityIcon className="eye_icon"/> View Item</button>
+            </div>
+            <div className="item_info_box">
+                <span>Title Title TitleTitle Title Title TitleTitle</span>
+                <span>(20$)</span>
+            </div>
         </div>
+
         <div className="carousel__item">
-           <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+            <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}>
+                <button className="btn_view_item"><VisibilityIcon className="eye_icon"/> View Item</button>
+            </div>
+            <div className="item_info_box">
+                <span>Title Title TitleTitle Title Title TitleTitle</span>
+                <span>(20$)</span>
+            </div>
         </div>
+
         <div className="carousel__item">
-           <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}/>
+            <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}>
+                <button className="btn_view_item"><VisibilityIcon className="eye_icon"/> View Item</button>
+            </div>
+            <div className="item_info_box">
+                <span>Title Title TitleTitle Title Title TitleTitle</span>
+                <span>(20$)</span>
+            </div>
         </div>
     </Carousel>
   )

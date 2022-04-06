@@ -195,13 +195,46 @@ $phone:480px;
     // carousel
     .carousel__item{
         padding: 20px;
+        @media (max-width:$tablet) {
+            padding: 20px 5px;
+        }
+        @media (max-width:$phone) {
+            padding: 20px 10px;
+        }
         .item_img_box{
+            position: relative;
             width: 100%;
-            height: 150px;
+            height: 170px;
             background-size: cover;
             background-repeat: no-repeat;
+            overflow: hidden;
             @media (max-width:$phone) {
                 height: 100px;
+            }
+            &:hover{
+                .btn_view_item{
+                    transform: translateX(0);
+                }
+            }
+            .btn_view_item{
+                position: absolute;
+                top: 60%;
+                right: 0;
+                background: rgba(255, 166, 0, 0.63);
+                color: white;
+                padding: 5px 10px;
+                border: none;
+                transform: translateX(100%);
+                transition: transform 500ms ease;
+                @media (max-width:$tablet) {
+                   display: none;
+                }
+                .eye_icon{
+                    transform: scale(0.7)
+                }
+                &:hover{
+                    color: black;
+                }
             }
         }
         .item_info_box{
@@ -210,7 +243,7 @@ $phone:480px;
             justify-content: space-around;
             padding: 0 10px;
             align-items: center;
-            border: 1px solid;
+            border: 1px solid rgb(175, 172, 172);
             @media (max-width:$tablet) {
                 font-size: 14px;
             }
