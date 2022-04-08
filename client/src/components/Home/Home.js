@@ -10,10 +10,11 @@ import pharmacy from '../../img/pharmacy.jpg'
 import tradition from '../../img/promo-img1.jpg'
 import modern from '../../img/modern.jpg'
 import traditional2 from '../../img/tradition.jpg'
+import ScrollTop from './ScrollTop';
 
 function Home() {
   return (
-    <div>
+    <div style={{position:"relative"}}>
       <section className='Hero'>
         <img src="" className='main__hero__img' alt=""/>
 
@@ -23,6 +24,8 @@ function Home() {
           <p>Dedicated to health and wellness. Healthier {'&'} happier!</p>
         </div>
       </section>
+
+      <ScrollTop/>
 
       <Row className='hero__tag'>
         <Col md ={4} sm={6} xs={12} className='hero_msg_box'>
