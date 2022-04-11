@@ -131,7 +131,7 @@ $phone:500px;
                 }
                 .cart_number{
                     position: absolute;
-                    top: -5px;
+                    top: -3px;
                     right: -5px;
                     width: 15px;
                     height:15px;
@@ -288,4 +288,11 @@ $phone:500px;
             }
         }
     }
+}
+.search_form{
+    width:100%;
+    margin-left: 20px;
+}
+.search_form_btn{
+    margin-right: 20px;
 }

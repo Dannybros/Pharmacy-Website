@@ -28,7 +28,7 @@ function NavBar() {
 
   const handleSwitch=()=> setOpenSidebar(true);
 
-  console.log(searchSelected);
+  const d = [{name:"dd", email:"23"},{name:"aad", email:"54"}]
 
   return (
     <div className='nav_wrapper'>
@@ -101,7 +101,7 @@ function NavBar() {
             </select>
           </div>
 
-          <Button variant='primary mx-3 p-1' className='main_search_btn' onClick={handleModalShow}>
+          <Button variant='primary mx-2 py-1 px-2 ' className='main_search_btn' onClick={handleModalShow}>
             <SearchIcon/>
           </Button>
 
@@ -123,19 +123,22 @@ function NavBar() {
 
       {/* search Modal */}
       <Modal show={modalShow} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-        <Form>
-          <Form.Group>
-            <Typeahead
-              id="basic-typeahead-single"
-              labelKey="name"
-              onChange={setSearchSelected}
-              options={['daa', 'eee']}
-              placeholder="Choose a state..."
-              selected={searchSelected}
-            />
-          </Form.Group>
-        </Form>
+        <Modal.Header closeButton >
+          <Form className='search_form'>
+            <Form.Group>
+              <Typeahead
+                id="search-type_ahead"
+                labelKey="name"
+                onChange={setSearchSelected}
+                options={d.map(item=>{return item.email;})}
+                placeholder="Search Item..."
+                selected={searchSelected}
+              />
+            </Form.Group>
+          </Form>
+          <Button type="submit" className='search_form_btn'>
+            <SearchIcon/>
+          </Button>
         </Modal.Header>
       </Modal>
       
