@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './NavBar.scss';
 import SideBar from './SideBar/SideBar';
-import {Button} from 'react-bootstrap';
+import {Button, Modal, Form} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,14 +11,24 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function NavBar() {
 
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [searchSelected, setSearchSelected] = useState([]);
 
-  const handleSwitch=()=>{
-    setOpenSidebar(true);
+  const handleModalClose = () => {
+    setModalShow(false);
+    setSearchSelected([]);
   }
+  const handleModalShow = () => setModalShow(true);
+
+  const handleSwitch=()=> setOpenSidebar(true);
+
+  console.log(searchSelected);
 
   return (
     <div className='nav_wrapper'>
@@ -46,12 +56,11 @@ function NavBar() {
           </select>
           
           {/* only for phone size */}
-          <div className='tablet_search_box'>
+          <div className='tablet_search_box' onClick={handleModalShow}>
             <SearchIcon className='tablet_search_icon'/>
             Search
           </div>
           {/* end of phone size*/}
-
           
           <div className='cart_box'>
             <ShoppingCartIcon className='cart_icon'/>
@@ -92,7 +101,7 @@ function NavBar() {
             </select>
           </div>
 
-          <Button variant='primary mx-3 p-1' className='main_search_btn'>
+          <Button variant='primary mx-3 p-1' className='main_search_btn' onClick={handleModalShow}>
             <SearchIcon/>
           </Button>
 
@@ -111,6 +120,25 @@ function NavBar() {
       {openSidebar&&
         <SideBar click={()=>setOpenSidebar(false)}/>
       }
+
+      {/* search Modal */}
+      <Modal show={modalShow} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+        <Form>
+          <Form.Group>
+            <Typeahead
+              id="basic-typeahead-single"
+              labelKey="name"
+              onChange={setSearchSelected}
+              options={['daa', 'eee']}
+              placeholder="Choose a state..."
+              selected={searchSelected}
+            />
+          </Form.Group>
+        </Form>
+        </Modal.Header>
+      </Modal>
+      
     </div>
   )
 }

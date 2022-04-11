@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import './Scroll.css'
+import './Home.scss'
 import backTop from '../../img/backtop.png'
 
 function ScrollTop() {
