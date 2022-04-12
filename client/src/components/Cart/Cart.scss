@@ -1,0 +1,135 @@
+$laptop:1024px;
+$tablet: 800px;
+$phone:500px;
+
+.cart_page{
+    width: 100%;
+    background: linear-gradient(to right, #3ee4ac , #5B96C0);
+}
+.cart_list_box{
+    border-right: 1px solid grey;
+    @media (max-width:$tablet) {
+        border-right: none;
+    }
+    ul{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li{
+            position: relative;
+            border-bottom: 1px solid grey;
+            padding: 20px 10px;
+            background: linear-gradient(to right, #6bfd99c4 , rgb(35, 250, 236));
+            .del_list_btn{
+                position: absolute;
+                top: 0;
+                right: 0;
+                border: 0;
+                background: none;
+                font-size: 30px;
+                padding: 0;
+                margin: 0;
+                color: rgb(245, 121, 121);
+            }
+            img{
+                width: 200px;
+                height: 130px;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                border-radius: 5px;
+                @media (max-width:$phone) {
+                    width: 100px;
+                    height: 80px;
+                }
+            }
+            .cart_item_info{
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                margin-left: 30px;
+                @media (max-width:$tablet) {
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+                @media (max-width:$phone) {
+                    margin-left: 10px;
+                }
+                .cart_item_btn_box{
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    @media (max-width:$laptop) {
+                        display: none;
+                    }
+                    @media (max-width:$tablet) {
+                        display: flex;
+                        flex-direction: row;
+                        margin-top: 10px;
+                    }
+                    button{
+                        width: 100px;
+                        @media (max-width:$tablet) {
+                            padding: 0;
+                        }
+                        @media (max-width:$phone) {
+                            width: 80px;
+                            padding: 3px;
+                        }
+                    }
+                }
+                .cart_item_price{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    .cart_item_counter{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        font-size: 30px;
+                        width: 200px;
+                        @media (max-width:$laptop) {
+                            font-size: 25px;
+                        }
+                        @media (max-width:$tablet) {
+                            font-size: 18px;
+                            justify-content: center;
+                            width: 100%;
+                        }
+                        .item_counter_icon{
+                            color: rgb(106, 111, 106);
+                            font-size: 40px;
+                            cursor: pointer;
+                            @media (max-width:$laptop) {
+                                font-size: 30px;
+                            }
+                            @media (max-width:$tablet) {
+                                font-size: 20px;
+                                margin: 0 20px;
+                            }
+                        }
+                    }
+                    h3{
+                        font-size: 24px;
+                        @media (max-width:$laptop) {
+                            font-size: 22px ;
+                        }
+                        @media (max-width:$tablet) {
+                            font-size: 18px;
+                            text-align: center;
+                        }
+                    }
+                    p{
+                        margin: 10px 0 0;
+                        font-size: 23px;
+                        @media (max-width:$laptop) {
+                            font-size: 18px;
+                        }
+                        @media (max-width:$tablet) {
+                            font-size: 16px;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
