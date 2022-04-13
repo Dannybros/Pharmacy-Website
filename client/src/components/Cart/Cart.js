@@ -41,6 +41,9 @@ function Cart() {
             </ul>
           </Col>
           <Col md={4} sm={12}>
+            <div className='d-flex-column'>
+
+            </div>
           </Col>
         </Row>
       </Container>
