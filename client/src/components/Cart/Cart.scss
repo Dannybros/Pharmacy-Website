@@ -4,6 +4,7 @@ $phone:500px;
 
 .cart_page{
     width: 100%;
+    height: 150vh;
     background: linear-gradient(to right, #3ee4ac , #5B96C0);
 }
 .cart_list_box{
@@ -18,8 +19,10 @@ $phone:500px;
         li{
             position: relative;
             border-bottom: 1px solid grey;
-            padding: 20px 10px;
-            background: linear-gradient(to right, #6bfd99c4 , rgb(35, 250, 236));
+            padding: 10px 10px;
+            background: linear-gradient(to right, #ffffffc4 , rgb(224, 253, 251));
+            border-radius: 5px;
+            margin-bottom: 20px;
             .del_list_btn{
                 position: absolute;
                 top: 0;
@@ -30,15 +33,17 @@ $phone:500px;
                 padding: 0;
                 margin: 0;
                 color: rgb(245, 121, 121);
+                cursor: pointer;
+                &:hover{
+                    font-weight: bold;
+                }
             }
             img{
-                width: 200px;
-                height: 130px;
+                width: 20%;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
                 border-radius: 5px;
                 @media (max-width:$phone) {
-                    width: 100px;
-                    height: 80px;
+                    width: 25%;
                 }
             }
             .cart_item_info{
@@ -46,40 +51,49 @@ $phone:500px;
                 justify-content: space-around;
                 width: 100%;
                 margin-left: 30px;
-                @media (max-width:$tablet) {
-                    flex-direction: column;
-                    justify-content: space-between;
-                }
                 @media (max-width:$phone) {
-                    margin-left: 10px;
+                    margin-left:20px;
                 }
-                .cart_item_btn_box{
-                    display:flex;
+                .cart_item_name{
+                    display: flex;
                     flex-direction: column;
                     justify-content: space-around;
-                    @media (max-width:$laptop) {
-                        display: none;
-                    }
-                    @media (max-width:$tablet) {
-                        display: flex;
-                        flex-direction: row;
-                        margin-top: 10px;
+                    align-items: center;
+                    h3{
+                        font-size: 24px;
+                        @media (max-width:$laptop) {
+                            font-size: 22px ;
+                        }
+                        @media (max-width:$tablet) {
+                            font-size: 18px;
+                            text-align: center;
+                        }
+                        @media (max-width:$phone) {
+                            font-size:16px;
+                        }
                     }
                     button{
                         width: 100px;
                         @media (max-width:$tablet) {
-                            padding: 0;
+                           padding: 0px 10px;
                         }
                         @media (max-width:$phone) {
-                            width: 80px;
-                            padding: 3px;
+                            font-size:14px;
+                            width: 80%;
+                            padding: 0;
                         }
                     }
                 }
                 .cart_item_price{
                     display: flex;
                     flex-direction: column;
-                    justify-content: space-between;
+                    justify-content: space-around;
+                    h3{
+                        text-align: center;
+                        @media (max-width:$phone) {
+                            font-size: 18px;
+                        }
+                    }
                     .cart_item_counter{
                         display: flex;
                         align-items: center;
@@ -88,6 +102,7 @@ $phone:500px;
                         width: 200px;
                         @media (max-width:$laptop) {
                             font-size: 25px;
+                            width: 100px;
                         }
                         @media (max-width:$tablet) {
                             font-size: 18px;
@@ -105,31 +120,20 @@ $phone:500px;
                                 font-size: 20px;
                                 margin: 0 20px;
                             }
-                        }
-                    }
-                    h3{
-                        font-size: 24px;
-                        @media (max-width:$laptop) {
-                            font-size: 22px ;
-                        }
-                        @media (max-width:$tablet) {
-                            font-size: 18px;
-                            text-align: center;
-                        }
-                    }
-                    p{
-                        margin: 10px 0 0;
-                        font-size: 23px;
-                        @media (max-width:$laptop) {
-                            font-size: 18px;
-                        }
-                        @media (max-width:$tablet) {
-                            font-size: 16px;
-                            text-align: center;
+                            @media (max-width:$phone) {
+                                font-size: 20px;
+                                margin: 0 10px;
+                            }
                         }
                     }
                 }
             }
         }
     }
+}
+.total_checkout_box{
+    position: sticky;
+    top:30px;
+    padding: 20px;
+    background: rgb(233, 188, 8);
 }
