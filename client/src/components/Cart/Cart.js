@@ -59,8 +59,28 @@ function Cart() {
           </Col>
 
           <Col md={4} sm={12} className="p-3">
-            <div className='d-flex total_checkout_box'>
-              <h3>Total</h3>
+            <div className='total_checkout_box'>
+              <h3>Receipt</h3>
+              <ul>
+                <li>
+                  <span> <b> Item </b> </span>
+                  <span> <b> Price </b> </span>
+                  <span> <b> Amount </b> </span>
+                  <span> <b> Total </b> </span>
+                </li>
+                <li>
+                  <span> holy jode medicine </span>
+                  <span> 20 $ </span>
+                  <span> 2 </span>
+                  <span> 40,000 KIP </span>
+                </li>
+              </ul>
+              <div className='total_checkout_btn'>
+                <h5>Total : <span>4kk</span></h5>
+                <Button className='py-1 px-2'>
+                  Check Out
+                </Button>
+              </div>
             </div>
           </Col>
         </Row>

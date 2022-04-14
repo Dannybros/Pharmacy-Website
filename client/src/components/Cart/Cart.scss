@@ -136,4 +136,32 @@ $phone:500px;
     top:30px;
     padding: 20px;
     background: rgb(233, 188, 8);
+    h3{
+        width: 100%;
+        border-bottom: 1px solid black;
+    }
+    ul{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li{
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.444);
+            margin-bottom: 10px;
+            font-size: 15px;
+            span{
+                width: 20%;
+                text-align: center;
+                &:first-child{
+                    width: 40%;
+                }
+            }
+        }
+    }
+    .total_checkout_btn{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
 }
