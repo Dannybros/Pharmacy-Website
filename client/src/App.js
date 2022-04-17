@@ -6,9 +6,9 @@ import ProductLIst from './components/Products/ProductList';
 import Product from './components/Products/Product';
 import Cart from './components/Cart/Cart';
 import Payment from './components/Payment/Payment'
-import Contact from './components/Contact/Contact'
 import SignIn from './components/User/SIgnIn';
 import NavBar from './components/Nav/NavBar';
+import OrderHistory from './components/OrderHistory/OrderHistory';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route path="/product/:productId" element={<Product/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/cart/payment" element={<Payment/>}/>
-          <Route path="/about-us" element={<Contact/>}/>
+          <Route path="/order_history" element={<OrderHistory/>}/>
           <Route path="/sign-in" element={<SignIn/>}/>
         </Routes>
       </main>

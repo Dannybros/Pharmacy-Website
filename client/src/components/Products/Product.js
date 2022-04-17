@@ -1,8 +1,11 @@
 import React from 'react'
+import './Product.scss';
 
 function Product() {
   return (
-    <div>Product</div>
+    <div className='product_detail_page'>
+      <div className='box'>sda</div>
+    </div>
   )
 }
 

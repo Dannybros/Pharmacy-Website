@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './NavBar.scss';
 import SideBar from './SideBar/SideBar';
 import {Button, Modal, Form} from 'react-bootstrap';
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -15,6 +15,7 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function NavBar() {
+  const navigate = useNavigate();
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -24,9 +25,12 @@ function NavBar() {
     setModalShow(false);
     setSearchSelected([]);
   }
+
   const handleModalShow = () => setModalShow(true);
 
   const handleSwitch=()=> setOpenSidebar(true);
+
+  const goToCart = () => navigate('../cart')
 
   const d = [{name:"dd", email:"23"},{name:"aad", email:"54"}]
 
@@ -62,7 +66,7 @@ function NavBar() {
           </div>
           {/* end of phone size*/}
           
-          <div className='cart_box'>
+          <div className='cart_box' onClick={goToCart}>
             <ShoppingCartIcon className='cart_icon'/>
             <span className='cart_number'>0</span>
           </div>
@@ -85,12 +89,12 @@ function NavBar() {
               <li>Shop <AddIcon className='plus_icon'/></li>
             </NavLink>
 
-            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/about-us">
-              <li>Contact <AddIcon className='plus_icon'/></li>
+            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/order_history">
+              <li>Order History <AddIcon className='plus_icon'/></li>
             </NavLink>
 
-            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/cart">
-              <li>Check Out <AddIcon className='plus_icon'/></li>
+            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/sign-in">
+              <li>Sign In <AddIcon className='plus_icon'/></li>
             </NavLink>
           </ul>
 
@@ -110,7 +114,7 @@ function NavBar() {
               <PersonOutlineIcon className='user_icon'/>
               Guest
             </div>
-            <p>asdfaadfadfa dfa</p>
+            <p>Email : None</p>
           </div>
 
         </div>

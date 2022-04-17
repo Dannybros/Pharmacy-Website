@@ -4,7 +4,9 @@ $phone:480px;
 .product_list_section{
     background: linear-gradient(to right, #b4ffe5 , #74c5ff);
     width: 100%;
+    min-height:calc(100vh - 100px);
     .category_box{
+        display: flex;
         padding: 30px 30px 10px;
         border-bottom: 1px solid grey;
         @media (max-width:$phone) {
@@ -36,7 +38,8 @@ $phone:480px;
             img{
                 width: 100%;
                 height: 55%;
-                object-fit: cover;
+                padding: 5px;
+                object-fit: contain;
                 border-bottom: 1px solid rgb(206, 204, 204);
                 @media (max-width:$phone) {
                     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
@@ -46,7 +49,17 @@ $phone:480px;
                 width: 100%;
                 padding: 10px 10px 5px;
                 h4{
+                    width: 100%;
                     text-transform: capitalize;
+                    font-size: 17px;
+                    height: 40px;
+                    box-sizing: border-box;
+                    display: -webkit-box;
+                    text-align: center;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                     @media (max-width:$phone) {
                         font-size: 16px;
                     }
@@ -76,4 +89,84 @@ $phone:480px;
             }
         }
     }
+}
+
+//category dropdown menu
+.DropDown {
+    position: relative;
+    display: grid;
+    place-items: center;
+    .icon-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        background-color: white;
+        padding: 5px;
+        margin: 5px;
+        margin-right: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+    } 
+    .icon-button svg {
+        fill: #76C7FF;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.DropdownBox {
+    position: absolute;
+    top: 60px;
+    width: 250px;
+    background: #A2EFEC;
+    border: 1px solid #474a4d;
+    z-index: 4;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: height 0.5s ease;
+    overflow: hidden;
+}
+
+.menu {
+    width: 100%;
+}
+.menu_item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 0.5rem;
+}
+
+.menu_item:hover {
+    background: white;
+}
+
+.menu_item .leftIcon {
+    fill: #fff;
+}
+
+/* CSSTransition  */
+/* first DropDown  */
+
+.menu-primary-enter {
+    position: absolute;
+    transform: translateX(-110%);
+}
+
+.menu-primary-enter-active {
+    transform: translateX(0%);
+    transition: all 0.5s ease;
+}
+
+.menu-primary-exit {
+    position: absolute;
+}
+
+.menu-primary-exit-active {
+    transform: translateX(-110%);
+    transition: all 0.5s ease;
 }

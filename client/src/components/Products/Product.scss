@@ -1,0 +1,12 @@
+.product_detail_page{
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
+    margin-block: 20px;
+    height: 100vh;
+    .box{
+        width: 30%;
+        aspect-ratio: 1 /1;
+        flex-grow: 1;
+        background: pink;
+    }
+}
