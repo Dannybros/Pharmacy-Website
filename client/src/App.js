@@ -11,6 +11,7 @@ import NavBar from './components/Nav/NavBar';
 import OrderHistory from './components/OrderHistory/OrderHistory';
 
 function App() {
+
   return (
     <div style={{fontFamily:"Oswald"}}>
       <NavBar/>

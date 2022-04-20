@@ -1,12 +1,87 @@
 .product_detail_page{
-    width: min(100% - 2rem, 1200px);
+    width: min(100% - 2rem, 1400px);
     margin-inline: auto;
     margin-block: 20px;
-    height: 100vh;
-    .box{
-        width: 30%;
-        aspect-ratio: 1 /1;
-        flex-grow: 1;
-        background: pink;
+    .product__box{
+        width: 100%;
+        display: flex;
+        height: 100%;
+        border-bottom: 1px solid rgb(200, 195, 195);
+        .product_img_magnify{
+            padding-top: 50px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            img{
+                position: sticky;
+                top: 70px;
+                height: 350px;
+                aspect-ratio: 5 /5;
+            }
+            .img_msg{
+                position: absolute;
+                bottom: 20px;
+                text-align: center;
+            }
+        }
+        .product__info__box{
+            padding: 10px;
+            margin-inline: 20px;
+            h3{
+                padding-bottom: 10px;
+                text-size-adjust: 80%;
+
+                border-bottom: 1px solid rgb(195, 194, 194);
+            }
+            .product_price_box, .product_category_box, .product_description_box, .product_rating_box, .product_amount_box{
+                text-transform: capitalize;
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            .product_price_box{
+                span{
+                    color: rgb(163, 14, 14);
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+            }
+            .product_description_box, .product_rating_box{
+                p{
+                    padding-left: 10px;
+                    font-size: 18px;
+                    text-indent: 15px;
+                    color:grey;
+                    text-align: justify;
+                }
+            }
+            .product_number_cart_box{
+                display: flex;
+                align-items: center;
+                font-size: 30px;
+                .item_counter_icon{
+                    font-size: 30px;
+                    margin-inline: 70px;
+                    color:rgb(43, 43, 43);
+                    cursor: pointer;
+                }
+            }
+        }
+        .add_cart_box{
+            position: sticky;
+            top: 20px;
+            border-radius: 10px;
+            border: 1px solid rgb(200, 200, 200);
+            text-align: center;
+            padding: 20px;
+            height: 100%;
+            p{
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+            button{
+                width: 100%;
+                border-radius: 50px;
+            }
+        }
     }
 }

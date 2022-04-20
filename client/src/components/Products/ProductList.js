@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
+import React, {useState} from 'react'
 import './ProductList.scss'
 import {Container, Row, Col} from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
@@ -10,35 +9,10 @@ import CategoryIcon from '@mui/icons-material/Category';
 
 function ProductList() {
   const navigate = useNavigate();
-  const [items, setItems] = useState([]);
   const [categoryTitle, setCategoryTitle] = useState('All Products')
   const [openCatDD, setOpenCatDD] = useState(false);
-
-  useEffect(() => {
-
-    const source = axios.CancelToken.source()
-
-    const fetchItems =async()=>{
-      try {
-        await axios.get('https://fakestoreapi.com/products', {cancelToken:source.token})
-        .then(res=>setItems(res.data));
-
-      } catch (error) {
-
-        if(axios.isCancel(error)){}
-        else{
-          throw error
-        } 
-      }
-    }
-
-    fetchItems();
-
-    return ()=>{
-      source.cancel();
-      
-    }
-  }, [items])
+  const items = JSON.parse(localStorage.getItem("Items"));
+  
 
   const getItemsUnderCategory=(arr, index) =>{
 
@@ -144,7 +118,7 @@ function ProductList() {
                       </span>
                       </p>
                       <div className='d-flex justify-content-between'>
-                        <button onClick={()=>navigate('../product/test')}> View </button>
+                        <button onClick={()=>navigate(`../product/${item.id}`)}> View </button>
                         <button> Add Cart </button>
                       </div>
                     </div>
