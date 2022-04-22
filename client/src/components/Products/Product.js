@@ -2,23 +2,49 @@ import React, {useEffect, useState} from 'react'
 import './Product.scss';
 import CarouselBox from '../Home/Carousel'
 import '../Home/Home.scss'
-import {Row, Col, Button} from 'react-bootstrap'
+import {Row, Col, Button, Modal} from 'react-bootstrap'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
+import {useParams, useNavigate} from 'react-router-dom'
+import { useStateValue } from '../../Reducer/StateProvider';
+
 function Product() {
 
-  const [data, setData] = useState([]);
+  const {productId} = useParams();
+  const navigate = useNavigate();
+
+  const [, dispatch] = useStateValue();
+  const [items] = useLocalStorage('Items');
+  const [data, setData] = useState({});
+
   const [itemAmount, setItemAmount] = useState(0);
   const [collapseText, setCollapseText] = useState('-webkit-box');
   const [collapseTextMsg, setCollapseTextMsg] = useState('Show More 🔼');
-
+  const [toastMsg, setToastMsg] = useState(false);
+  
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("Items"));
-    setData(items[2])
-  }, [])
+    window.scrollTo(0, 0);
+    
+    items.map((item)=>{ 
+      if(item.id===parseInt(productId)){
+        setData(item)
+      }
+      return null
+    })
+  }, [items, productId])
 
+  const handleClose = () => {
+    setToastMsg(false);
+    navigate(-1);
+  };
+
+  const handleShow = () => setToastMsg(true);
+  
   const LowerItemAmount = ()=>{
     if(itemAmount>0) setItemAmount(itemAmount-1);
   }
+
   const IncreaseItemAmount = () =>{
     setItemAmount(itemAmount+1);
   }
@@ -31,6 +57,14 @@ function Product() {
       setCollapseText('block');
       setCollapseTextMsg('Show less 🔼');
     }
+  }
+
+  const handleAddToCart =async()=>{
+    await dispatch({
+      type:"ADD_TO_BASKET",
+      item: data,
+    });
+    handleShow();
   }
  
   return (
@@ -86,7 +120,7 @@ function Product() {
         <Col sm={2} xs={12} className="add_cart_box">
           <p>To buy, choose <b>Amount</b></p>
           <p>Total: <b>{data.price * itemAmount}$</b></p>
-          <Button variant='warning'  disabled={itemAmount<=0}> Add to Cart </Button>
+          <Button variant='warning' disabled={itemAmount<=0} onClick={handleAddToCart}> Add to Cart </Button>
         </Col>
       </Row>
 
@@ -94,6 +128,18 @@ function Product() {
           <h1>Other products</h1>
           <CarouselBox/>
       </div>
+
+      <Modal show={toastMsg} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add To Cart Message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{data.title} has been added to cart successfully!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose} style={{width:"100px"}}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
      
     </div>
   )

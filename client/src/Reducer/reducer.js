@@ -1,23 +1,19 @@
 export const initialState={
-    products:[],
-    cart: [],
-    user: null,
+    cart:[]
 };
 
 const reducer = (state, action)=>{
+
     switch (action.type) {
         case 'ADD_TO_BASKET':
             return{
-                ...state,
-                cart: [...state.cart, action.item],
+                cart: [...state.cart, action.item]
             };
-        
+            
         case 'Clear_BASKET':
             localStorage.removeItem('basket');
             return{
-                ...state,
-                user:null,
-                cart: [],
+                cart: []
             };
 
         case 'DELETE_FROM_BASKET':
@@ -28,9 +24,9 @@ const reducer = (state, action)=>{
                 newBasket.splice(index, 1);
             };
             return{
-                ...state, 
-                cart: newBasket,
+                cart: newBasket
             };
+
         default:
             return state;
     }

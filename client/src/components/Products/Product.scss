@@ -25,7 +25,7 @@ $phone:480px;
                 img{
                     margin-top: 40px;
                     width: 90%;
-                    aspect-ratio: 1 / 1 !important;
+                    aspect-ratio: 5 / 6 !important;
                     background: green;
                     @media (max-width:$tablet) {
                         width: 100%;
@@ -147,7 +147,7 @@ $phone:480px;
             text-align: center;
             padding: 20px;
             height: 100%;
-            margin-top: 40px;
+            margin-block: 40px;
             @media (max-width:$laptop) {
                 padding: 20px 5px;
             }

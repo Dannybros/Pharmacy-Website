@@ -13,9 +13,10 @@ import tradition from '../../img/promo-img1.jpg'
 import modern from '../../img/modern.jpg'
 import traditional2 from '../../img/tradition.jpg'
 import ScrollTop from './ScrollTop';
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function Home() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useLocalStorage("Items", [])
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,9 +25,8 @@ function Home() {
 
     const fetchItems =async()=>{
       try {
-        await axios.get('https://fakestoreapi.com/products', {cancelToken:source.token})
+        await axios.get('https://fakestoreapi.com/products/', {cancelToken:source.token})
         .then(res=>{
-          localStorage.setItem('Items', JSON.stringify(res.data));
           setData(res.data);
           setLoading(false);
         });
@@ -46,7 +46,7 @@ function Home() {
       source.cancel();
       
     }
-  }, [data])
+  }, [setData])
 
   return (
     <div style={{position:"relative"}}>

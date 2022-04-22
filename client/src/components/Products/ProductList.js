@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 import {CSSTransition} from 'react-transition-group';
 import {ReactComponent as DropIcon} from '../../img/DropDown.svg';
 import CategoryIcon from '@mui/icons-material/Category';
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function ProductList() {
   const navigate = useNavigate();
   const [categoryTitle, setCategoryTitle] = useState('All Products')
   const [openCatDD, setOpenCatDD] = useState(false);
-  const items = JSON.parse(localStorage.getItem("Items"));
-  
+  const [items] = useLocalStorage('Items');
 
   const getItemsUnderCategory=(arr, index) =>{
 
@@ -127,7 +127,6 @@ function ProductList() {
               )
             })
           }
-
         </Row>
       </Container>
     </section>

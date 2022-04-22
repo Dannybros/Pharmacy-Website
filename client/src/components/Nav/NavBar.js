@@ -13,9 +13,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { useStateValue } from '../../Reducer/StateProvider';
 
 function NavBar() {
   const navigate = useNavigate();
+
+  const [{cart}] = useStateValue();
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -68,7 +71,7 @@ function NavBar() {
           
           <div className='cart_box' onClick={goToCart}>
             <ShoppingCartIcon className='cart_icon'/>
-            <span className='cart_number'>0</span>
+            <span className='cart_number'>{cart? cart.length: 0}</span>
           </div>
 
           {/* only for phone size */}
