@@ -71,6 +71,7 @@ $phone:480px;
                     font-size: 16px;
                     @media (max-width:$phone) {
                         font-size: 14px;
+                        margin-bottom: 10px;;
                     }
                 }
                 button{
@@ -82,8 +83,8 @@ $phone:480px;
                     padding: 5px 10px;
                     background: #409fe4;
                     font-size: 14px;
-                    &:last-child{
-                        background: #33b33e;
+                    @media (max-width:$phone) {
+                       overflow: hidden;
                     }
                 }
             }

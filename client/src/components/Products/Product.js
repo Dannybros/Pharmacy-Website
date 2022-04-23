@@ -3,7 +3,6 @@ import './Product.scss';
 import CarouselBox from '../Home/Carousel'
 import '../Home/Home.scss'
 import {Row, Col, Button, Modal} from 'react-bootstrap'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
 import {useParams, useNavigate} from 'react-router-dom'
@@ -14,11 +13,10 @@ function Product() {
   const {productId} = useParams();
   const navigate = useNavigate();
 
-  const [, dispatch] = useStateValue();
+  const [cart, dispatch] = useStateValue();
   const [items] = useLocalStorage('Items');
   const [data, setData] = useState({});
 
-  const [itemAmount, setItemAmount] = useState(0);
   const [collapseText, setCollapseText] = useState('-webkit-box');
   const [collapseTextMsg, setCollapseTextMsg] = useState('Show More 🔼');
   const [toastMsg, setToastMsg] = useState(false);
@@ -40,14 +38,6 @@ function Product() {
   };
 
   const handleShow = () => setToastMsg(true);
-  
-  const LowerItemAmount = ()=>{
-    if(itemAmount>0) setItemAmount(itemAmount-1);
-  }
-
-  const IncreaseItemAmount = () =>{
-    setItemAmount(itemAmount+1);
-  }
 
   const handleCollapseText = ()=>{
     if(collapseText !== "-webkit-box"){
@@ -64,7 +54,14 @@ function Product() {
       type:"ADD_TO_BASKET",
       item: data,
     });
+
     handleShow();
+  }
+
+  function checkItemInCart(id){
+    const index = cart.findIndex(prod => prod.id === id);
+    if(index <0) return false
+    return true
   }
  
   return (
@@ -73,7 +70,7 @@ function Product() {
       <Row className='product__box'>
         <Col sm={4} xs={5} className="product_img_magnify">
           <div className='product_img_box'>
-            <img src="" alt=""/>
+            <img src={data.image} alt=""/>
             <div className='text-center mt-2 img_msg'>
               Hover image to zoom in
             </div>
@@ -106,21 +103,11 @@ function Product() {
               ))}
             </p> 
           </div>
-
-          <div className="product_amount_box">
-            Amount:
-            <div className='product_number_cart_box'>
-              <PlayArrowIcon className='item_counter_icon' style={{transform:"rotate(180deg)"}} onClick={LowerItemAmount}/> 
-                {itemAmount}
-              <PlayArrowIcon className='item_counter_icon' onClick={IncreaseItemAmount}/>
-            </div>
-          </div>
         </Col>
 
         <Col sm={2} xs={12} className="add_cart_box">
-          <p>To buy, choose <b>Amount</b></p>
-          <p>Total: <b>{data.price * itemAmount}$</b></p>
-          <Button variant='warning' disabled={itemAmount<=0} onClick={handleAddToCart}> Add to Cart </Button>
+          <p>You can't add if item is already in the cart</p>
+          <Button variant='warning' disabled={checkItemInCart(data.id)} onClick={handleAddToCart}> Add to Cart </Button>
         </Col>
       </Row>
 

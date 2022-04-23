@@ -3,22 +3,37 @@ const cart = JSON.parse(localStorage.getItem("Medicine-Shop-Cart"));
 export const initialState=cart? cart : [];
 
 const reducer = (state, action)=>{
+    const updatedCart = [...state];
+    const updatedItemIndex = updatedCart.findIndex(item => item.id === action.id);
+    const updatedItem = {
+        ...updatedCart[updatedItemIndex]
+    };
+
     switch (action.type) {
         case 'ADD_TO_BASKET':
-            return [...state, action.item];
+            updatedCart.push({ ...action.item, quantity: 1 });
+            return updatedCart;
             
         case 'Clear_BASKET':
-            localStorage.removeItem('basket');
             return [];
+        
+        case 'QUANTITY_INCREMENT':
+            updatedItem.quantity++;
+            updatedCart[updatedItemIndex] = updatedItem;
+            return updatedCart;
+
+        case 'QUANTITY_DECREMENT':
+            updatedItem.quantity--;
+            updatedCart[updatedItemIndex] = updatedItem;
+            return updatedCart;
 
         case 'DELETE_FROM_BASKET':
             const index = state.findIndex(item=>item.id ===action.id);
-            const newBasket=[...state];
 
             if(index>=0){
-                newBasket.splice(index, 1);
+                updatedCart.splice(index, 1);
             };
-            return newBasket
+            return updatedCart
 
         default:
             return state;

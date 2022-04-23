@@ -19,7 +19,7 @@ import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 function NavBar() {
   const navigate = useNavigate();
 
-  const [cart, dispatch] = useStateValue();
+  const [cart] = useStateValue();
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -72,7 +72,11 @@ function NavBar() {
           
           <div className='cart_box' onClick={goToCart}>
             <ShoppingCartIcon className='cart_icon'/>
-            <span className='cart_number'>{cart? cart.length: 0}</span>
+            <span className='cart_number'>
+              {cart.reduce((count, curItem) => {
+                return count + curItem.quantity;
+              }, 0)}
+          </span>
           </div>
 
           {/* only for phone size */}

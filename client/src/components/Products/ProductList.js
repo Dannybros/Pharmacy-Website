@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './ProductList.scss'
-import {Container, Row, Col} from 'react-bootstrap'
+import {Container, Row, Col, Toast} from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 
 import {CSSTransition} from 'react-transition-group';
@@ -11,11 +11,18 @@ import { useStateValue } from '../../Reducer/StateProvider';
 
 function ProductList() {
   const navigate = useNavigate();
+  const [items] = useLocalStorage('Items');
+  const [cart, dispatch] = useStateValue();
+
   const [categoryTitle, setCategoryTitle] = useState('All Products')
   const [openCatDD, setOpenCatDD] = useState(false);
-  const [items] = useLocalStorage('Items');
+  const [showToast, setShowToast] = useState(false);
 
-  const [, dispatch] = useStateValue();
+  function checkItemInCart(id){
+    const index = cart.findIndex(prod => prod.id === id);
+    if(index <0) return false
+    return true
+  }
 
   const getItemsUnderCategory=(arr, index) =>{
 
@@ -91,32 +98,50 @@ function ProductList() {
   }
 
   const AddToCart =(data)=>{
-     dispatch({
-      type:"ADD_TO_BASKET",
-      item: data,
-    });
+    if(checkItemInCart(data.id)){
+      setShowToast(true)
+    }else{
+      dispatch({
+        type:"ADD_TO_BASKET",
+        item: data,
+      });
+    }
   }
 
   return (
     <section className='product_list_section'>
       <Container>
+        <Toast style={{position:'absolute',top:"100px", right:"0"}} onClose={() => setShowToast(false)} show={showToast} delay={5000} autohide>
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded "
+              alt=""
+            />
+            <strong className="me-auto" style={{color:'#BB2D3B'}}>Alert</strong>
+          </Toast.Header>
+          <Toast.Body><b style={{color:"#BB2D3B", fontSize:"16px"}}>You already have this Item on the Cart!</b></Toast.Body>
+        </Toast>
+
         <Row>
           <div className='category_box'>
-            <h1>Category</h1>
+            <h1 onClick={()=>setShowToast(true)}>Category</h1>
             <div className="DropDown">
                 <div className="category__dropdown__icon icon-button" onClick={()=>setOpenCatDD(!openCatDD)}>
                     {<DropIcon/>}
                 </div>
                 {openCatDD && <CategoryDropDown item={items}/>}
             </div>
+           
           </div>
+          
 
           {
             filterItems(items).map((item, i)=>{
               return(
                 <Col lg={3} md={4} sm={6} xs={6} className="product_item_box" key={i}>
                   <div className='product'>
-                    <img src="" alt=""/>
+                    <img src={item.image} alt=""/>
                     <div className='product_info_box'>
                       <h4>{item.title}</h4>
                       <p>
@@ -129,7 +154,7 @@ function ProductList() {
                       </p>
                       <div className='d-flex justify-content-between'>
                         <button onClick={()=>navigate(`../product/${item.id}`)}> View </button>
-                        <button onClick={()=>AddToCart(item)}> Add Cart </button>
+                        <button onClick={()=>AddToCart(item)} style={{background:checkItemInCart(item.id)? "#135118": "#33b33e"}}> Add Cart </button>
                       </div>
                     </div>
                   </div>

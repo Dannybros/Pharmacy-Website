@@ -3,22 +3,46 @@ import './Cart.scss'
 import {Container, Row, Col, Button} from 'react-bootstrap'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useStateValue } from '../../Reducer/StateProvider';
+import {useNavigate} from 'react-router-dom'
 
 function Cart() {
 
   const [cart, dispatch] =useStateValue();
 
+  const navigate = useNavigate();
+
   const handleCart = async()=>{
-    await dispatch({
+    dispatch({
       type:"Clear_BASKET"
     });
   }
 
   const handleCartItemDel=async(id)=>{
-    await dispatch({
+    dispatch({
       type:"DELETE_FROM_BASKET",
       id:id
     });
+  }
+  
+  const IncreaseItemAmount=(id)=>{
+    dispatch({
+      type:"QUANTITY_INCREMENT",
+      id:id
+    });
+  }
+
+  const DecreaseItemAmount=(id, quantity)=>{
+    if(quantity>1){
+      dispatch({
+        type:"QUANTITY_DECREMENT",
+        id:id
+      });
+    }else{
+      dispatch({
+        type:"DELETE_FROM_BASKET",
+        id:id
+      });
+    }
   }
 
   return (
@@ -40,7 +64,7 @@ function Cart() {
                       <div className='cart_item_name'>
                         <h3>{item.title}</h3>
                         <div className='d-flex w-100 justify-content-around'>
-                          <Button>
+                          <Button onClick={()=>navigate(`../product/${item.id}`)}>
                             View
                           </Button>
                           <Button variant='danger' onClick={()=>handleCartItemDel(item.id)}>
@@ -51,11 +75,11 @@ function Cart() {
                       </div>
 
                       <div className='cart_item_price'>
-                        <h3>{item.price}$</h3>
+                        <h3>{item.price * item.quantity}$</h3>
                         <div className=' cart_item_counter'>
-                          <PlayArrowIcon className='item_counter_icon' style={{transform:"rotate(180deg)"}}/> 
-                          0 
-                          <PlayArrowIcon className='item_counter_icon'/>
+                          <PlayArrowIcon className='item_counter_icon' style={{transform:"rotate(180deg)"}} onClick={()=>DecreaseItemAmount(item.id, item.quantity)}/> 
+                            {item.quantity}
+                          <PlayArrowIcon className='item_counter_icon' onClick={()=>IncreaseItemAmount(item.id)}/>
                         </div>
                       </div>
                     </div>
