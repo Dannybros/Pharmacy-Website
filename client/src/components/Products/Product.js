@@ -73,7 +73,7 @@ function Product() {
       <Row className='product__box'>
         <Col sm={4} xs={5} className="product_img_magnify">
           <div className='product_img_box'>
-            <img src={data.image} alt=""/>
+            <img src="" alt=""/>
             <div className='text-center mt-2 img_msg'>
               Hover image to zoom in
             </div>

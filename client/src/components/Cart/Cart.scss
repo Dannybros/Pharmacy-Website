@@ -63,6 +63,7 @@ $phone:500px;
                     margin-left:20px;
                 }
                 .cart_item_name{
+                    width: 100%;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;
@@ -141,8 +142,9 @@ $phone:500px;
 }
 .total_checkout_box{
     position: sticky;
-    top:30px;
+    top:40px;
     padding: 20px;
+    margin-top: 40px;
     background: rgb(233, 188, 8);
     h3{
         width: 100%;

@@ -7,12 +7,15 @@ import {CSSTransition} from 'react-transition-group';
 import {ReactComponent as DropIcon} from '../../img/DropDown.svg';
 import CategoryIcon from '@mui/icons-material/Category';
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
+import { useStateValue } from '../../Reducer/StateProvider';
 
 function ProductList() {
   const navigate = useNavigate();
   const [categoryTitle, setCategoryTitle] = useState('All Products')
   const [openCatDD, setOpenCatDD] = useState(false);
   const [items] = useLocalStorage('Items');
+
+  const [, dispatch] = useStateValue();
 
   const getItemsUnderCategory=(arr, index) =>{
 
@@ -87,6 +90,13 @@ function ProductList() {
       }
   }
 
+  const AddToCart =(data)=>{
+     dispatch({
+      type:"ADD_TO_BASKET",
+      item: data,
+    });
+  }
+
   return (
     <section className='product_list_section'>
       <Container>
@@ -106,7 +116,7 @@ function ProductList() {
               return(
                 <Col lg={3} md={4} sm={6} xs={6} className="product_item_box" key={i}>
                   <div className='product'>
-                    <img src={item.image} alt=""/>
+                    <img src="" alt=""/>
                     <div className='product_info_box'>
                       <h4>{item.title}</h4>
                       <p>
@@ -119,7 +129,7 @@ function ProductList() {
                       </p>
                       <div className='d-flex justify-content-between'>
                         <button onClick={()=>navigate(`../product/${item.id}`)}> View </button>
-                        <button> Add Cart </button>
+                        <button onClick={()=>AddToCart(item)}> Add Cart </button>
                       </div>
                     </div>
                   </div>

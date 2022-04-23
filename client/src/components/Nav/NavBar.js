@@ -3,6 +3,10 @@ import './NavBar.scss';
 import SideBar from './SideBar/SideBar';
 import {Button, Modal, Form} from 'react-bootstrap';
 import {NavLink, useNavigate} from 'react-router-dom'
+import {useStateValue } from '../../Reducer/StateProvider';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -11,14 +15,11 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { useStateValue } from '../../Reducer/StateProvider';
 
 function NavBar() {
   const navigate = useNavigate();
 
-  const [{cart}] = useStateValue();
+  const [cart, dispatch] = useStateValue();
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);

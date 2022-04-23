@@ -6,11 +6,18 @@ import { useStateValue } from '../../Reducer/StateProvider';
 
 function Cart() {
 
-  const [{cart}, dispatch] =useStateValue();
+  const [cart, dispatch] =useStateValue();
 
   const handleCart = async()=>{
     await dispatch({
       type:"Clear_BASKET"
+    });
+  }
+
+  const handleCartItemDel=async(id)=>{
+    await dispatch({
+      type:"DELETE_FROM_BASKET",
+      id:id
     });
   }
 
@@ -36,7 +43,7 @@ function Cart() {
                           <Button>
                             View
                           </Button>
-                          <Button variant='danger'>
+                          <Button variant='danger' onClick={()=>handleCartItemDel(item.id)}>
                             Del
                           </Button>
                           
