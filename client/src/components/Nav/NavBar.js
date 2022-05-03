@@ -15,6 +15,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
+import logoImg from '../../img/MedLogo.png';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function NavBar() {
   return (
     <div className='nav_wrapper'>
       <section className='logo_section'>
-        adfa
+        <img src={logoImg} alt=""/>
       </section>
       <section className='menu_section'>
         <div className='subMenu_list'>

@@ -3,7 +3,7 @@ import './Product.scss';
 import CarouselBox from '../Home/Carousel'
 import '../Home/Home.scss'
 import {Row, Col, Button, Modal} from 'react-bootstrap'
-
+import Magnifier from "react-magnifier";
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
 import {useParams, useNavigate} from 'react-router-dom'
 import { useStateValue } from '../../Reducer/StateProvider';
@@ -70,7 +70,8 @@ function Product() {
       <Row className='product__box'>
         <Col sm={4} xs={5} className="product_img_magnify">
           <div className='product_img_box'>
-            <img src={data.image} alt=""/>
+            <Magnifier src={data.image} />;
+            {/* <img src={data.image} alt=""/> */}
             <div className='text-center mt-2 img_msg'>
               Hover image to zoom in
             </div>
@@ -111,6 +112,7 @@ function Product() {
         </Col>
       </Row>
 
+      
       <div className='popular__product'>
           <h1>Other products</h1>
           <CarouselBox/>
