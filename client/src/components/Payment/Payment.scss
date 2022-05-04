@@ -1,0 +1,118 @@
+$phone:480px;
+
+.payment_Card{
+    width: 70%;
+    padding: 0px 20px;
+    .payment_customer_info{
+        font-size: 20px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid grey;
+        h1{
+            margin-bottom: 10px;
+            width: 100%;
+            color: rgb(14, 91, 23);
+        }
+        input, textarea{
+            font-size: 18px;
+        }
+        textarea{
+            height: 70px;
+        }
+    }
+    .payment__method{
+        padding: 30px 0 20px;
+        h1{
+            width: 100%;
+            color: rgb(14, 91, 23);
+        }
+        .tab-nav{
+            list-style: none; 
+            display: flex;
+            padding: 0;
+            margin: 20px auto;
+            border-radius: 2rem;
+            border: 1px solid grey;
+            li{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                font-weight: bold;
+                font-size: 16px;
+                padding: 7px 20px;
+                transition: all 0.7s;
+                border: none;
+                user-select: none;
+                border-bottom-left-radius: 2rem;
+                border-top-left-radius: 2rem;
+                @media (max-width:$phone) {
+                    padding: 5px;
+                    font-size: 12px;
+                }
+                &:last-child{
+                    border-radius: 0;
+                    border-bottom-right-radius: 2rem;
+                    border-top-right-radius: 2rem;
+                }
+                &.active{
+                    background: #5cb85c;
+                    color: white;
+                    img{
+                        display: block;
+                        margin-left: 20px;
+                        @media (max-width:$phone) {
+                            margin-left: 10px;
+                            transform: scale(0.7);
+                        }
+                    }
+                }
+                img{
+                    display: none;
+                    transition: all 2s ease;
+                }
+            }
+        }
+        .outlet{
+            transition: all 1s forwards;
+            .card_img__list{
+                margin-top: 20px;
+                height: 50px;
+                display: flex;
+                justify-content: space-around;
+            }
+            label{
+                width: 100%;
+                margin: 10px 0;
+                text-align: left;
+                font-weight: bold;
+                text-indent: 5px;
+                font-size: 18px;
+                @media (max-width:$phone) {
+                    font-size: 14px;
+                }
+            }
+            input{
+                font-size: 18px;
+                border-radius: 5px;
+                border:1px solid grey;
+                width: 100%;
+                outline: none;
+                padding: 8px;
+                @media (max-width:$phone) {
+                    font-size: 14px;
+                }
+                &:focus{
+                    border:1px solid rgb(49, 173, 99);
+                }
+            }
+            button{
+                margin-top: 10px;
+                width: 100%;
+                font-size: 20px;
+            }
+        }
+    }
+}
+.payment_total{
+    width: 30%;
+}
