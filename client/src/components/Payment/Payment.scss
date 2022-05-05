@@ -1,8 +1,21 @@
 $phone:480px;
+$tablet:768px;
+
+.payment_page_container{
+    display: flex;
+    padding: 48px 12px;
+    @media (max-width:$tablet) {
+       flex-direction: column;
+       padding: 20px 12px;
+    }
+}
 
 .payment_Card{
     width: 70%;
     padding: 0px 20px;
+    @media (max-width:$tablet) {
+        width: 100%;    
+    }
     .payment_customer_info{
         font-size: 20px;
         padding-bottom: 30px;
@@ -12,8 +25,16 @@ $phone:480px;
             width: 100%;
             color: rgb(14, 91, 23);
         }
+        label{
+            @media (max-width:$phone) {
+                font-size: 14px;
+            }
+        }
         input, textarea{
             font-size: 18px;
+            @media (max-width:$phone) {
+                font-size: 14px;
+            }
         }
         textarea{
             height: 70px;
@@ -73,7 +94,12 @@ $phone:480px;
             }
         }
         .outlet{
-            transition: all 1s forwards;
+            .CC_form{
+                animation:fadeInUp 0.7s ease-in;
+            }
+            .Bcel_form{
+                animation:fadeInLeft 0.7s ease-in;
+            }
             .card_img__list{
                 margin-top: 20px;
                 height: 50px;
@@ -113,6 +139,39 @@ $phone:480px;
         }
     }
 }
-.payment_total{
+.payment_price_check{
+    position: relative;
     width: 30%;
+    padding: 20px;
+    @media (max-width:$tablet) {
+        width: 100%;    
+    }
+    .payment__total{
+        padding: 20px;
+        text-align: center;
+        position: sticky;
+        top: 50px;
+        background: rgb(255, 223, 96);
+    }
+}
+
+@keyframes fadeInLeft{
+    0%{
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes fadeInUp{
+    0%{
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
