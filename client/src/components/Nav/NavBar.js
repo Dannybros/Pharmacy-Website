@@ -16,6 +16,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import logoImg from '../../img/MedLogo.png';
+import Selecter from './Select';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -59,9 +60,13 @@ function NavBar() {
           </select>
           {/* end of phone size*/}
 
+          {/* test select */}
+          <Selecter/>
+
           <select className='lang_selector'>
-            <option value="">Eng</option>
+            <option value="">Eng </option>
             <option value="">Lao</option>
+            <option value=""> <img src={logoImg} alt=""/>ss </option>
           </select>
           
           {/* only for phone size */}
