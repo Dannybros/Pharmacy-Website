@@ -12,8 +12,7 @@ import { useStateValue } from '../../Reducer/StateProvider';
 function ProductList() {
   const navigate = useNavigate();
   const [items] = useLocalStorage('Items');
-  const [currency] = useLocalStorage("Currency");
-  const [cart, dispatch] = useStateValue();
+  const [{cart, currency}, dispatch] = useStateValue();
 
   const [categoryTitle, setCategoryTitle] = useState('All Products')
   const [openCatDD, setOpenCatDD] = useState(false);
@@ -26,7 +25,7 @@ function ProductList() {
   }
 
   const roundPriceNumber=(price)=>{
-    if(currency==="USD"){
+    if(currency.abbr==="USD"){
       return Math.round(price);
     }else{
       return Math.round(price/1000)*1000;
@@ -117,6 +116,20 @@ function ProductList() {
     }
   }
 
+  // var myHeaders = new Headers();
+  // myHeaders.append("apikey", "sHAFPNOqSW1MuCezoLSu5YVTs9G9a19L");
+
+  // var requestOptions = {
+  //   method: 'GET',
+  //   redirect: 'follow',
+  //   headers: myHeaders
+  // };
+
+  // fetch("https://api.apilayer.com/fixer/latest?symbols=LAK&base=USD", requestOptions)
+  //   .then(response => response.text())
+  //   .then(data => console.log(data['date']))
+  //   .catch(error => console.log('error', error));
+
   return (
     <section className='product_list_section'>
       <Container>
@@ -154,12 +167,12 @@ function ProductList() {
                     <div className='product_info_box'>
                       <h4>{item.title}</h4>
                       <p>
-                        <span>{roundPriceNumber(item.price * 2328)} $</span>
+                        <span>{roundPriceNumber(item.price * 2328).toLocaleString()} {currency.abbr}</span>
                         <span>
                           {Array(Math.round(item.rating.rate)).fill().map((_,i)=>(
                               <b key={i}>⭐</b>
                           ))}
-                      </span>
+                        </span>
                       </p>
                       <div className='d-flex justify-content-between'>
                         <button onClick={()=>navigate(`../product/${item.id}`)}> View </button>

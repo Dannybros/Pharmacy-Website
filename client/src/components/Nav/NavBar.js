@@ -17,17 +17,15 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import logoImg from '../../img/MedLogo.png';
 import Selector from './Select';
-import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function NavBar() {
   const navigate = useNavigate();
 
-  const [cart] = useStateValue();
+  const [{cart, currency}, dispatch] = useStateValue();
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchSelected, setSearchSelected] = useState([]);
-  const [currency, setCurrency] = useLocalStorage("Currency", "USD");
 
   const handleModalClose = () => {
     setModalShow(false);
@@ -35,8 +33,15 @@ function NavBar() {
   }
 
   const handleCurrencyChange = (e)=>{
-    console.log(e.target.value);
-    setCurrency(e.target.value);
+    const newCurrency = e.target.value;
+    const currencyLabel = newCurrency.split("_")[0];
+    const currencyAbbr = newCurrency.split("_")[1];
+
+    dispatch({
+      type:"CHANGE_CURRENCY",
+      label:currencyLabel,
+      abbr:currencyAbbr
+    })
   }
 
   const handleModalShow = () => setModalShow(true);
@@ -61,9 +66,9 @@ function NavBar() {
           </div>
 
           {/* currency box only for phone size */}
-          <select className='currency_tablet_selector' value={currency} onChange={handleCurrencyChange}>
-            <option value="USD">USD</option>
-            <option value="KIP">KIP</option>
+          <select className='currency_tablet_selector' value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
+            <option value="Dollar_USD">USD</option>
+            <option value="LAOKIP_KIP">KIP</option>
           </select>
 
           <Selector/>
@@ -110,9 +115,9 @@ function NavBar() {
           </ul>
 
           <div className='currency_selector'>
-            <select id="" value={currency} onChange={handleCurrencyChange}>
-              <option value="USD">USD</option>
-              <option value="KIP">KIP</option>
+            <select id="" value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
+              <option value="Dollar_USD">USD</option>
+              <option value="LAOKIP_KIP">KIP</option>
             </select>
           </div>
 

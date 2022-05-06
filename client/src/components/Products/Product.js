@@ -13,7 +13,7 @@ function Product() {
   const {productId} = useParams();
   const navigate = useNavigate();
 
-  const [cart, dispatch] = useStateValue();
+  const [{cart}, dispatch] = useStateValue();
   const [items] = useLocalStorage('Items');
   const [data, setData] = useState({});
 

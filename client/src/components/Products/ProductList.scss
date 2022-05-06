@@ -68,7 +68,8 @@ $phone:480px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    font-size: 16px;
+                    font-size: 18px;
+                    font-weight: bold;
                     @media (max-width:$phone) {
                         font-size: 14px;
                         margin-bottom: 10px;;

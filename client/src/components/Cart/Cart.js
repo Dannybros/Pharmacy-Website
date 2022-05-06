@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom'
 
 function Cart() {
 
-  const [cart, dispatch] =useStateValue();
+  const [{cart}, dispatch] =useStateValue();
 
   const navigate = useNavigate();
 
