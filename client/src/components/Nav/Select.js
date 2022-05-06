@@ -9,15 +9,18 @@ const options  = [
     { value: 'ln', label: <div style={{color:"white"}}><img src={laoFlag} height="20px" width="20px" alt=""/> &nbsp; Lao </div>},
   ];
 
-function Selecter() {
-    const [selectedOption, setSelectedOption] = useState(options[0]);
+function Selector() {
+    
+    const [lang, setLang] = useLocalStorage('Lang', 'en');
+
+    const [selectedOption, setSelectedOption] = useState(lang==="en"? options[0] : options[1]);
 
     const customStyles = {
         control: (provided, state) => ({
           ...provided,
           background: "transparent",
           border:0,
-          width: 150,
+          width: 124,
           "&:hover": {
             outline:0
           }
@@ -44,16 +47,21 @@ function Selecter() {
       
           return { ...provided, opacity, transition };
         }
-      }
+    }
+
+    const handleLangChange=(e)=>{
+      setLang(e.value);
+      setSelectedOption(e);
+    }
 
     return (
         <Select
             styles={customStyles}
             value={selectedOption}
-            onChange={setSelectedOption}
+            onChange={handleLangChange}
             options={options}
         />
     )
 }
 
-export default Selecter
+export default Selector

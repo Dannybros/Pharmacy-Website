@@ -12,6 +12,7 @@ import { useStateValue } from '../../Reducer/StateProvider';
 function ProductList() {
   const navigate = useNavigate();
   const [items] = useLocalStorage('Items');
+  const [currency] = useLocalStorage("Currency");
   const [cart, dispatch] = useStateValue();
 
   const [categoryTitle, setCategoryTitle] = useState('All Products')
@@ -22,6 +23,14 @@ function ProductList() {
     const index = cart.findIndex(prod => prod.id === id);
     if(index <0) return false
     return true
+  }
+
+  const roundPriceNumber=(price)=>{
+    if(currency==="USD"){
+      return Math.round(price);
+    }else{
+      return Math.round(price/1000)*1000;
+    }
   }
 
   const getItemsUnderCategory=(arr, index) =>{
@@ -145,7 +154,7 @@ function ProductList() {
                     <div className='product_info_box'>
                       <h4>{item.title}</h4>
                       <p>
-                        <span>{item.price} $</span>
+                        <span>{roundPriceNumber(item.price * 2328)} $</span>
                         <span>
                           {Array(Math.round(item.rating.rate)).fill().map((_,i)=>(
                               <b key={i}>⭐</b>

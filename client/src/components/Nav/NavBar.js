@@ -16,7 +16,8 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import logoImg from '../../img/MedLogo.png';
-import Selecter from './Select';
+import Selector from './Select';
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -26,10 +27,16 @@ function NavBar() {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchSelected, setSearchSelected] = useState([]);
+  const [currency, setCurrency] = useLocalStorage("Currency", "USD");
 
   const handleModalClose = () => {
     setModalShow(false);
     setSearchSelected([]);
+  }
+
+  const handleCurrencyChange = (e)=>{
+    console.log(e.target.value);
+    setCurrency(e.target.value);
   }
 
   const handleModalShow = () => setModalShow(true);
@@ -53,28 +60,19 @@ function NavBar() {
             <span className='sub_menu'><MailOutlineIcon className='sub_menu_icon'/> adfadssasdssdsfa@gmail.com</span>
           </div>
 
-          {/* only for phone size */}
-          <select className='currency_tablet_selector'>
-            <option value="">USD</option>
-            <option value="">KIP</option>
+          {/* currency box only for phone size */}
+          <select className='currency_tablet_selector' value={currency} onChange={handleCurrencyChange}>
+            <option value="USD">USD</option>
+            <option value="KIP">KIP</option>
           </select>
-          {/* end of phone size*/}
 
-          {/* test select */}
-          <Selecter/>
-
-          <select className='lang_selector'>
-            <option value="">Eng </option>
-            <option value="">Lao</option>
-            <option value=""> <img src={logoImg} alt=""/>ss </option>
-          </select>
+          <Selector/>
           
-          {/* only for phone size */}
+          {/* search box only for phone size */}
           <div className='tablet_search_box' onClick={handleModalShow}>
             <SearchIcon className='tablet_search_icon'/>
             Search
           </div>
-          {/* end of phone size*/}
           
           <div className='cart_box' onClick={goToCart}>
             <ShoppingCartIcon className='cart_icon'/>
@@ -89,7 +87,6 @@ function NavBar() {
           <div className='bar_icon' onClick={handleSwitch}>
             <MenuOpenSharpIcon/>
           </div>
-          {/* end of phone size*/}
 
         </div>
 
@@ -113,9 +110,9 @@ function NavBar() {
           </ul>
 
           <div className='currency_selector'>
-            <select name="" id="">
-              <option value="">USD</option>
-              <option value="">KIP</option>
+            <select id="" value={currency} onChange={handleCurrencyChange}>
+              <option value="USD">USD</option>
+              <option value="KIP">KIP</option>
             </select>
           </div>
 
