@@ -13,8 +13,9 @@ function Product() {
   const {productId} = useParams();
   const navigate = useNavigate();
 
-  const [{cart}, dispatch] = useStateValue();
+  const [{cart, currency}, dispatch] = useStateValue();
   const [items] = useLocalStorage('Items');
+  const [exchangeRate] = useLocalStorage("ExchangeRate")
   const [data, setData] = useState({});
 
   const [collapseText, setCollapseText] = useState('-webkit-box');
@@ -63,6 +64,15 @@ function Product() {
     if(index <0) return false
     return true
   }
+
+  const getExchangeRatePrice = (price)=>{
+    if(currency.abbr==="USD"){
+      const newPrice = price / exchangeRate.rates.LAK;
+      return Math.round(newPrice).toLocaleString();
+    }
+
+    return (Math.round(price/1000)*1000).toLocaleString();
+  }
  
   return (
     
@@ -81,11 +91,19 @@ function Product() {
         <Col sm={6} xs={7} className="product__info__box">
           <h3> {data.title} </h3>
           <div className='product_price_box'>
-            price: <span className="price_tag">{data.price}$</span>
+            price: <span className="price_tag">{getExchangeRatePrice(data.price*12353)} {currency.abbr}</span>
           </div>
 
           <div className='product_category_box'>
             category: <b>{data.category}</b> 
+          </div>
+
+          <div className='product_category_box'>
+            Weight: <b>328 g</b> 
+          </div>
+
+          <div className='product_category_box'>
+            Brand: <b>{data.category}</b> 
           </div>
 
           <div className='product_description_box'>

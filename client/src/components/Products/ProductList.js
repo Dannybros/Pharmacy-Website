@@ -12,6 +12,7 @@ import { useStateValue } from '../../Reducer/StateProvider';
 function ProductList() {
   const navigate = useNavigate();
   const [items] = useLocalStorage('Items');
+  const [exchangeRate] = useLocalStorage("ExchangeRate")
   const [{cart, currency}, dispatch] = useStateValue();
 
   const [categoryTitle, setCategoryTitle] = useState('All Products')
@@ -24,14 +25,7 @@ function ProductList() {
     return true
   }
 
-  const roundPriceNumber=(price)=>{
-    if(currency.abbr==="USD"){
-      return Math.round(price);
-    }else{
-      return Math.round(price/1000)*1000;
-    }
-  }
-
+  
   const getItemsUnderCategory=(arr, index) =>{
 
     const unique = arr
@@ -116,19 +110,14 @@ function ProductList() {
     }
   }
 
-  // var myHeaders = new Headers();
-  // myHeaders.append("apikey", "sHAFPNOqSW1MuCezoLSu5YVTs9G9a19L");
+  const getExchangeRatePrice = (price)=>{
+    if(currency.abbr==="USD"){
+      const newPrice = price / exchangeRate.rates.LAK;
+      return Math.round(newPrice).toLocaleString();
+    }
 
-  // var requestOptions = {
-  //   method: 'GET',
-  //   redirect: 'follow',
-  //   headers: myHeaders
-  // };
-
-  // fetch("https://api.apilayer.com/fixer/latest?symbols=LAK&base=USD", requestOptions)
-  //   .then(response => response.text())
-  //   .then(data => console.log(data['date']))
-  //   .catch(error => console.log('error', error));
+    return (Math.round(price/1000)*1000).toLocaleString();
+  }
 
   return (
     <section className='product_list_section'>
@@ -156,8 +145,6 @@ function ProductList() {
             </div>
            
           </div>
-          
-
           {
             filterItems(items).map((item, i)=>{
               return(
@@ -167,7 +154,7 @@ function ProductList() {
                     <div className='product_info_box'>
                       <h4>{item.title}</h4>
                       <p>
-                        <span>{roundPriceNumber(item.price * 2328).toLocaleString()} {currency.abbr}</span>
+                        <span>{getExchangeRatePrice(item.price * 12342)} {currency.abbr}</span>
                         <span>
                           {Array(Math.round(item.rating.rate)).fill().map((_,i)=>(
                               <b key={i}>⭐</b>

@@ -3,7 +3,7 @@ const localCurrency = JSON.parse(localStorage.getItem("Medicine-Shop-Currency"))
 
 export const initialState={
     cart: localCart? localCart: [],
-    currency:localCurrency? {label:localCurrency.label, abbr:localCurrency.abbr} : {label:"LAOKIP", abbr:"KIP"}
+    currency:localCurrency? {label:localCurrency.label, abbr:localCurrency.abbr} : {label:"LAOKIP", abbr:"LAK"}
 };
 
 const reducer = (state, action)=>{

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './NavBar.scss';
 import SideBar from './SideBar/SideBar';
 import {Button, Modal, Form} from 'react-bootstrap';
@@ -17,16 +17,45 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import logoImg from '../../img/MedLogo.png';
 import Selector from './Select';
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function NavBar() {
   const navigate = useNavigate();
+  const [items] = useLocalStorage("Items");
+  const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
 
   const [{cart, currency}, dispatch] = useStateValue();
-
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchSelected, setSearchSelected] = useState([]);
 
+  useEffect(() => {
+    const fetchExchangeAPI=async()=>{
+
+      const date = new Date().toLocaleDateString('en-CA');
+
+      if(date !== exchange.date){
+
+        var myHeaders = new Headers();
+        myHeaders.append("apikey", "sHAFPNOqSW1MuCezoLSu5YVTs9G9a19L");
+        
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+          headers: myHeaders
+        };
+        
+        fetch("https://api.apilayer.com/exchangerates_data/latest?symbols=LAK&base=USD", requestOptions)
+        .then(response => response.json())
+          .then(result => setExchange(result))
+          .catch(error => console.log('error', error));
+      }
+    }
+
+    fetchExchangeAPI();
+  }, [setExchange, exchange])
+
+ 
   const handleModalClose = () => {
     setModalShow(false);
     setSearchSelected([]);
@@ -50,8 +79,6 @@ function NavBar() {
 
   const goToCart = () => navigate('../cart')
 
-  const d = [{name:"dd", email:"23"},{name:"aad", email:"54"}]
-
   return (
     <div className='nav_wrapper'>
       <section className='logo_section'>
@@ -68,7 +95,7 @@ function NavBar() {
           {/* currency box only for phone size */}
           <select className='currency_tablet_selector' value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
             <option value="Dollar_USD">USD</option>
-            <option value="LAOKIP_KIP">KIP</option>
+            <option value="LAOKIP_LAK">KIP</option>
           </select>
 
           <Selector/>
@@ -117,7 +144,7 @@ function NavBar() {
           <div className='currency_selector'>
             <select id="" value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
               <option value="Dollar_USD">USD</option>
-              <option value="LAOKIP_KIP">KIP</option>
+              <option value="LAOKIP_LAK">KIP</option>
             </select>
           </div>
 
@@ -150,7 +177,7 @@ function NavBar() {
                 id="search-type_ahead"
                 labelKey="name"
                 onChange={setSearchSelected}
-                options={d.map(item=>{return item.email;})}
+                options={items.map(item=>{return item.title;})}
                 placeholder="Search Item..."
                 selected={searchSelected}
               />
