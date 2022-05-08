@@ -6,6 +6,11 @@ $phone:480px;
     width: min(100% - 2rem, 1400px);
     margin-inline: auto;
     margin-block: 20px;
+    @media (max-width:$phone) {
+        width: 100%;
+        margin-block: 10px;
+        padding-inline: 10px;
+    }
     .product__box{
         width: 100%;
         display: flex;
@@ -41,6 +46,9 @@ $phone:480px;
             @media (max-width:$tablet) {
                 padding: 10px 15px;
             }
+            @media (max-width:$phone) {
+                padding: 5px;
+            }
             h3{
                 padding-bottom: 10px;
                 text-size-adjust: 80%;
@@ -49,12 +57,37 @@ $phone:480px;
                     font-size: 20px;
                 }
             }
-            .product_price_box, .product_category_box, .product_description_box, .product_rating_box{
+            .product_list_box, .product_price_box{
+                display: flex;
+                @media (max-width:$phone) {
+                   display: block;
+                }
+            }
+            .product_price_box, .product_list_box, .product_description_box, .product_rating_box{
                 text-transform: capitalize;
                 font-size: 20px;
                 margin-bottom: 20px;
+                label{
+                    width: 120px;
+                    @media (max-width:$tablet) {
+                        width: 80px;
+                    }
+                    @media (max-width:$phone) {
+                        width: 100%;
+                    }
+                }
+                .space_indent{
+                    @media (max-width:$phone) {
+                        width: 100%;
+                        text-indent: 15px;
+                    }
+                }
                 @media (max-width:$laptop) {
                     font-size: 16px;
+                }
+                @media (max-width:$phone) {
+                    margin-bottom: 10px;
+                    font-size: 15px;
                 }
             }
             .product_price_box{
@@ -64,6 +97,9 @@ $phone:480px;
                     font-weight: bold;
                     @media (max-width:$laptop) {
                         font-size: 18px;
+                    }
+                    @media (max-width:$phone) {
+                       text-indent: 20px;
                     }
                 }
             }
@@ -88,7 +124,9 @@ $phone:480px;
                     margin-bottom: 0;
                     @media (max-width:$laptop) {
                         font-size: 15px;
-                        // display: block;
+                    }
+                    @media (max-width:$phone) {
+                        font-size: 14px;
                     }
                 }
                 span{
@@ -152,8 +190,9 @@ $phone:480px;
                 padding: 20px 5px;
             }
             @media (max-width:$phone) {
-                padding:5px;
+                padding:5px 5px 10px;
                 margin-top: 20px;
+                margin-bottom: 5px;
             }
             p{
                 margin-bottom: 10px;

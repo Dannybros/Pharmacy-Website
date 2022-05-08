@@ -91,23 +91,27 @@ function Product() {
         <Col sm={6} xs={7} className="product__info__box">
           <h3> {data.title} </h3>
           <div className='product_price_box'>
-            price: <span className="price_tag">{getExchangeRatePrice(data.price*12353)} {currency.abbr}</span>
+            <label>Price:</label>  
+            <div className='space_indent'><span className="price_tag">{getExchangeRatePrice(data.price*12353)} {currency.abbr}</span></div>
           </div>
 
-          <div className='product_category_box'>
-            category: <b>{data.category}</b> 
+          <div className='product_list_box'>
+            <label>Category:</label>  
+            <div className='space_indent'><b>{data.category}</b></div> 
           </div>
 
-          <div className='product_category_box'>
-            Weight: <b>328 g</b> 
+          <div className='product_list_box'>
+            <label>Weight:</label>  
+            <div className='space_indent'><b>328 g</b> </div>
           </div>
 
-          <div className='product_category_box'>
-            Brand: <b>{data.category}</b> 
+          <div className='product_list_box'>
+            <label>Brand:</label>  
+            <div className='space_indent'><b>{data.category}</b> </div>
           </div>
 
           <div className='product_description_box'>
-            description:
+            <label>Description:</label>
             <p style={{display:collapseText}}>
               {data.description}
             </p> 
@@ -115,7 +119,7 @@ function Product() {
           </div>
 
           <div className='product_rating_box'>
-            Rating:
+            <label>Rating:</label>
             <p>
               {Array(Math.round(4)).fill().map((_,i)=>(
                   <span key={i}>⭐</span>
