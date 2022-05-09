@@ -12,7 +12,7 @@ import Cart from './components/Cart/Cart';
 import Payment from './components/Payment/Payment'
 import SignIn from './components/User/SIgnIn';
 import NavBar from './components/Nav/NavBar';
-import OrderHistory from './components/OrderHistory/OrderHistory';
+import OrderList from './components/OrderList/OrderList';
 
 function App() {
 
@@ -27,7 +27,7 @@ function App() {
             <Route path="/product/:productId" element={<Product/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/cart/payment" element={<Payment/>}/>
-            <Route path="/order_history" element={<OrderHistory/>}/>
+            <Route path="/order_list" element={<OrderList/>}/>
             <Route path="/sign-in" element={<SignIn/>}/>
           </Routes>
         </main>

@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Cart.scss'
 import {Container, Row, Col, Button} from 'react-bootstrap'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useStateValue } from '../../Reducer/StateProvider';
 import {useNavigate} from 'react-router-dom'
+import PayMethod from './PayMethod';
 
 function Cart() {
 
   const [{cart}, dispatch] =useStateValue();
+  const [showPayMethod, setShowPayMethod] = useState(false);
 
   const navigate = useNavigate();
 
@@ -44,9 +46,13 @@ function Cart() {
       });
     }
   }
-
+  
   return (
     <div className='cart_page'>
+      {showPayMethod&&
+        <PayMethod click={()=>setShowPayMethod(false)}/> 
+      }
+     
       <Container >
         <Row>
           <Col md={8} sm={12} className="cart_list_box p-3">
@@ -109,7 +115,7 @@ function Cart() {
               </ul>
               <div className='total_checkout_btn'>
                 <h5>Total : <span>4kk</span></h5>
-                <Button className='py-1 px-2'>
+                <Button className='py-1 px-2' onClick={()=>{setShowPayMethod(true)}}>
                   Check Out
                 </Button>
               </div>

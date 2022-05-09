@@ -1,9 +1,9 @@
 import React from 'react'
 
-function OrderHistory() {
+function OrderList() {
   return (
     <div>OrderHistory</div>
   )
 }
 
-export default OrderHistory
+export default OrderList

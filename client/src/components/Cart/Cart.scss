@@ -4,7 +4,7 @@ $phone:500px;
 
 .cart_page{
     width: 100%;
-    height: 150vh;
+    min-height: calc(100vh - 100px);
     background: linear-gradient(to right, #3ee4ac , #5B96C0);
 }
 .cart_list_box{

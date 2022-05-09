@@ -29,7 +29,7 @@ function Selector() {
             ...provided,
             background: state.isFocused ?"#333" : "#222",
             borderBottom: '1px dotted pink',
-            padding: 20,
+            padding: 15,
         }),
         menu: (base) => ({
             ...base,

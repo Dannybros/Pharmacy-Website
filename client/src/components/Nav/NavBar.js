@@ -92,19 +92,13 @@ function NavBar() {
             <span className='sub_menu'><MailOutlineIcon className='sub_menu_icon'/> adfadssasdssdsfa@gmail.com</span>
           </div>
 
+          <Selector/>
+
           {/* currency box only for phone size */}
           <select className='currency_tablet_selector' value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
             <option value="Dollar_USD">USD</option>
             <option value="LAOKIP_LAK">KIP</option>
           </select>
-
-          <Selector/>
-          
-          {/* search box only for phone size */}
-          <div className='tablet_search_box' onClick={handleModalShow}>
-            <SearchIcon className='tablet_search_icon'/>
-            Search
-          </div>
           
           <div className='cart_box' onClick={goToCart}>
             <ShoppingCartIcon className='cart_icon'/>
@@ -113,6 +107,11 @@ function NavBar() {
                 return count + curItem.quantity;
               }, 0)}
           </span>
+          </div>
+           
+          {/* search box only for phone size */}
+          <div className='tablet_search_box' onClick={handleModalShow}>
+            <SearchIcon className='tablet_search_icon'/>
           </div>
 
           {/* only for phone size */}
@@ -133,7 +132,7 @@ function NavBar() {
             </NavLink>
 
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/order_history">
-              <li>Order History <AddIcon className='plus_icon'/></li>
+              <li>Order List <AddIcon className='plus_icon'/></li>
             </NavLink>
 
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/sign-in">
