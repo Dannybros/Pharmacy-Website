@@ -131,7 +131,7 @@ function NavBar() {
               <li>Shop <AddIcon className='plus_icon'/></li>
             </NavLink>
 
-            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/order_history">
+            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/order_list">
               <li>Order List <AddIcon className='plus_icon'/></li>
             </NavLink>
 

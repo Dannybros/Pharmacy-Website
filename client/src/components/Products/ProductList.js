@@ -24,7 +24,6 @@ function ProductList() {
     if(index <0) return false
     return true
   }
-
   
   const getItemsUnderCategory=(arr, index) =>{
 
