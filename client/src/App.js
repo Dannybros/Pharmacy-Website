@@ -10,7 +10,7 @@ import ProductList from './components/Products/ProductList';
 import Product from './components/Products/Product';
 import Cart from './components/Cart/Cart';
 import Payment from './components/Payment/Payment'
-import SignIn from './components/User/SIgnIn';
+import SignIn from './components/User/SignIn';
 import NavBar from './components/Nav/NavBar';
 import OrderList from './components/OrderList/OrderList';
 
