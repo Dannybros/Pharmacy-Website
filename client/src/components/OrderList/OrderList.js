@@ -11,7 +11,8 @@ import Pagination from './Pagination';
 function OrderList() {
 
   const [items] = useLocalStorage('Items');
-  const [orderSearch, setOrderSearch] = useState(null);
+  const [orderSearch, setOrderSearch] = useState('');
+  const [orderDate, setOrderDate] = useState('');
 
   function groupArrayOfObjects(list, key) {
     return list.reduce(function(rv, x) {
@@ -58,6 +59,7 @@ function OrderList() {
                         <Button variant='warning' disabled> <HourglassBottomIcon className="order_btn_icon"/> </Button>
                       </div>
                     </li>
+                    
                   )
                 })}
               </ul>
@@ -70,17 +72,20 @@ function OrderList() {
 
   const handleSearchChange=(e)=>{
     setOrderSearch(e.target.value);
-    console.log(orderSearch);
+  }
+  
+  const handleDateChange=(e)=>{
+    setOrderDate(e.target.value);
   }
 
-  const filterData=(data, search)=>{
-    if(!search) return data;
+  const filterData=(data, search, date)=>{
+    if(!search && !date) return data;
 
-    const searchTerm = search.toLowerCase()
+    const searchTerm = search.toLowerCase();
+    const dateTerm = date.toLowerCase()
 
     const filterData = data.filter((item)=>{
-        return item.title.includes(searchTerm) ||
-            item.category.includes(searchTerm)
+        return item.title.includes(searchTerm) && item.category.includes(dateTerm)
     })
 
     return filterData
@@ -92,7 +97,7 @@ function OrderList() {
         <h1>Order List</h1>
         <div className='d-flex'>
           <input type="text" className='form-control' placeholder='Search...' value={orderSearch} onChange={handleSearchChange}/>
-          <input type="date" className='form-control' value={new Date().toLocaleDateString('en-CA')}/>
+          <input type="date" className='form-control' value={orderDate} onChange={handleDateChange}/>
         </div>
       </section>
 
@@ -111,8 +116,8 @@ function OrderList() {
           </li>
         </ul>
         <Pagination
-            key={filterData(items, orderSearch)}
-            data={filterData(items, orderSearch)}
+            key={filterData(items, orderSearch, orderDate)}
+            data={filterData(items, orderSearch, orderDate)}
             RenderComp={TestPopper}
             dataLimit={10}
         />
