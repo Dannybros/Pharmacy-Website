@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './Pagination.css'
 
-const Pagination=({data, TestPopper, dataLimit})=>{
+const Pagination=({data, RenderComp, dataLimit})=>{
 
     const [totalPages] =  useState(Math.ceil(data.length/dataLimit));
     const [currentPage, setCurrentPage]= useState(1);
@@ -64,11 +64,7 @@ const Pagination=({data, TestPopper, dataLimit})=>{
     return(
         <div>
             <div className="dataContainer">
-                {getPaginationData().map((d, idx) => {
-                    return(
-                        <div key={idx}>{d.category}</div>
-                    )
-                })}
+                <RenderComp data={getPaginationData()}/>
             </div>
 
             <div className="pagination">
