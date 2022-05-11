@@ -10,19 +10,23 @@ dotenv.config();
 router.post('/login', async (req, res)=>{
     const {username, password} = req.body;
 
+    if( username=='' || password==''){
+        return res.status(400).json({message: "Please fil in all the fields"});
+    }
+
     try{
         const existingUser = await UserCollection.findOne({username});
 
-        if(!existingUser) return res.send({message: "User doesn't exit"});
+        if(!existingUser) return res.status(400).json({message: "User doesn't exit"});
 
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
 
-        if(!isPasswordCorrect) return res.json({message: "Password doesn't match."});
+        if(!isPasswordCorrect) return res.status(400).json({message: "Password doesn't match."});
 
-        res.json({result:existingUser});
+        res.status(200).json({result:existingUser});
 
     }catch(error){  
-        res.json({message: "Something went wrong"});
+        res.status(401).json({message: "Something went wrong. Please Check Internet"});
     }
 })
 
@@ -30,13 +34,17 @@ router.post('/signup', async (req, res)=>{
 
     const { email, age, username, password, firstName, lastName, cPassword, hint } = req.body;
 
+    if(email=='' || age=='' || username=='' || password=='' || firstName=='' || lastName=='' || cPassword=='' || hint==''){
+        return res.status(400).json({message: "Please fil in all the fields"});
+    }
+
     const validateEmail = EmailValidator.validate(email);
     
-    if(!validateEmail) return res.json({message: "Email is not real"});
+    if(!validateEmail) return res.status(400).json({message: "Email is not real"});
 
     const existingUser = await UserCollection.findOne({email});
 
-    if(existingUser) return res.json({message: "User already exit"});
+    if(existingUser) return res.status(400).json({message: "User already exit"});
 
     if(password !== cPassword){
         return res.json({message: "Password don't match"});
@@ -44,9 +52,9 @@ router.post('/signup', async (req, res)=>{
 
     const hashPw= await bcrypt.hash(password, 10);
 
-    await UserCollection.create({email, age:19, username, hint, password:hashPw, firstName, lastName});
+    await UserCollection.create({email, age:Number(age), username, hint, password:hashPw, firstName, lastName});
 
-    res.json("You have logged in successfully");
+    res.status(201).json({message:"You have sign up successfully"});
 
 })
 
