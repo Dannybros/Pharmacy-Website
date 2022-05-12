@@ -20,7 +20,7 @@ function SideBar(props) {
                         <span className='user__info__name'><b>Guest</b></span>
                         <div className='user__info__email'><b>Email : None</b></div>
                     </div>
-                    <Button className='mx-4 py-1 px-3 btn_log_in' onClick={()=>navigate('../sign-in')}>
+                    <Button className='mx-4 py-1 px-3 btn_log_in' onClick={()=>navigate('../user')}>
                         Log In
                     </Button>
                     <Button className='mx-4 py-1 px-3 btn_sign_out' variant="danger">

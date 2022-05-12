@@ -1,0 +1,24 @@
+.user_page{
+    padding-block: 30px;
+    h2{
+        border-bottom: 1px solid grey;
+    }
+    label{
+        font-weight: bold;
+        padding-left: 5px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        @media (max-width:480px) {
+            font-size: 14px;
+        }
+    }
+    .btn_box{
+        button{
+            margin-right: 20px;
+            width: 15%;
+            @media (max-width:480px) {
+                width: 33%;
+            }
+        }
+    }
+}

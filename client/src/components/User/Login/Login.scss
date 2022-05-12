@@ -24,6 +24,13 @@ $phone:480px;
             width: 90%;
             background: rgba(255, 255, 255, 0.849);
         }
+        label{
+            float: left;
+            padding-left: 10px;
+            font-weight: bold;
+            text-transform: capitalize;
+            color: #006f7d;
+        }
         input {
             font-size: 16px;
             font-weight: 500;
@@ -41,13 +48,14 @@ $phone:480px;
                 border-color: rgb(167, 222, 245);
             }
             &::placeholder{
-                color:rgb(46, 45, 45)
+                color:rgb(145, 145, 145)
             }
         }
         h3{
             color: #3a99d0;
             text-transform: uppercase;
             font-weight: bold;
+            margin-bottom: 20px;
         }
         p{
             color: rgb(8, 44, 7);

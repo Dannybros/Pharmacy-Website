@@ -23,7 +23,6 @@ function NavBar() {
   const navigate = useNavigate();
   const [items] = useLocalStorage("Items");
   const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
-
   const [{cart, currency}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -135,8 +134,8 @@ function NavBar() {
               <li>Order List <AddIcon className='plus_icon'/></li>
             </NavLink>
 
-            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/sign-in">
-              <li>Sign In <AddIcon className='plus_icon'/></li>
+            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/user">
+              <li>User <AddIcon className='plus_icon'/></li>
             </NavLink>
           </ul>
 
@@ -180,7 +179,7 @@ function NavBar() {
                 placeholder="Search Item..."
                 selected={searchSelected}
               />
-            </Form.Group>
+            </Form.Group> 
           </Form>
           <Button type="submit" className='search_form_btn'>
             <SearchIcon/>

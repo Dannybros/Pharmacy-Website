@@ -566,18 +566,6 @@ $phone:480px;
         }
     }
 }
-.spinner_box{
-    position: absolute;
-    top:-80px;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-    z-index: 300;
-}
-  
 
 @keyframes gradient {
     0% {
