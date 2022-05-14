@@ -22,6 +22,7 @@ import { useLocalStorage } from '../../Reducer/useLocalStorage';
 function NavBar() {
   const navigate = useNavigate();
   const [items] = useLocalStorage("Items");
+  const [user] = useLocalStorage("User");
   const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
   const [{cart, currency}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -153,9 +154,9 @@ function NavBar() {
           <div className='user_box'>
             <div className='user_name_box'>
               <PersonOutlineIcon className='user_icon'/>
-              Guest
+              {user? user.username : "Guest"}
             </div>
-            <p>Email : None</p>
+            <p>{user? user.email : "None"}</p>
           </div>
 
         </div>

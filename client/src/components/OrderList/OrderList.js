@@ -1,16 +1,20 @@
 import React, {useState} from 'react'
 import './OrderList.scss'
+import {Button} from 'react-bootstrap'
+import {useNavigate} from 'react-router-dom'
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
+import Pagination from './Pagination';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import CheckIcon from '@mui/icons-material/Check';
-import {Button} from 'react-bootstrap'
-import { useLocalStorage } from '../../Reducer/useLocalStorage';
-import Pagination from './Pagination';
 
 function OrderList() {
 
+  const navigate = useNavigate();
+
   const [items] = useLocalStorage('Items');
+  const [user] = useLocalStorage('User');
   const [orderSearch, setOrderSearch] = useState('');
   const [orderDate, setOrderDate] = useState('');
 
@@ -93,36 +97,44 @@ function OrderList() {
 
   return (
     <div className='orderList'>
-      <section className='order_search_section'>
-        <h1>Order List</h1>
-        <div className='d-flex'>
-          <input type="text" className='form-control' placeholder='Search...' value={orderSearch} onChange={handleSearchChange}/>
-          <input type="date" className='form-control' value={orderDate} onChange={handleDateChange}/>
+      {
+        user?
+        <>
+          <section className='order_search_section'>
+            <h1>Order List</h1>
+            <div className='d-flex'>
+              <input type="text" className='form-control' placeholder='Search...' value={orderSearch} onChange={handleSearchChange}/>
+              <input type="date" className='form-control' value={orderDate} onChange={handleDateChange}/>
+            </div>
+          </section>
+
+          <section className='order_list_container'>
+            <ul className='order_header_title'>
+              <li className='order_table_list bold_header'>
+                <main className='order__info'>
+                  <div>Name</div>
+                  <div>Email</div>
+                  <div>Bill ID</div>
+                  <div>Bill Total</div>
+                  <div>Bill Date</div>
+                  <div>Status</div>
+                </main>
+                <div className='action_box'>Action</div>
+              </li>
+            </ul>
+            <Pagination
+                key={filterData(items, orderSearch, orderDate)}
+                data={filterData(items, orderSearch, orderDate)}
+                RenderComp={TestPopper}
+                dataLimit={10}
+            />
+          </section>
+        </> :
+        <div className='non_user_page'>
+          <h1 className='text-uppercase'>Please Log In To Access Order List Page...</h1>
+          <Button onClick={()=>navigate('/user')}>Go TO LOGIN PAGE</Button>
         </div>
-      </section>
-
-      <section className='order_list_container'>
-        <ul className='order_header_title'>
-          <li className='order_table_list bold_header'>
-            <main className='order__info'>
-              <div>Name</div>
-              <div>Email</div>
-              <div>Bill ID</div>
-              <div>Bill Total</div>
-              <div>Bill Date</div>
-              <div>Status</div>
-            </main>
-            <div className='action_box'>Action</div>
-          </li>
-        </ul>
-        <Pagination
-            key={filterData(items, orderSearch, orderDate)}
-            data={filterData(items, orderSearch, orderDate)}
-            RenderComp={TestPopper}
-            dataLimit={10}
-        />
-      </section>
-
+      }
     </div>
   )
 }

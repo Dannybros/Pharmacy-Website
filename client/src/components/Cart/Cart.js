@@ -1,15 +1,18 @@
 import React, {useState} from 'react'
 import './Cart.scss'
-import {Container, Row, Col, Button} from 'react-bootstrap'
+import {Container, Row, Col, Button, Modal} from 'react-bootstrap'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useStateValue } from '../../Reducer/StateProvider';
 import {useNavigate} from 'react-router-dom'
 import PayMethod from './PayMethod';
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function Cart() {
 
   const [{cart}, dispatch] =useStateValue();
+  const [user] = useLocalStorage('User');
   const [showPayMethod, setShowPayMethod] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,12 +49,39 @@ function Cart() {
       });
     }
   }
+
+  const goPayment=()=>{
+    if(user){
+      setShowPayMethod(true);
+    }else{
+      setShowErrorModal(true);
+    }
+  }
+
+  const handleCloseErrorModal = ()=>{
+    setShowErrorModal(false);
+  }
   
   return (
     <div className='cart_page'>
       {showPayMethod&&
         <PayMethod click={()=>setShowPayMethod(false)}/> 
       }
+
+      <Modal show={showErrorModal} onHide={handleCloseErrorModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Warning</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You need to log in to account to pay products</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseErrorModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={()=>navigate('/user')}>
+            Go To Login Page
+          </Button>
+        </Modal.Footer>
+      </Modal>
      
       <Container >
         <Row>
@@ -115,7 +145,7 @@ function Cart() {
               </ul>
               <div className='total_checkout_btn'>
                 <h5>Total : <span>4kk</span></h5>
-                <Button className='py-1 px-2' onClick={()=>{setShowPayMethod(true)}}>
+                <Button className='py-1 px-2' onClick={goPayment}>
                   Check Out
                 </Button>
               </div>
