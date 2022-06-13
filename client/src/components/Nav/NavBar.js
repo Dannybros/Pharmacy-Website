@@ -22,7 +22,7 @@ import { useLocalStorage } from '../../Reducer/useLocalStorage';
 function NavBar() {
   const navigate = useNavigate();
   const [items] = useLocalStorage("Items");
-  const [user] = useLocalStorage("User");
+  const [user] = useLocalStorage("User", []);
   const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
   const [{cart, currency}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);

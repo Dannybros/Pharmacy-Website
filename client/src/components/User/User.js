@@ -4,10 +4,10 @@ import SignIn from './Login/SignIn';
 import UserPage from './UserSection/UserPage';
 
 function User() {
-    const [user, setUser] =  useLocalStorage("User", null);
+    const [user, setUser] =  useLocalStorage("User");
 
     useEffect(() => {
-      if (user ===null) {
+      if (user.length <= 0) {
         document.title = 'Log In User';
       } else {
         document.title = `User Info`;
@@ -16,7 +16,7 @@ function User() {
     
   return (
     <div>
-        {user===null?
+        {user.length <= 0?
             <SignIn setUser={setUser} key={user}/>:
             <UserPage/>
         }
