@@ -9,8 +9,9 @@ import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function Cart() {
 
-  const [{cart}, dispatch] =useStateValue();
+  const [{cart, currency}, dispatch] =useStateValue();
   const [user] = useLocalStorage('User');
+  const [exchangeRate] = useLocalStorage('ExchangeRate');
   const [showPayMethod, setShowPayMethod] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
@@ -61,6 +62,20 @@ function Cart() {
   const handleCloseErrorModal = ()=>{
     setShowErrorModal(false);
   }
+
+  const getExchangeRatePrice = (price)=>{
+    if(currency.abbr==="USD"){
+      const newPrice = price / exchangeRate.rates.LAK;
+      return Math.round(newPrice).toLocaleString();
+    }
+
+    return (Math.round(price/1000)*1000).toLocaleString();
+  }
+
+  const totalCart = cart.reduce((total, currentItem)=>{
+    total += currentItem.price * currentItem.quantity;
+    return total;
+  }, 0)
   
   return (
     <div className='cart_page'>
@@ -111,7 +126,7 @@ function Cart() {
                       </div>
 
                       <div className='cart_item_price'>
-                        <h3>{item.price * item.quantity}$</h3>
+                        <h3>{getExchangeRatePrice(item.price * 12342 * item.quantity)} {currency.abbr}</h3>
                         <div className=' cart_item_counter'>
                           <PlayArrowIcon className='item_counter_icon' style={{transform:"rotate(180deg)"}} onClick={()=>DecreaseItemAmount(item.id, item.quantity)}/> 
                             {item.quantity}
@@ -136,15 +151,19 @@ function Cart() {
                   <span> <b> Amount </b> </span>
                   <span> <b> Total </b> </span>
                 </li>
-                <li>
-                  <span> holy jode medicine </span>
-                  <span> 20 $ </span>
-                  <span> 2 </span>
-                  <span> 40,000 KIP </span>
-                </li>
+                {cart?.map(item=>{
+                  return(
+                    <li>
+                      <span> {item.title} </span>
+                      <span> {getExchangeRatePrice(item.price * 12342)} {currency.abbr} </span>
+                      <span> {item.quantity} </span>
+                      <span> {getExchangeRatePrice(item.price * 12342 * item.quantity)} {currency.abbr} </span>
+                    </li>
+                  )
+                })}
               </ul>
               <div className='total_checkout_btn'>
-                <h5>Total : <span>4kk</span></h5>
+                <h5>Total : <span>{getExchangeRatePrice(totalCart* 12342)} {currency.abbr}</span></h5>
                 <Button className='py-1 px-2' onClick={goPayment}>
                   Check Out
                 </Button>

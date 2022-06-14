@@ -22,6 +22,7 @@ function SignIn({setUser}) {
 
   const handleOnClear =()=>{
     setFormData(initials);
+    setBtnLoading(false);
   }
   
   const handleOnChangeOnlyNumber=(e)=>{

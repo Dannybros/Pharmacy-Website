@@ -112,11 +112,11 @@ function OrderList() {
             <ul className='order_header_title'>
               <li className='order_table_list bold_header'>
                 <main className='order__info'>
-                  <div>Name</div>
-                  <div>Email</div>
                   <div>Bill ID</div>
+                  <div>Product Title</div>
+                  <div>Product Price</div>
+                  <div>Quantity</div>
                   <div>Bill Total</div>
-                  <div>Bill Date</div>
                   <div>Status</div>
                 </main>
                 <div className='action_box'>Action</div>
