@@ -7,6 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import {Button} from 'react-bootstrap';
 
 function SideBar(props) {
+    
     const navigate = useNavigate();
 
     return (
