@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
+    userID:mongoose.ObjectId,
     firstName:String,
     lastName:String,
     email:String,
-    age:Number,
+    birthday:String,
     username:String,
     password:String,
     hint:String

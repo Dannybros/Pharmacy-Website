@@ -2,12 +2,9 @@ import React from 'react'
 import './Sidebar.scss'
 import {Container} from 'react-bootstrap'
 import logo from '../../img/MedLogo.png'
-import {NavLink, useNavigate} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 function Sidebar() {
-
-  const navigate = useNavigate();
-
   return (
     <div className="sidebar">
       <Container className='h-100 sidebar_container'>
