@@ -14,7 +14,10 @@ function Sidebar() {
               <li> Home </li>
             </NavLink>
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/employee">
-              <li> Organize Info </li>
+              <li> Employee </li>
+            </NavLink>
+            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/supplier">
+              <li> Supplier </li>
             </NavLink>
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/import-product">
               <li> Import Products </li>

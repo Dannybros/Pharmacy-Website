@@ -4,8 +4,8 @@ import {Container} from 'react-bootstrap'
 
 function Home() {
   return (
-    <Container className='Home'>
-        Home
+    <Container className='home_page'>
+      Home
     </Container>
   )
 }
