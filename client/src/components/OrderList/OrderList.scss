@@ -58,7 +58,7 @@ $phone:500px;
                 margin: 15px 0px;
             }
             .order__info{
-                width: calc(100% - 120px);
+                width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: space-around;
@@ -69,6 +69,9 @@ $phone:500px;
                     width: 16.6%;
                     text-align: center;
                     border-right: 1px solid;
+                    &:last-child{
+                        border-right: none;
+                    }
                     @media (max-width:$tablet) {
                         width: 25%;
                         &:nth-child(3){
@@ -82,28 +85,6 @@ $phone:500px;
                         width: 33.3%;
                         &:nth-child(2){
                             display: none;
-                        }
-                    }
-                }
-            }
-            .action_box{
-                width: 120px;
-                text-align: center;
-                @media (max-width:$phone) {
-                    width: 80px;
-                }
-            }
-            .order_button_list{
-                display: flex;
-                justify-content: space-around;
-                width: 120px;
-                @media (max-width:$phone) {
-                    width: 80px;
-                    justify-content: space-around;
-                    button{
-                        padding: 0px 2px;
-                        .order_btn_icon{
-                            transform: scale(0.7);
                         }
                     }
                 }
@@ -137,4 +118,7 @@ $phone:500px;
     display: grid;
     place-items: center;
     text-align: center;
+}
+.modal_view{
+    min-width: 90% !important;
 }

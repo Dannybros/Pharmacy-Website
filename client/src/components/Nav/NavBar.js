@@ -88,7 +88,7 @@ function NavBar() {
         <div className='subMenu_list'>
           <div className="shop_info">
             <span className='sub_menu'><LocalPhoneIcon className='sub_menu_icon'/> Phone: (+856) 12231 222 11</span>
-            <span className='sub_menu'><AccessAlarmIcon className='sub_menu_icon'/> Mon-Fro (8am - 6pm)</span>
+            <span className='sub_menu'><AccessAlarmIcon className='sub_menu_icon'/> Mon-Fri (8am - 6pm)</span>
             <span className='sub_menu'><MailOutlineIcon className='sub_menu_icon'/> adfadssasdssdsfa@gmail.com</span>
           </div>
 

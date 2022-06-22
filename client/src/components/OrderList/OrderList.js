@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './OrderList.scss'
-import {Button} from 'react-bootstrap'
+import {Button, Modal, Container, Row, Col} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
 import Pagination from './Pagination';
@@ -17,6 +17,7 @@ function OrderList() {
   const [user] = useLocalStorage('User');
   const [orderSearch, setOrderSearch] = useState('');
   const [orderDate, setOrderDate] = useState('');
+  const [viewDetail, setViewDetail] = useState(false);
 
   function groupArrayOfObjects(list, key) {
     return list.reduce(function(rv, x) {
@@ -49,21 +50,20 @@ function OrderList() {
                   return(
                     <li className='order_table_list' key={item.title}>
                       <main className='order__info'>
-                        <div>Name</div>
-                        <div>Email</div>
-                        <div>Bill ID</div>
-                        <div>Bill Total</div>
-                        <div>Bill Date</div>
-                        <div>Status</div>
+                        <div>Order ID</div>
+                        <div>Order Total</div>
+                        <div>Order Time</div>
+                        <div>
+                          <Button variant='primary' disabled> <CheckIcon/> </Button>
+                        </div>
+                        <div>
+                          <Button variant='warning' disabled> <HourglassBottomIcon/> </Button>
+                        </div>
+                        <div>
+                          <Button variant='success' onClick={() => setViewDetail(true)}> <RemoveRedEyeIcon/> </Button>
+                        </div>
                       </main>
-        
-                      <div className='order_button_list'>
-                        <Button variant='success'> <RemoveRedEyeIcon className="order_btn_icon"/> </Button>
-                        {/* <Button variant='primary' disabled> <CheckIcon className="order_btn_icon"/> </Button> */}
-                        <Button variant='warning' disabled> <HourglassBottomIcon className="order_btn_icon"/> </Button>
-                      </div>
                     </li>
-                    
                   )
                 })}
               </ul>
@@ -112,14 +112,13 @@ function OrderList() {
             <ul className='order_header_title'>
               <li className='order_table_list bold_header'>
                 <main className='order__info'>
-                  <div>Bill ID</div>
-                  <div>Product Title</div>
-                  <div>Product Price</div>
-                  <div>Quantity</div>
-                  <div>Bill Total</div>
-                  <div>Status</div>
+                  <div>Order ID</div>
+                  <div>Order Total</div>
+                  <div>Order Time</div>
+                  <div>Paid</div>
+                  <div>Delivery</div>
+                  <div>Action</div>
                 </main>
-                <div className='action_box'>Action</div>
               </li>
             </ul>
             <Pagination
@@ -135,6 +134,46 @@ function OrderList() {
           <Button onClick={()=>navigate('/user')}>Go TO LOGIN PAGE</Button>
         </div>
       }
+
+      <Modal
+        show={viewDetail}
+        onHide={() => setViewDetail(false)}
+        dialogClassName="modal_view"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            Custom Modal Styling
+          </Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <p>
+            Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
+            commodi aspernatur enim, consectetur. Cumque deleniti temporibus
+            ipsam atque a dolores quisquam quisquam adipisci possimus
+            laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
+            accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
+            reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
+            deleniti rem!
+          </p>
+          <Container>
+            <Row>
+              <Col xs={12} md={8}>
+                .col-xs-12 .col-md-8
+              </Col>
+              <Col xs={6} md={4}>
+                .col-xs-6 .col-md-4
+              </Col>
+            </Row>
+          </Container>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button onClick={() => setViewDetail(false)}>Close</Button>
+        </Modal.Footer>
+
+      </Modal>
+
     </div>
   )
 }
