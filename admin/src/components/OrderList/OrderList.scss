@@ -2,12 +2,12 @@ $phone:500px;
 $tablet:768px;
 
 .orderList{
-    width: 100%;
+    width: 80%;
     height: 100%;
     padding-block: 30px;
     .toggle-tab{
         width: 100%;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid gray;
         display: flex;
         li{
             padding: 10px;
@@ -20,6 +20,7 @@ $tablet:768px;
             border-top-left-radius: 2rem;
             cursor: pointer;
             &:last-child{
+                border: none;
                 border-radius: 0;
                 border-bottom-right-radius: 2rem;
                 border-top-right-radius: 2rem;
@@ -28,6 +29,19 @@ $tablet:768px;
                 font-weight: bold;
                 background: #3ef47a;
             }
+        }
+    }
+    .search_order{
+        padding-bottom: 20px;
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        input{
+            width: min(100% - 1rem, 250px);
+            padding: 6px 30px 6px 12px;
+        }
+        .search_icon{
+            margin-left: -30px;
         }
     }
     .order_header_title{
@@ -40,10 +54,12 @@ $tablet:768px;
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding:10px;
+        padding:5px 10px;
         font-size: 17px;
-        margin: 15px 0px;
-        border-bottom: 1px solid;
+        border-bottom: 1px solid rgb(181, 181, 181);
+        &:last-child{
+            border-bottom: none;
+        }
         @media (max-width:$tablet) {
             font-size: 16px;
         }
@@ -63,7 +79,7 @@ $tablet:768px;
             div{
                 width: 16.6%;
                 text-align: center;
-                border-right: 1px solid;
+                border-right: 1px solid rgb(181, 181, 181);
                 &:last-child{
                     border-right: none;
                 }
