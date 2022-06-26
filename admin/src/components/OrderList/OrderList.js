@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './OrderList.scss';
-import {Container, Button, Accordion} from 'react-bootstrap'
+import {Button, Accordion} from 'react-bootstrap'
 import SearchIcon from '@mui/icons-material/Search';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
@@ -78,7 +78,7 @@ function OrderList() {
   }
 
   return (
-    <Container className='orderList'>
+    <main className='orderList'>
       <div className='toggle-tab'>
         <li onClick={handleActiveTab} name="tab1" className={activeTab === 'tab1'? "active" : ""}>
           New Orders
@@ -100,7 +100,7 @@ function OrderList() {
         <DeliveredOrdersTab/>
       }
 
-    </Container>
+    </main>
   )
 }
 

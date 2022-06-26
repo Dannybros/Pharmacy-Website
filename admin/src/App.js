@@ -1,26 +1,44 @@
-import './App.css';
+import './App.scss';
+import {Routes, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Nav from './components/Nav/Nav'
 import Sidebar from './components/Sidebar/Sidebar';
 import Home from './components/Home/Home';
-import Import from './components/Import/Import'
+import Import from './components/Imports/Import/Import'
+import ImportList from './components/Imports/ImportList/ImportList'
 import OrderList from './components/OrderList/OrderList'
-import Report from './components/Report/Report'
-import {Routes, Route} from 'react-router-dom'
-import Employee from './components/Employee/Employee';
-import Supplier from './components/Supplier/Supplier'
+import Categories from './components/Catalog/Categories/Categories'
+import Products from './components/Catalog/Products/Products'
+import Employee from './components/Catalog/Employee/Employee';
+import Supplier from './components/Catalog/Supplier/Supplier'
+import ProductReport from './components/Report/Products/ProductReport'
+import CustomerReport from './components/Report/Customers/CustomerReport'
+import ImportReport from './components/Report/Imports/ImportReport'
+import OrderReport from './components/Report/Orders/OrderReport'
+import Setting from './components/Setting/Setting'
 
 function App() {
   return (
     <div className="App">
-      <Sidebar/>
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/employee" element={<Employee/>}/>
-        <Route path="/supplier" element={<Supplier/>}/>
-        <Route path="/import-product" element={<Import/>}/>
-        <Route path="/order_product-list" element={<OrderList/>}/>
-        <Route path="/report" element={<Report/>}/>
-      </Routes>
+      <Nav/>
+      <div className='d-flex web_container'>
+        <Sidebar/>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/catalog/categories" element={<Categories/>}/>
+          <Route path="/catalog/products" element={<Products/>}/>
+          <Route path="/catalog/employees" element={<Employee/>}/>
+          <Route path="/catalog/suppliers" element={<Supplier/>}/>
+          <Route path="/imports" element={<Import/>}/>
+          <Route path="/imports/orders" element={<ImportList/>}/>
+          <Route path="/order" element={<OrderList/>}/>
+          <Route path="/report/products" element={<ProductReport/>}/>
+          <Route path="/report/customers" element={<CustomerReport/>}/>
+          <Route path="/report/imports" element={<ImportReport/>}/>
+          <Route path="/report/orders" element={<OrderReport/>}/>
+          <Route path="/setting" element={<Setting/>}/>
+        </Routes>
+      </div>
     </div>
   );
 }

@@ -4,9 +4,11 @@ import {Container} from 'react-bootstrap'
 
 function Home() {
   return (
-    <Container className='home_page'>
-      Home
-    </Container>
+    <div>
+      <Container className='home_page'>
+        Home
+      </Container>
+    </div>
   )
 }
 
