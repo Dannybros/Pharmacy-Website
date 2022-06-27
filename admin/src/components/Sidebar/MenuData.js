@@ -51,7 +51,16 @@ export const MenuData = [
     {
         title:"Order",
         icon: <ShoppingCartIcon/>,
-        path:'/order'
+        submenu:[
+            {
+                title:"Delivery",
+                path:'/order/delivery'
+            },
+            {
+                title:"Pay In Shop",
+                path:'/order/pay-in-shop'
+            },
+        ]
     },
     {
         title:"Report",

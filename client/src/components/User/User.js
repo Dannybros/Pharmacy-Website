@@ -7,7 +7,7 @@ function User() {
     const [user, setUser] =  useLocalStorage("User");
 
     useEffect(() => {
-      if (user.length <= 0) {
+      if (Object.keys(user).length === 0) {
         document.title = 'Log In User';
       } else {
         document.title = `User Info`;
@@ -16,7 +16,7 @@ function User() {
     
   return (
     <div>
-        {user.length <= 0?
+        {Object.keys(user).length === 0?
             <SignIn setUser={setUser} key={user}/>:
             <UserPage/>
         }

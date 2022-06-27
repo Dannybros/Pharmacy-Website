@@ -151,9 +151,9 @@ function Cart() {
                   <span> <b> Amount </b> </span>
                   <span> <b> Total </b> </span>
                 </li>
-                {cart?.map(item=>{
+                {cart?.map((item, i)=>{
                   return(
-                    <li>
+                    <li key={i}>
                       <span> {item.title} </span>
                       <span> {getExchangeRatePrice(item.price * 12342)} {currency.abbr} </span>
                       <span> {item.quantity} </span>

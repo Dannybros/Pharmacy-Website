@@ -6,7 +6,8 @@ import Sidebar from './components/Sidebar/Sidebar';
 import Home from './components/Home/Home';
 import Import from './components/Imports/Import/Import'
 import ImportList from './components/Imports/ImportList/ImportList'
-import OrderList from './components/OrderList/OrderList'
+import OrderList from './components/OrderList/Delivery/OrderList'
+import PayInCash from './components/OrderList/PayCash/PayInCash';
 import Categories from './components/Catalog/Categories/Categories'
 import Products from './components/Catalog/Products/Products'
 import Employee from './components/Catalog/Employee/Employee';
@@ -31,7 +32,8 @@ function App() {
           <Route path="/catalog/suppliers" element={<Supplier/>}/>
           <Route path="/imports" element={<Import/>}/>
           <Route path="/imports/orders" element={<ImportList/>}/>
-          <Route path="/order" element={<OrderList/>}/>
+          <Route path="/order/delivery" element={<OrderList/>}/>
+          <Route path="/order/pay-in-shop" element={<PayInCash/>}/>
           <Route path="/report/products" element={<ProductReport/>}/>
           <Route path="/report/customers" element={<CustomerReport/>}/>
           <Route path="/report/imports" element={<ImportReport/>}/>

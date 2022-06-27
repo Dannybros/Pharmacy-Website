@@ -2,43 +2,21 @@ $phone:500px;
 $tablet:768px;
 
 .orderList{
-    width: 80%;
+    width: calc(100% - 260px);
     height: 100%;
-    padding: 30px 12px;
+    padding: 30px;
     @media (max-width:$tablet) {
         width: 100%;
     }
-    .toggle-tab{
-        width: 100%;
-        border-bottom: 1px solid gray;
-        display: flex;
-        li{
-            padding: 10px;
-            list-style: none;
-            margin: 0;
-            width: 50%;
-            text-align: center;
-            border-right: 1px solid;
-            border-bottom-left-radius: 2rem;
-            border-top-left-radius: 2rem;
-            cursor: pointer;
-            &:last-child{
-                border: none;
-                border-radius: 0;
-                border-bottom-right-radius: 2rem;
-                border-top-right-radius: 2rem;
-            }
-            &.active{
-                font-weight: bold;
-                background: #3ef47a;
-            }
-        }
-    }
     .search_order{
-        padding-bottom: 20px;
-        margin-top: 30px;
+        padding:0px 20px 20px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        main{
+            display: flex;
+        align-items: center;
+        }
         input{
             width: min(100% - 1rem, 250px);
             padding: 6px 30px 6px 12px;
@@ -47,42 +25,37 @@ $tablet:768px;
             margin-left: -30px;
         }
     }
-    .order_header_title{
-        margin-top: 30px;
-        padding: 0;
+    .order_header{
+        font-weight: bold;
+        font-size: 18px ;
+        padding:10px ;
+        border-block: 1px solid;
     }
     .order_table_list{
-        list-style: none;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
         padding:5px 10px;
         font-size: 17px;
         border-bottom: 1px solid rgb(181, 181, 181);
-        &:last-child{
-            border-bottom: none;
-        }
+    }
+    .order_table_list, .order_header{
+        list-style: none;
         @media (max-width:$tablet) {
             font-size: 16px;
         }
         @media (max-width:$phone) {
             font-size: 14px;
-            padding: 0;
             margin: 15px 0px;
         }
         .order__info{
-            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-around;
+            padding: 10px;
+            .waiting_icon{
+                animation: spinning 3s linear forwards infinite;
+            }
             div{
                 width: 16.6%;
                 text-align: center;
-                border-right: 1px solid rgb(181, 181, 181);
-                &:last-child{
-                    border-right: none;
-                }
                 @media (max-width:$tablet) {
                     width: 25%;
                     &:nth-child(3){
@@ -95,4 +68,46 @@ $tablet:768px;
             }
         }
     }
+}
+.modal_header, .modal_body{
+    padding: 20px 50px;
+}
+.modal_body{
+    .customer_info{
+        background: rgb(230, 229, 229);
+        padding: 10px 10px 20px;
+        border-bottom: 1px solid rgb(182, 174, 174);
+    }
+    .table_header{
+        font-weight: bold;
+        padding: 10px;
+        border-bottom: 1px solid;
+        font-size: 16px;
+    }
+    li{
+        width: 100%;
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        text-align: center;
+        border-bottom: 1px solid gray;
+        div{
+            width: 20%;
+            display: grid;
+            place-items: center;
+            img{
+                width: 100px;
+                height: 50px;
+            }
+        }
+    }
+}
+
+@keyframes spinning{
+    from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(359deg);
+      }
 }

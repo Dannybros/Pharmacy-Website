@@ -22,7 +22,7 @@ import { useLocalStorage } from '../../Reducer/useLocalStorage';
 function NavBar() {
   const navigate = useNavigate();
   const [items] = useLocalStorage("Items");
-  const [user] = useLocalStorage("User", []);
+  const [user] = useLocalStorage("User", {});
   const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
   const [{cart, currency}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -54,13 +54,12 @@ function NavBar() {
 
     fetchExchangeAPI();
   }, [setExchange, exchange])
-
  
   const handleModalClose = () => {
     setModalShow(false);
     setSearchSelected([]);
   }
-
+  
   const handleCurrencyChange = (e)=>{
     const newCurrency = e.target.value;
     const currencyLabel = newCurrency.split("_")[0];
@@ -72,6 +71,8 @@ function NavBar() {
       abbr:currencyAbbr
     })
   }
+
+  console.log(user);
 
   const handleModalShow = () => setModalShow(true);
 
@@ -154,9 +155,9 @@ function NavBar() {
           <div className='user_box'>
             <div className='user_name_box'>
               <PersonOutlineIcon className='user_icon'/>
-              {user? user.username : "Guest"}
+              {Object.keys(user).length !== 0? user.username : "Guest"}
             </div>
-            <p>{user? user.email : "None"}</p>
+            <p>{Object.keys(user).length !== 0? user.email : "Email None"}</p>
           </div>
 
         </div>
