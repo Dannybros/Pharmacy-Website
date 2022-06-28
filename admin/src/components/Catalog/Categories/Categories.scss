@@ -1,13 +1,26 @@
+$tablet:768px;
+$phone:500px;
+
 .category{
     width: calc(100% - 260px);
     padding: 15px;
     border: 1px solid ;
+    @media (max-width:$tablet) {
+        width: 100%;
+    }
     .card-header{
         display: flex;
         justify-content: space-between;
         align-items: center;
         .list_icon{
             font-size: 18px;
+        }
+        .add_icon{
+            padding: 6px;
+            @media (max-width:$phone) {
+                padding: 0;
+                font-size: 12px;
+            }
         }
     }
     .card-main{
@@ -23,11 +36,21 @@
             align-items: center;
             padding: 10px 20px;
             border-bottom: 1px solid rgba(0,0,0,0.125);
+            @media (max-width:$phone) {
+                padding: 10px;
+                font-size: 14px;
+            }
             &:first-child{
                 border-right: 1px solid rgba(0,0,0,0.125);
             }
             .card_table_icon{
                 padding: 3px 7px;
+                @media (max-width:$phone) {
+                    padding: 0px 3px;
+                    svg{
+                        font-size: 14px;
+                    }
+                }
                 svg{
                     font-size: 20px;
                 }
