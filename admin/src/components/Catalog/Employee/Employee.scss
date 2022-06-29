@@ -1,9 +1,10 @@
 .employee{
     width: 80%;
     height: 100%;
-    padding-block: 20px;
-    @media (max-width:500px) {
-        padding-block: 10px;
+    padding: 20px;
+    @media (max-width:768px) {
+        padding: 10px 20px;
+        width: 100%;
     }
     .staffNav{
         border-bottom: 1px solid grey;
@@ -47,16 +48,14 @@
                 }
             }
             .staff_list{
-                width: 19%;
+                width: 23%;
                 padding: 10px 5px;
                 font-size: 16px;
-                border-right: 1px solid rgb(188, 188, 188);
                 display: flex;
-                text-align: center;
                 align-items: center;
                 justify-content: center;
                 &:first-child{
-                    width: 5%;
+                    width: 8%;
                 }
                 .btn_view{
                     padding: 3px 5px;
@@ -67,22 +66,19 @@
                         transform: scale(0.8);
                     }
                 }
-                &:last-child{
-                    border-right: none;
-                    overflow: hidden;
-                }
                 @media (max-width:500px) {
                     padding: 7px 5px;
-                    width: 20%;
                     font-size: 12px;
-                    &:nth-child(3){
+                    width: 30%;
+                    &:nth-child(4){
                         display: none;
                     }
                     .btn_view{
-                        padding: 0;
-                        font-size: 12px;
-                        display: grid;
-                        place-items: center;
+                        width: 28px;
+                        height: 20px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         .edit_icon{
                             transform: scale(0.6);
                         }

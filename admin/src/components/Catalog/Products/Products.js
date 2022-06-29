@@ -7,18 +7,28 @@ import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function Products() {
+
+  const initialProductInfo = {name:"", type:"", price:"", brand:"", weight:"", amount:"", description:"", expire:""};
+
   const [showModal, setShowModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [productInfo, setProductInfo] = useState(initialProductInfo);
+  const [selectedItem, setSelectedItem] = useState(false);
 
   const handleClose = () => {
     setShowModal(false);
-    setSelectedItem(null);
+    setSelectedItem(true);
+    setProductInfo(null);
   };
 
   const handleShow = (item) =>{
     setShowModal(true);
-    setSelectedItem(item);
+    setSelectedItem(true);
+    setProductInfo(item);
   };
+
+  const handleOnChange =(e)=>{
+    setProductInfo({...productInfo, [e.target.name]: e.target.value});
+  }
 
   return (
     <div className='product'>
@@ -33,7 +43,7 @@ function Products() {
         </section>
         <main className='card-main'>
           <Row className="card-table-header">
-            <Col xs={3} className="card-table-cell">  Image</Col>
+            <Col xs={3} className="card-table-cell"> Image</Col>
             <Col xs={4} className="card-table-cell"> Product Name </Col>
             <Col xs={2} className="card-table-cell"> Price </Col>
             <Col xs={3} className="card-table-cell"> Action </Col>
@@ -60,31 +70,35 @@ function Products() {
           <Row>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Name:</label>
-              <input type="text" className='form-control'/>
+              <input type="text" className='form-control' name='name' value={productInfo.name} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Type:</label>
-              <input type="text" className='form-control'/>
+              <input type="text" className='form-control' name='type' value={productInfo.type} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Brand:</label>
-              <input type="text" className='form-control'/>
+              <input type="text" className='form-control' name='brand' value={productInfo.brand} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Size:</label>
-              <input type="text" className='form-control'/>
+              <input type="text" className='form-control' name='weight' value={productInfo.weight} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product price:</label>
-              <input type="text" className='form-control'/>
+              <input type="text" className='form-control' name='price' value={productInfo.price} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Amount:</label>
-              <input type="text" className='form-control'/>
+              <input type="text" className='form-control' name='amount' value={productInfo.amount} onChange={handleOnChange}/>
+            </Col>
+            <Col sm={6} className="mb-3">
+              <label className='mb-1'>Product Expiration:</label>
+              <input type="date" className='form-control'  name='expire' value={productInfo.expire} onChange={handleOnChange}/>
             </Col>
             <Col sm={12} className="mb-3">
               <label className='mb-1'>Product Description:</label>
-              <textarea type="text" className='form-control' style={{height:'100px'}}/>
+              <textarea type="text" className='form-control' style={{height:'100px'}} name='description' value={productInfo.description} onChange={handleOnChange}/>
             </Col>
           </Row>
         </Modal.Body>

@@ -34,11 +34,11 @@ function Employee() {
   }
 
   return (
-    <Container className='employee'>
+    <div className='employee'>
       <div className="staffNav p-3 d-flex justify-content-between">
-          <Button className="py-2" variant='primary' onClick={()=>handleAddModalShow(null)}>Add New Employee</Button>
-          <form className="form-inline">
-              <div className="input-group">
+          <Button className="py-1" variant='primary' onClick={()=>handleAddModalShow(null)}>Add New Employee</Button>
+          <form className="form-inline ">
+              <div className="input-group ">
                   <input className="form-control" type="search" placeholder="Search..."/>
                   <div className="input-group-prepend">
                       <span className="input-group-text">
@@ -55,14 +55,12 @@ function Employee() {
                 <span className="staff_list"><b>Name</b></span>
                 <span className="staff_list"><b>Phone</b></span>
                 <span className="staff_list"><b>Salary</b></span>
-                <span className="staff_list"><b>Password</b></span>
                 <span className="staff_list"><b>Action</b></span>
             </li>
             <div className="staff_list_display">
               <li className="d-flex justify-content-between">
                   <span className="staff_list"> 1</span>
                   <span className="staff_list" style={{textTransform:"capitalize"}}> adfa </span>
-                  <span className="staff_list"> adfa </span>
                   <span className="staff_list"> adfa </span>
                   <span className="staff_list"> adfa </span>
                   <span className="staff_list justify-content-around">
@@ -124,7 +122,7 @@ function Employee() {
         </Modal.Footer>
       </Modal>
       
-    </Container>
+    </div>
   )
 }
 
