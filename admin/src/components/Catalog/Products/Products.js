@@ -16,18 +16,22 @@ function Products() {
 
   const handleClose = () => {
     setShowModal(false);
-    setSelectedItem(true);
-    setProductInfo(null);
+    setSelectedItem(false);
+    setProductInfo(initialProductInfo);
   };
 
   const handleShow = (item) =>{
     setShowModal(true);
-    setSelectedItem(true);
-    setProductInfo(item);
+    setSelectedItem(item===null? false : true);
+    setProductInfo(item!==null?item : initialProductInfo);
   };
 
   const handleOnChange =(e)=>{
     setProductInfo({...productInfo, [e.target.name]: e.target.value});
+  }
+
+  const handleBtnSubmit=()=>{
+    console.log(selectedItem? "update": "add");
   }
 
   return (
@@ -105,7 +109,7 @@ function Products() {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}> Close </Button>
-          <Button variant="primary"> Update </Button> 
+          <Button variant="primary" onClick={handleBtnSubmit}> Save </Button> 
         </Modal.Footer>
       </Modal>
     </div>

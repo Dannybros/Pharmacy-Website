@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import items from './route/Items.js'
 import users from './route/Users.js'
+import employee from './route/Employee.js'
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}
 
 app.use('/products', items);
 app.use('/user', users);
+app.use('/employee', employee);
 
 app.get('/', (req, res)=> {
     res.status(200).send("Hello World");
