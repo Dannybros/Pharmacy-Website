@@ -48,15 +48,14 @@
                 }
             }
             .staff_list{
-                width: 23%;
+                width: 20%;
                 padding: 10px 5px;
                 font-size: 16px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                &:first-child{
-                    width: 8%;
-                }
+                &:first-child{ width: 8%;}
+                &:last-child{ width: 12%;}
                 .btn_view{
                     padding: 3px 5px;
                     display: grid;
@@ -66,21 +65,27 @@
                         transform: scale(0.8);
                     }
                 }
+                @media (max-width:768px) {
+                    width: 25%;
+                    &:nth-child(5){
+                        display: none;
+                    }
+                    &:last-child{
+                        width: 17%;
+                    }
+                }
                 @media (max-width:500px) {
                     padding: 7px 5px;
                     font-size: 12px;
-                    width: 30%;
-                    &:nth-child(4){
-                        display: none;
-                    }
                     .btn_view{
-                        width: 28px;
+                        padding: 0;
+                        width: 20px;
                         height: 20px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         .edit_icon{
-                            transform: scale(0.6);
+                            transform: scale(0.7);
                         }
                     }
                 }

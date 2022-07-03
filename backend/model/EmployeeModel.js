@@ -3,10 +3,10 @@ import mongoose from 'mongoose'
 const employeeSchema = new mongoose.Schema({
     EmployeeName:String,
     Address:String,
-    Phone:String,
+    Phone:Number,
     Joining_Date:String,
     Salary:Number,
-    password:String
+    Password:String
 })
 
 const EmployeeCollection = mongoose.model('employee', employeeSchema);

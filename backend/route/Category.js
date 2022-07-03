@@ -1,11 +1,11 @@
 import express from 'express'
-import EmployeeCollection from '../model/EmployeeModel.js';
 import mongoose from 'mongoose';
+import CategoryCollection from '../model/CategoryModel.js';
 
 const router = express.Router();
 
 router.get('/', (req, res)=>{
-    EmployeeCollection.find({}, (err, data)=>{
+    CategoryCollection.find({}, (err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
@@ -16,7 +16,7 @@ router.get('/', (req, res)=>{
 
 router.post('/delete', (req,res)=>{
     const {id} = req.body;
-    EmployeeCollection.find({_id: id}, (err, data)=>{
+    CategoryCollection.find({_id: id}, (err, data)=>{
         if(err){
             res.status(500).json({error:err});
         }else{
@@ -27,21 +27,16 @@ router.post('/delete', (req,res)=>{
 })
 
 router.post('/update', (req,res)=>{
-    const {_id, EmployeeName, Address, Joining_Date, Password, Phone, Salary} = req.body;
+    const {_id, Name} = req.body;
 
-    if(EmployeeName=="" || Address=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
+    if(Name==""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
     }
 
-    EmployeeCollection.findByIdAndUpdate(_id, {
-        EmployeeName,
-        Phone:Number(Phone),
-        Address,
-        Joining_Date,
-        Password,
-        Salary:Number(Salary),
+    CategoryCollection.findByIdAndUpdate(_id, {
+        Name:Name
     }, ({new:true}), (err, data)=>{
         if(err){
             res.status(500).json({message:"Updated Failed. Please Try Again"})
@@ -53,24 +48,17 @@ router.post('/update', (req,res)=>{
 })
 
 router.post('/', (req, res)=>{
-    const {EmployeeName, Address, Joining_Date, Password, Phone, Salary} = req.body;
+    const {Name} = req.body;
     
-    if(EmployeeName=="" || Address=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
+    if(Name==""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
     }
 
-    const employee = new EmployeeCollection({
-        EmployeeName:EmployeeName,
-        Address:Address,
-        Phone:parseInt(Phone),
-        Joining_Date:Joining_Date,
-        Salary:parseInt(Salary),
-        Password:Password
-    })
+    const category = new CategoryCollection({Name})
 
-    employee.save()
+    category.save()
     .then(result=>{
         res.status(201).json({
             message:"Employee registered successfully",
@@ -83,4 +71,5 @@ router.post('/', (req, res)=>{
         });
     });
 })
+
 export default router;
