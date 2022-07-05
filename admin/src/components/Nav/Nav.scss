@@ -37,6 +37,9 @@ $tablet:768px;
             padding:0 10px;
             display: flex;
             align-items: end;
+            @media (max-width:460px) {
+                padding:0 5px;
+            }
             cursor: pointer;
             &:hover{
                 background: #EEEEEE;

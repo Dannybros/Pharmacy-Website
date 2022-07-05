@@ -3,10 +3,9 @@ import mongoose from 'mongoose'
 const id =  mongoose.Types.ObjectId();
 
 const supplierSchema = new mongoose.Schema({
-    Supplier_ID: mongoose.ObjectId,
-    SupplierName:String,
-    Phone:Number,
-    Email:String,
+    name:String,
+    phone:Number,
+    email:String,
 })
 
 const SupplierCollection = mongoose.model('supplier', supplierSchema);

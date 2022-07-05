@@ -1,3 +1,4 @@
+$laptop:1024px;
 $tablet:768px;
 $phone:500px;
 
@@ -8,10 +9,17 @@ $phone:500px;
     @media (max-width:$tablet) {
         width: 100%;
     }
+    @media (max-width:$phone) {
+       padding: 0px;
+       .card-body{
+        padding: 16px 5px;
+       }
+    }
     .card-header{
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border: 1px solid rgba(0,0,0,0.125);
         .list_icon{
             font-size: 18px;
         }
@@ -34,22 +42,37 @@ $phone:500px;
         .card-table-cell{
             display: flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 10px 20px ;
             border-bottom: 1px solid rgba(0,0,0,0.125);
             border-right: 1px solid rgba(0,0,0,0.125);
-            @media (max-width:$phone) {
+            @media (max-width:$laptop) {
                 padding: 10px;
+            }
+            @media (max-width:$tablet) {
                 font-size: 14px;
+            }
+            @media (max-width:$phone) {
+                padding: 5px;
+                font-size: 12px;
             }
             &:last-child{
                 border-right: none;
             }
+            img{
+                height: 40px;
+                width: 100%;
+                object-fit: contain;
+            }
             .card_table_icon{
                 padding: 3px 7px;
                 @media (max-width:$phone) {
-                    padding: 0px 3px;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     svg{
-                        font-size: 14px;
+                        transform: scale(0.8);
                     }
                 }
                 svg{

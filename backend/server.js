@@ -6,6 +6,7 @@ import items from './route/Items.js'
 import users from './route/Users.js'
 import employee from './route/Employee.js'
 import category from './route/Category.js'
+import supplier from './route/Supplier.js'
 import {Server} from 'socket.io'
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use('/products', items);
 app.use('/user', users);
 app.use('/employee', employee);
 app.use('/category', category)
+app.use('/supplier', supplier)
 
 app.get('/', (req, res)=> {
     res.status(200).send("Hello World");
@@ -49,7 +51,6 @@ const io = new Server(server, {
       methods:["GET", "POST"],
     },
 });
-
 
 io.on('connection', (socket)=>{
     console.log(`User Connected ${socket.id}`);

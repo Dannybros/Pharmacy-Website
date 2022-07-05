@@ -1,18 +1,70 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Products.scss'
-import {Card, Button, Row, Col, Modal} from 'react-bootstrap'
+import ProductForm from './ProductForm';
+import { v4 as uuidv4 } from 'uuid';
+import {Card, Button, Col} from 'react-bootstrap'
 import AddIcon from '@mui/icons-material/Add';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import CreateIcon from '@mui/icons-material/Create';
-import DeleteIcon from '@mui/icons-material/Delete';
+import {Snackbar, Alert, AlertTitle} from '@mui/material';
+//import io from 'socket.io-client';
+import axios from '../../axios'
+import { storage } from '../../firebaseConfig';
+import {ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage'
+import ProductList from './ProductList';
+
+const initialProductInfo = {name:"", type:"", price:"", brand:"", weight:"", quantity:"", description:"", expireDate:"", imgFile:null, img:""};
 
 function Products() {
 
-  const initialProductInfo = {name:"", type:"", price:"", brand:"", weight:"", amount:"", description:"", expire:""};
-
+  //const [socket, setSocket] = useState();
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState();
   const [showModal, setShowModal] = useState(false);
   const [productInfo, setProductInfo] = useState(initialProductInfo);
   const [selectedItem, setSelectedItem] = useState(false);
+  const [openAlert, setOpenAlert] = useState({state:false, message:"", type:'warning'});
+  
+  useEffect(() => {
+    const fetchProducts= async()=>{
+      await axios.get('/products')
+      .then(res=>{
+        setProducts(res.data)
+      })
+      .catch(err=>alert(err))
+    }
+
+    fetchProducts();
+  }, [])
+  
+  // useEffect(() => {
+  //   const s = io.connect("http://localhost:5000");
+  //   setSocket(s);
+  
+  //   return () => {
+  //     s.disconnect();
+  //   }
+  // }, [])
+
+  
+  // useEffect(() => {
+  //   if (socket==null) return
+    
+  //   socket.on("new-message", (data)=>{
+  //     alert(data.message);
+  //   })
+
+  //   socket.on("receive_message", (data)=>{
+  //     alert(data.message);
+  //   })
+  // }, [socket])  
+
+  const handleCloseAlert=()=>{
+    setOpenAlert({state:false, message:"", type:""});
+  }
+
+  const handleOpenAlert=(message, type)=>{
+    setOpenAlert({state:true, message:message, type:type});
+  }
 
   const handleClose = () => {
     setShowModal(false);
@@ -27,16 +79,99 @@ function Products() {
   };
 
   const handleOnChange =(e)=>{
-    setProductInfo({...productInfo, [e.target.name]: e.target.value});
+    const newObj = {...productInfo};
+
+    if(e.target.name==="imgFile"){
+      newObj["imgFile"] =e.target.files[0];
+      newObj["img"] =URL.createObjectURL(e.target.files[0]);
+    }else{
+      newObj[e.target.name] = e.target.value;
+    }
+    setProductInfo(newObj)
+  }
+
+  const uploadInfoToBackend=(data)=>{
+    const apiURL = selectedItem? '/products/update' : '/products'
+
+    axios.post(apiURL, data)
+    .then(res=>{
+      setShowModal(false);
+      handleOpenAlert(res.data.message, "success");
+    })
+    .catch((error)=>{
+      handleOpenAlert(error.response.data.message, "warning");
+    })
   }
 
   const handleBtnSubmit=()=>{
-    console.log(selectedItem? "update": "add");
+
+    if(productInfo.imgFile===null){
+      handleOpenAlert("Please select image", "warning");
+
+    }else{
+      const imgPath = selectedItem? productInfo.img : `/product-images/${uuidv4()}`
+
+      const storageRef = ref(storage, imgPath)
+  
+      const uploadTask = uploadBytesResumable(storageRef, productInfo.imgFile);
+   
+      uploadTask.on(
+          "state_changed",
+          (snapShot) => {
+          },
+          (err) => console.log(err),
+          () => {
+              getDownloadURL(uploadTask.snapshot.ref).then(fireBaseUrl  => {
+                let formData = {...productInfo, imgUrl:fireBaseUrl}
+                uploadInfoToBackend(formData)
+              });
+          }
+      ); 
+    }
+  }
+  
+  const handleDelete=(item)=>{
+    const id = item._id
+    axios.post('/products/delete', {id:id})
+      .then(res=>{
+        deleteObject(ref(storage, item.img))
+        setProducts(products.filter(item=>item._id !==id));
+        handleOpenAlert(res.data.message, "success");
+      })
+      .catch((error)=>{
+        handleOpenAlert(error.response.data.message, "warning");
+      })
+  }
+
+  const handleTest=()=>{
+     //socket.emit("send_message", {message:"test"});
+  }
+
+  const handleTest2=()=>{
+    //axios.post('/products/test');
   }
 
   return (
     <div className='product'>
+      <Snackbar open={openAlert.state} autoHideDuration={2000} onClose={handleCloseAlert} anchorOrigin={{vertical: "top", horizontal: "right"}}>
+        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type==="warning"? "warning" :"success"} sx={{ width: '100%' }} >
+          <AlertTitle style={{textTransform:"capitalize"}}>{openAlert.type}</AlertTitle>
+          {openAlert.message}
+        </Alert>
+      </Snackbar>
+
       <Card body>
+        <Col className="mb-3" md={6}>
+          <div className="input-group">
+              <input className="form-control ml-sm-2" type="search" placeholder="Search..." onChange={(e)=>setSearch(e.target.value)}/>
+              <div className="input-group-prepend">
+                  <span className="input-group-text">
+                  <i className="fas fa-search">@</i>
+                  </span>
+              </div>
+          </div>
+        </Col>
+
         <section className="card-header">
           <div className='d-flex align-items-center'>
             <FormatListBulletedIcon className='list_icon'/> &nbsp; Product List
@@ -45,73 +180,11 @@ function Products() {
             <Button className='add_icon' variant="success" name="add" onClick={()=>handleShow(null)}><AddIcon/></Button>
           </div>
         </section>
-        <main className='card-main'>
-          <Row className="card-table-header">
-            <Col xs={3} className="card-table-cell"> Image</Col>
-            <Col xs={4} className="card-table-cell"> Product Name </Col>
-            <Col xs={2} className="card-table-cell"> Price </Col>
-            <Col xs={3} className="card-table-cell"> Action </Col>
-          </Row>
-          <Row>
-            <Col xs={3} className="card-table-cell"> Product Image</Col>
-            <Col xs={4} className="card-table-cell"> Product Name </Col>
-            <Col xs={2} className="card-table-cell"> Price </Col>
-            <Col xs={3} className="card-table-cell"> 
-              <Button className='card_table_icon' variant='primary' name="update" onClick={()=>handleShow("ds")}><CreateIcon/></Button>
-              &nbsp; &nbsp;
-              <Button className='card_table_icon' variant='danger'><DeleteIcon/></Button>
-            </Col>
-          </Row>
-        </main>
+
+        <ProductList handleShow={handleShow} handleDelete={handleDelete} data={products} search={search}/>
       </Card>
 
-      <Modal show={showModal} size="lg" onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Product Details</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <Row>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Name:</label>
-              <input type="text" className='form-control' name='name' value={productInfo.name} onChange={handleOnChange}/>
-            </Col>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Type:</label>
-              <input type="text" className='form-control' name='type' value={productInfo.type} onChange={handleOnChange}/>
-            </Col>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Brand:</label>
-              <input type="text" className='form-control' name='brand' value={productInfo.brand} onChange={handleOnChange}/>
-            </Col>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Size:</label>
-              <input type="text" className='form-control' name='weight' value={productInfo.weight} onChange={handleOnChange}/>
-            </Col>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product price:</label>
-              <input type="text" className='form-control' name='price' value={productInfo.price} onChange={handleOnChange}/>
-            </Col>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Amount:</label>
-              <input type="text" className='form-control' name='amount' value={productInfo.amount} onChange={handleOnChange}/>
-            </Col>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Expiration:</label>
-              <input type="date" className='form-control'  name='expire' value={productInfo.expire} onChange={handleOnChange}/>
-            </Col>
-            <Col sm={12} className="mb-3">
-              <label className='mb-1'>Product Description:</label>
-              <textarea type="text" className='form-control' style={{height:'100px'}} name='description' value={productInfo.description} onChange={handleOnChange}/>
-            </Col>
-          </Row>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}> Close </Button>
-          <Button variant="primary" onClick={handleBtnSubmit}> Save </Button> 
-        </Modal.Footer>
-      </Modal>
+      <ProductForm showModal={showModal} handleClose={handleClose} handleOnChange={handleOnChange} handleBtnSubmit={handleBtnSubmit} productInfo={productInfo}/>
     </div>
   )
 }

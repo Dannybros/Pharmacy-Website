@@ -1,24 +1,114 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Supplier.scss'
-import {Container, Modal, Button} from 'react-bootstrap'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteIcon from '@mui/icons-material/Delete';
+import {Container, Modal, Button, Row, Col} from 'react-bootstrap'
+import {Snackbar, Alert, AlertTitle} from '@mui/material';
+import SupplierList from './SupplierList';
+import axios from '../../axios'
+
+const initialData = {name:'', phone:"", email:""};
 
 function Supplier() {
-  
-  const [addModal, setAddModal] = useState(false);
 
-  const handleAddModalClose = () => setAddModal(false);
-  const handleAddModalShow = () => setAddModal(true);
+  const [addModal, setAddModal] = useState(false);
+  const [suppliers, setSuppliers] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(false);
+  const [supplierData, setSupplierData]=useState(initialData);
+  const [search, setSearch] = useState(null);
+  const [openAlert, setOpenAlert] = useState({state:false, message:"", type:'warning'});
+
+  useEffect(() => {
+    const fetchEmployee= async()=>{
+      await axios.get('/supplier')
+      .then(res=>{
+        setSuppliers(res.data)
+      })
+      .catch(err=>alert(err))
+    }
+
+    fetchEmployee();
+  }, [])
+
+  const handleModalShow = (item) => {
+    setAddModal(true);
+    setSelectedItem(item===null? false : true);
+    setSupplierData(item!==null? item : initialData);
+  };
+
+  const handleModalClose = () => {
+    setAddModal(false);
+    setSelectedItem(false);
+    setSupplierData(initialData);
+  };
+
+  const handleCloseAlert=()=>{
+    setOpenAlert({state:false, message:"", type:""});
+  }
+
+  const handleOpenAlert=(message, type)=>{
+    setOpenAlert({state:true, message:message, type:type});
+  }
+
+  const handleDeleteEmployee=(id)=>{
+    axios.post('/supplier/delete', {id:id})
+      .then(res=>{
+        setSuppliers(suppliers.filter(person=>person._id !==id));
+        handleOpenAlert(res.data.message, "success");
+      })
+      .catch((error)=>{
+        handleOpenAlert(error.response.data.message, "warning");
+      })
+  }
+
+  const updateState=(newItem)=>{
+    const newState = suppliers.map(obj => {
+      if (obj._id === newItem._id) {
+        return {...newItem};
+      }
+      return obj;
+    });
+
+    setSuppliers(newState)
+  }
+
+  const handleButtonSubmit= async()=>{
+    const apiURL = selectedItem? '/supplier/update' : '/supplier'
+
+    await axios.post(apiURL, supplierData)
+    .then(res=>{
+      selectedItem? updateState(res.data.data) : setSuppliers(oldArray => [...oldArray, res.data.data]);
+      handleOpenAlert(res.data.message, "success");
+    })
+    .catch((error)=>{
+      handleOpenAlert(error.response.data.message, "warning");
+    })
+
+    setAddModal(false);
+  }
+
+  const handleOnSearch=(e)=>{
+    setSearch(e.target.value);
+  }
+
+  const handleOnChange =(e)=>{
+    setSupplierData({...supplierData, [e.target.name]: e.target.value});
+  }
 
 
   return (
     <Container className="supplier">
+
+       <Snackbar open={openAlert.state} autoHideDuration={2000} onClose={handleCloseAlert} anchorOrigin={{vertical: "top", horizontal: "right"}}>
+        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type==="warning"? "warning" :"success"} sx={{ width: '100%' }} >
+          <AlertTitle style={{textTransform:"capitalize"}}>{openAlert.type}</AlertTitle>
+          {openAlert.message}
+        </Alert>
+      </Snackbar>
+
       <div className="search_box p-3 d-flex justify-content-between">
-          <Button className="py-2" variant="primary" onClick={handleAddModalShow}>Add New Supplier</Button>
+          <Button className="py-2" variant="primary" onClick={()=>handleModalShow(null)}>Add New Supplier</Button>
           <form className="form-inline">
             <div className="input-group">
-                <input className="form-control ml-sm-2" type="search" placeholder="Search..."/>
+                <input className="form-control ml-sm-2" type="search" placeholder="Search..." onChange={handleOnSearch}/>
                 <div className="input-group-prepend">
                     <span className="input-group-text">
                     <i className="fas fa-search">@</i>
@@ -31,44 +121,55 @@ function Supplier() {
       <div className="supplier_page">
         <ul className="supplier_table">
             <li className="d-flex justify-content-between supplier_table_header">
-                <span className="supplier_list"><b>ID</b></span>
+                <span className="supplier_list"><b>No</b></span>
                 <span className="supplier_list"><b>Name</b></span>
                 <span className="supplier_list"><b>Phone</b></span>
                 <span className="supplier_list"><b>Email</b></span>
                 <span className="supplier_list"><b>Action</b></span>
             </li>
-            <div className="supplier_list_display">
-              <li className="d-flex justify-content-between">
-                  <span className="supplier_list"> adfa</span>
-                  <span className="supplier_list" style={{textTransform:"capitalize"}}> adfa </span>
-                  <span className="supplier_list"> adfa </span>
-                  <span className="supplier_list"> adfa </span>
-                  <span className="supplier_list justify-content-around">
-                    <Button variant="success" className='btn_view'> <RemoveRedEyeIcon className='edit_icon'/></Button> 
-                    <Button variant="danger" className='btn_view'> <DeleteIcon className='edit_icon'/></Button> 
-                  </span>
-              </li>
-            </div>
+            <SupplierList data={suppliers} search={search} handleModalShow={handleModalShow} handleDeleteEmployee={handleDeleteEmployee}/>
         </ul>
       </div>
 
       <Modal 
         show={addModal} 
-        onHide={handleAddModalClose} 
+        onHide={handleModalClose} 
         animation={false} 
         size="lg" 
       >
         <Modal.Header>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Supplier Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <Row>
+            <Col sm={6} className="mb-3">
+              <label className='mb-1'>Name:</label>
+              <input type="text" className='form-control' name="name" value={supplierData.name} onChange={handleOnChange}/>
+            </Col>
+            <Col sm={6} className="mb-3">
+              <label className='mb-1'>Email:</label>
+              <input type="text" className='form-control' name="email" value={supplierData.email} onChange={handleOnChange}/>
+            </Col>
+            <Col sm={6} className="mb-3">
+              <label className='mb-1'>Phone:</label>
+              <input type="text" 
+                className='form-control' 
+                name="phone" 
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+                value={supplierData.phone} 
+                onChange={handleOnChange}
+              />
+            </Col>
+          </Row>
+        </Modal.Body>
+
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleAddModalClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAddModalClose}>
-            Save Changes
-          </Button>
+          <Button variant="secondary" onClick={handleModalClose}> Close </Button>
+          <Button variant="primary" onClick={handleButtonSubmit}>Save </Button>
         </Modal.Footer>
       </Modal>
 

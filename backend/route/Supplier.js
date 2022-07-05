@@ -1,10 +1,10 @@
 import express from 'express'
-import CategoryCollection from '../model/CategoryModel.js';
+import SupplierCollection from '../model/SupplierModel.js';
 
 const router = express.Router();
 
 router.get('/', (req, res)=>{
-    CategoryCollection.find({}, (err, data)=>{
+    SupplierCollection.find({}, (err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
@@ -15,7 +15,7 @@ router.get('/', (req, res)=>{
 
 router.post('/delete', (req,res)=>{
     const {id} = req.body;
-    CategoryCollection.find({_id: id}, (err, data)=>{
+    SupplierCollection.find({_id: id}, (err, data)=>{
         if(err){
             res.status(500).json({error:err});
         }else{
@@ -26,15 +26,19 @@ router.post('/delete', (req,res)=>{
 })
 
 router.post('/update', (req,res)=>{
-    const {_id, Name} = req.body;
+    const {_id, name, phone, email} = req.body;
 
-    if(Name==""){
+    if(name==""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
     }
 
-    CategoryCollection.findByIdAndUpdate(_id, {Name:Name}, ({new:true}), (err, data)=>{
+    SupplierCollection.findByIdAndUpdate(_id, {
+        name,
+        phone,
+        email
+    }, ({new:true}), (err, data)=>{
         if(err){
             res.status(500).json({error:err});
         }else{
@@ -45,20 +49,24 @@ router.post('/update', (req,res)=>{
 })
 
 router.post('/', (req, res)=>{
-    const {Name} = req.body;
+    const {name, phone, email} = req.body;
     
-    if(Name==""){
+    if(name==""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
     }
 
-    const category = new CategoryCollection({Name})
+    const supplier = new SupplierCollection({
+        name:name,
+        phone:Number(phone),
+        email:email
+    })
 
-    category.save()
+    supplier.save()
     .then(result=>{
         res.status(201).json({
-            message:"Employee registered successfully",
+            message:"Supplier registered successfully",
             data:result
         })
     })

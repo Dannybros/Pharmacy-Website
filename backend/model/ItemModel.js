@@ -2,14 +2,15 @@
 import mongoose from 'mongoose'
 
 const itemSchema = new mongoose.Schema({
-    ProductTypeID:String,
-    ProductName:String,
-    Quantity:String,
-    Price:Number,
-    Weight:String,
-    Brand:String,
-    Description:String,
-    ExpireDate:String
+    name:String,
+    type:String,
+    quantity:String,
+    price:Number,
+    weight:String,
+    brand:String,
+    description:String,
+    expireDate:String,
+    img:String
 })
 
 const ItemCollection = mongoose.model('items', itemSchema);

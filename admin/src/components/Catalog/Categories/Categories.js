@@ -43,7 +43,7 @@ function Categories() {
   };
 
   const handleOnChange =(e)=>{
-    setCategoryData({...category, Name: e.target.value});
+    setCategoryData({...categoryData, Name: e.target.value});
   }
 
   const updateState=(newItem)=>{
@@ -56,30 +56,22 @@ function Categories() {
 
     setCategory(newState)
   }
-
-  console.log(categoryData);
-
+  
   const handleBtnSubmit=async()=>{
-
+    
     const apiURL = selectedItem? '/category/update' : '/category'
     
     await axios.post(apiURL, categoryData)
     .then(res=>{
-      if(selectedItem){
-        updateState(res.data.data)
-      }else{
-        setCategory(oldArray => [...oldArray, res.data.data]);
-      }
+      selectedItem?  updateState(res.data.data) : setCategory(oldArray => [...oldArray, res.data.data]);
       handleOpenAlert(res.data.message, "success");
     })
     .catch((error)=>{
-      handleOpenAlert(error.response.data.message, "warning");
+      handleOpenAlert(error.response?.data.message, "warning");
     })
 
     setShowModal(false);
   }
-
-  console.log(category);
 
   const handleCloseAlert=()=>{
     setOpenAlert({state:false, message:"", type:""});
@@ -103,7 +95,7 @@ function Categories() {
   return (
     <div className='category'>
       <Snackbar open={openAlert.state} autoHideDuration={2000} onClose={handleCloseAlert} anchorOrigin={{vertical: "top", horizontal: "right"}}>
-        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type} sx={{ width: '100%' }} >
+        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type==="warning"? "warning" :"success"} sx={{ width: '100%' }} >
           <AlertTitle style={{textTransform:"capitalize"}}>{openAlert.type}</AlertTitle>
           {openAlert.message}
         </Alert>
