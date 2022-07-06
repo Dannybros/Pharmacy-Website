@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {Card, Button, Col} from 'react-bootstrap'
 import AddIcon from '@mui/icons-material/Add';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import {Snackbar, Alert, AlertTitle} from '@mui/material';
-//import io from 'socket.io-client';
+import Swal from 'sweetalert2'
+import io from 'socket.io-client';
 import axios from '../../axios'
 import { storage } from '../../firebaseConfig';
 import {ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage'
@@ -16,13 +16,12 @@ const initialProductInfo = {name:"", type:"", price:"", brand:"", weight:"", qua
 
 function Products() {
 
-  //const [socket, setSocket] = useState();
+  const [socket, setSocket] = useState();
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState();
   const [showModal, setShowModal] = useState(false);
   const [productInfo, setProductInfo] = useState(initialProductInfo);
   const [selectedItem, setSelectedItem] = useState(false);
-  const [openAlert, setOpenAlert] = useState({state:false, message:"", type:'warning'});
   
   useEffect(() => {
     const fetchProducts= async()=>{
@@ -36,35 +35,35 @@ function Products() {
     fetchProducts();
   }, [])
   
-  // useEffect(() => {
-  //   const s = io.connect("http://localhost:5000");
-  //   setSocket(s);
+  useEffect(() => {
+    const s = io.connect("http://localhost:5000");
+    setSocket(s);
   
-  //   return () => {
-  //     s.disconnect();
-  //   }
-  // }, [])
-
+    return () => {
+      s.disconnect();
+    }
+  }, [])
   
-  // useEffect(() => {
-  //   if (socket==null) return
+  useEffect(() => {
+    if (socket==null) return
     
-  //   socket.on("new-message", (data)=>{
-  //     alert(data.message);
-  //   })
+    socket.on("new-products", (data)=>{
+      setProducts(oldArray => [...oldArray, data.data]);
+    })
 
-  //   socket.on("receive_message", (data)=>{
-  //     alert(data.message);
-  //   })
-  // }, [socket])  
+    socket.on("receive_message", (data)=>{
+      alert(data.message);
+    })
 
-  const handleCloseAlert=()=>{
-    setOpenAlert({state:false, message:"", type:""});
-  }
+    socket.on("delete-products", (data)=>{
+      setProducts(data.data)
+    })
+    
+    socket.on("update-products", (data)=>{
+      setProducts(data.data)
+    })
 
-  const handleOpenAlert=(message, type)=>{
-    setOpenAlert({state:true, message:message, type:type});
-  }
+  }, [socket])  
 
   const handleClose = () => {
     setShowModal(false);
@@ -96,37 +95,55 @@ function Products() {
     axios.post(apiURL, data)
     .then(res=>{
       setShowModal(false);
-      handleOpenAlert(res.data.message, "success");
+      Swal.fire({
+        title: 'success',
+        text: res.data.message,
+        icon: 'success',
+      })
     })
     .catch((error)=>{
-      handleOpenAlert(error.response.data.message, "warning");
+      Swal.fire({
+        title: 'error',
+        text: error.response.data.message,
+        icon: 'warning',
+      })
     })
   }
 
   const handleBtnSubmit=()=>{
 
     if(productInfo.imgFile===null){
-      handleOpenAlert("Please select image", "warning");
+      Swal.fire({
+        title: 'error',
+        text: 'Please select image',
+        icon: 'warning',
+      })
 
     }else{
-      const imgPath = selectedItem? productInfo.img : `/product-images/${uuidv4()}`
-
-      const storageRef = ref(storage, imgPath)
+      if(productInfo.img && !productInfo.imgFile){
+        let formData = {...productInfo, imgUrl:productInfo.img}
+        uploadInfoToBackend(formData)
+      }else{
+        const imgPath = selectedItem? productInfo.img : `/product-images/${uuidv4()}`
   
-      const uploadTask = uploadBytesResumable(storageRef, productInfo.imgFile);
-   
-      uploadTask.on(
-          "state_changed",
-          (snapShot) => {
-          },
-          (err) => console.log(err),
-          () => {
-              getDownloadURL(uploadTask.snapshot.ref).then(fireBaseUrl  => {
-                let formData = {...productInfo, imgUrl:fireBaseUrl}
-                uploadInfoToBackend(formData)
-              });
-          }
-      ); 
+        const storageRef = ref(storage, imgPath)
+    
+        const uploadTask = uploadBytesResumable(storageRef, productInfo.imgFile);
+     
+        uploadTask.on(
+            "state_changed",
+            (snapShot) => {
+            },
+            (err) => console.log(err),
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then(fireBaseUrl  => {
+                  let formData = {...productInfo, imgUrl:fireBaseUrl}
+                  uploadInfoToBackend(formData)
+                });
+            }
+        ); 
+      }
+      
     }
   }
   
@@ -135,31 +152,23 @@ function Products() {
     axios.post('/products/delete', {id:id})
       .then(res=>{
         deleteObject(ref(storage, item.img))
-        setProducts(products.filter(item=>item._id !==id));
-        handleOpenAlert(res.data.message, "success");
+        Swal.fire({
+          title: 'success',
+          text: res.data.message,
+          icon: 'success',
+        })
       })
       .catch((error)=>{
-        handleOpenAlert(error.response.data.message, "warning");
+        Swal.fire({
+          title: 'error',
+          text: error.response.data.message,
+          icon: 'warning',
+        })
       })
-  }
-
-  const handleTest=()=>{
-     //socket.emit("send_message", {message:"test"});
-  }
-
-  const handleTest2=()=>{
-    //axios.post('/products/test');
   }
 
   return (
     <div className='product'>
-      <Snackbar open={openAlert.state} autoHideDuration={2000} onClose={handleCloseAlert} anchorOrigin={{vertical: "top", horizontal: "right"}}>
-        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type==="warning"? "warning" :"success"} sx={{ width: '100%' }} >
-          <AlertTitle style={{textTransform:"capitalize"}}>{openAlert.type}</AlertTitle>
-          {openAlert.message}
-        </Alert>
-      </Snackbar>
-
       <Card body>
         <Col className="mb-3" md={6}>
           <div className="input-group">

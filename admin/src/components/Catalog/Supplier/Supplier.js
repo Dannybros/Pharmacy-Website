@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import './Supplier.scss'
 import {Container, Modal, Button, Row, Col} from 'react-bootstrap'
-import {Snackbar, Alert, AlertTitle} from '@mui/material';
 import SupplierList from './SupplierList';
 import axios from '../../axios'
+import Swal from 'sweetalert2'
 
 const initialData = {name:'', phone:"", email:""};
 
@@ -14,7 +14,6 @@ function Supplier() {
   const [selectedItem, setSelectedItem] = useState(false);
   const [supplierData, setSupplierData]=useState(initialData);
   const [search, setSearch] = useState(null);
-  const [openAlert, setOpenAlert] = useState({state:false, message:"", type:'warning'});
 
   useEffect(() => {
     const fetchEmployee= async()=>{
@@ -40,22 +39,22 @@ function Supplier() {
     setSupplierData(initialData);
   };
 
-  const handleCloseAlert=()=>{
-    setOpenAlert({state:false, message:"", type:""});
-  }
-
-  const handleOpenAlert=(message, type)=>{
-    setOpenAlert({state:true, message:message, type:type});
-  }
-
   const handleDeleteEmployee=(id)=>{
     axios.post('/supplier/delete', {id:id})
       .then(res=>{
         setSuppliers(suppliers.filter(person=>person._id !==id));
-        handleOpenAlert(res.data.message, "success");
+        Swal.fire({
+          title: 'success',
+          text: res.data.message,
+          icon: 'success',
+        })
       })
       .catch((error)=>{
-        handleOpenAlert(error.response.data.message, "warning");
+        Swal.fire({
+          title: 'error',
+          text: error.response.data.message,
+          icon: 'warning',
+        })
       })
   }
 
@@ -76,10 +75,18 @@ function Supplier() {
     await axios.post(apiURL, supplierData)
     .then(res=>{
       selectedItem? updateState(res.data.data) : setSuppliers(oldArray => [...oldArray, res.data.data]);
-      handleOpenAlert(res.data.message, "success");
+      Swal.fire({
+        title: 'success',
+        text: res.data.message,
+        icon: 'success',
+      })
     })
     .catch((error)=>{
-      handleOpenAlert(error.response.data.message, "warning");
+      Swal.fire({
+        title: 'error',
+        text: error.response.data.message,
+        icon: 'warning',
+      })
     })
 
     setAddModal(false);
@@ -96,13 +103,6 @@ function Supplier() {
 
   return (
     <Container className="supplier">
-
-       <Snackbar open={openAlert.state} autoHideDuration={2000} onClose={handleCloseAlert} anchorOrigin={{vertical: "top", horizontal: "right"}}>
-        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type==="warning"? "warning" :"success"} sx={{ width: '100%' }} >
-          <AlertTitle style={{textTransform:"capitalize"}}>{openAlert.type}</AlertTitle>
-          {openAlert.message}
-        </Alert>
-      </Snackbar>
 
       <div className="search_box p-3 d-flex justify-content-between">
           <Button className="py-2" variant="primary" onClick={()=>handleModalShow(null)}>Add New Supplier</Button>

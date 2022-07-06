@@ -20,9 +20,16 @@ router.post('/delete', (req,res)=>{
             res.status(500).json({error:err});
         }else{
             res.status(201).send({message:"Deleted Successfully"});
-            
         }
     }).deleteOne();
+
+    ItemCollection.find({}, (err, data)=>{
+        if(err){
+            console.log(err);
+        }else{
+            req.io.emit("delete-products",{data:data});
+        }
+    })
 })
 
 
@@ -49,7 +56,16 @@ router.post('/update', (req,res)=>{
         if(err){
             res.status(500).json({message:"Updated Failed. Please Try Again"})
         }else{
-            res.status(201).json({data:data, message:"Updated Success", data:data})
+            res.status(201).json({data:data, message:"Updated Success"})
+
+            ItemCollection.find({}, (err, data)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    req.io.emit("update-products",{data:data});
+                }
+            })
+            
         }
     })
 
@@ -80,9 +96,10 @@ router.post('/', (req, res)=>{
     product.save()
     .then(result=>{
         res.status(201).json({
-            message:"Employee registered successfully",
-            data:result
+            message:"Employee registered successfully"
         })
+
+        req.io.emit("new-products",{data:result});
     })
     .catch(err=>{
         res.status(500).json({
@@ -92,7 +109,7 @@ router.post('/', (req, res)=>{
 })
 
 router.post('/test', (req, res)=>{
-    req.io.emit("new-message",{message:"test2"});
+    //req.io.emit("new-message",{message:"test2"});
 })
 
 export default router;

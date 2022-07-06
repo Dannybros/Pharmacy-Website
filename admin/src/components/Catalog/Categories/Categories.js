@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import axios from '../../axios'
+import Swal from 'sweetalert2'
 
 const initialData = {Name:""}
 
@@ -16,7 +17,6 @@ function Categories() {
   const [selectedItem, setSelectedItem] = useState(false);
   const [category, setCategory] = useState([]);
   const [categoryData, setCategoryData]=useState(initialData);
-  const [openAlert, setOpenAlert] = useState({state:false, message:"", type:'warning'});
 
   useEffect(() => {
     const fetchCategory= async()=>{
@@ -64,42 +64,44 @@ function Categories() {
     await axios.post(apiURL, categoryData)
     .then(res=>{
       selectedItem?  updateState(res.data.data) : setCategory(oldArray => [...oldArray, res.data.data]);
-      handleOpenAlert(res.data.message, "success");
+      Swal.fire({
+        title: 'success',
+        text: res.data.message,
+        icon: 'success',
+      })
     })
     .catch((error)=>{
-      handleOpenAlert(error.response?.data.message, "warning");
+      Swal.fire({
+        title: 'error',
+        text: error.response.data.message,
+        icon: 'warning',
+      })
     })
 
     setShowModal(false);
-  }
-
-  const handleCloseAlert=()=>{
-    setOpenAlert({state:false, message:"", type:""});
-  }
-
-  const handleOpenAlert=(message, type)=>{
-    setOpenAlert({state:true, message:message, type:type});
   }
 
   const handleDeleteCat=(id)=>{
     axios.post('/category/delete', {id:id})
       .then(res=>{
         setCategory(category.filter(obj=>obj._id !==id));
-        handleOpenAlert(res.data.message, "success");
+        Swal.fire({
+          title: 'success',
+          text: res.data.message,
+          icon: 'success',
+        })
       })
       .catch((error)=>{
-        handleOpenAlert(error.response.data.message, "warning");
+        Swal.fire({
+          title: 'error',
+          text: error.response.data.message,
+          icon: 'warning',
+        })
       })
   }
 
   return (
     <div className='category'>
-      <Snackbar open={openAlert.state} autoHideDuration={2000} onClose={handleCloseAlert} anchorOrigin={{vertical: "top", horizontal: "right"}}>
-        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type==="warning"? "warning" :"success"} sx={{ width: '100%' }} >
-          <AlertTitle style={{textTransform:"capitalize"}}>{openAlert.type}</AlertTitle>
-          {openAlert.message}
-        </Alert>
-      </Snackbar>
 
       <Card body>
         <section className="card-header">

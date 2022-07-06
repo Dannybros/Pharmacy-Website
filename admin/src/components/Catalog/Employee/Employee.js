@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import './Employee.scss'
-import {Button, Modal, Row, Col} from 'react-bootstrap'
+import {Button} from 'react-bootstrap'
 import axios from '../../axios'
-import {Snackbar, Alert, AlertTitle} from '@mui/material';
 import EmployeeList from './EmployeeList';
 import EmployeeForm from './EmployeeForm';
+import Swal from 'sweetalert2'
 
 const initialData = {EmployeeName:'', Phone:"", Joining_Date:"", Address:"", Salary:"", Password:""};
 
@@ -15,7 +15,6 @@ function Employee() {
   const [selectedItem, setSelectedItem] = useState(false);
   const [employeeData, setEmployeeData]=useState(initialData);
   const [search, setSearch] = useState(null);
-  const [openAlert, setOpenAlert] = useState({state:false, message:"", type:'warning'});
   
   useEffect(() => {
     const fetchEmployee= async()=>{
@@ -41,14 +40,6 @@ function Employee() {
     setEmployeeData(initialData);
   };
 
-  const handleCloseAlert=()=>{
-    setOpenAlert({state:false, message:"", type:""});
-  }
-
-  const handleOpenAlert=(message, type)=>{
-    setOpenAlert({state:true, message:message, type:type});
-  }
-
   const updateState=(newItem)=>{
     const newState = employee.map(obj => {
       if (obj._id === newItem._id) {
@@ -66,10 +57,18 @@ function Employee() {
     await axios.post(apiURL, employeeData)
     .then(res=>{
       selectedItem? updateState(res.data.data) : setEmployee(oldArray => [...oldArray, res.data.data]);
-      handleOpenAlert(res.data.message, "success");
+      Swal.fire({
+        title: 'success',
+        text: res.data.message,
+        icon: 'success',
+      })
     })
     .catch((error)=>{
-      handleOpenAlert(error.response.data.message, "warning");
+      Swal.fire({
+        title: 'error',
+        text: error.response.data.message,
+        icon: 'warning',
+      })
     })
 
     setAddModal(false);
@@ -79,10 +78,18 @@ function Employee() {
     axios.post('/employee/delete', {id:id})
       .then(res=>{
         setEmployee(employee.filter(person=>person._id !==id));
-        handleOpenAlert(res.data.message, "success");
+        Swal.fire({
+          title: 'success',
+          text: res.data.message,
+          icon: 'success',
+        })
       })
       .catch((error)=>{
-        handleOpenAlert(error.response.data.message, "warning");
+        Swal.fire({
+          title: 'error',
+          text: error.response.data.message,
+          icon: 'warning',
+        })
       })
   }
 
@@ -96,12 +103,6 @@ function Employee() {
 
   return (
     <div className='employee'>
-      <Snackbar open={openAlert.state} autoHideDuration={2000} onClose={handleCloseAlert} anchorOrigin={{vertical: "top", horizontal: "right"}}>
-        <Alert onClose={handleCloseAlert} variant="filled" severity={openAlert.type==="warning"? "warning" :"success"} sx={{ width: '100%' }} >
-          <AlertTitle style={{textTransform:"capitalize"}}>{openAlert.type}</AlertTitle>
-          {openAlert.message}
-        </Alert>
-      </Snackbar>
 
       <div className="staffNav p-3 d-flex justify-content-between">
           <Button className="py-1" variant='primary' onClick={()=>handleModalShow(null)}>Add New Employee</Button>
