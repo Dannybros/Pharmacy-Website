@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import './Supplier.scss'
 import {Container, Modal, Button, Row, Col} from 'react-bootstrap'
-import SupplierList from './SupplierList';
 import axios from '../../axios'
 import Swal from 'sweetalert2'
+import SupplierTable from './SupplierTable';
 
 const initialData = {name:'', phone:"", email:""};
 
@@ -39,7 +39,7 @@ function Supplier() {
     setSupplierData(initialData);
   };
 
-  const handleDeleteEmployee=(id)=>{
+  const handleDeleteSupplier=(id)=>{
     axios.post('/supplier/delete', {id:id})
       .then(res=>{
         setSuppliers(suppliers.filter(person=>person._id !==id));
@@ -118,19 +118,8 @@ function Supplier() {
           </form>
       </div>
 
-      <div className="supplier_page">
-        <ul className="supplier_table">
-            <li className="d-flex justify-content-between supplier_table_header">
-                <span className="supplier_list"><b>No</b></span>
-                <span className="supplier_list"><b>Name</b></span>
-                <span className="supplier_list"><b>Phone</b></span>
-                <span className="supplier_list"><b>Email</b></span>
-                <span className="supplier_list"><b>Action</b></span>
-            </li>
-            <SupplierList data={suppliers} search={search} handleModalShow={handleModalShow} handleDeleteEmployee={handleDeleteEmployee}/>
-        </ul>
-      </div>
-
+      <SupplierTable data={suppliers} search={search} handleModalShow={handleModalShow} handleDeleteSupplier={handleDeleteSupplier}/>
+      
       <Modal 
         show={addModal} 
         onHide={handleModalClose} 

@@ -1,12 +1,13 @@
 .supplier{
-    width: 80%;
+    width: calc(100% - 250px);
     height: 100%;
-    padding-block: 20px;
+    padding: 20px 40px;
     @media (max-width:500px) {
         padding: 10px 20px;
         width: 100%;
     }
     .search_box{
+        background: white;
         border-bottom: 1px solid grey;
         .input-group-text{
             padding-right: 6px;

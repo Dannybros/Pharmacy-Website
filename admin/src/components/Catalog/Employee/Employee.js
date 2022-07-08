@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react'
 import './Employee.scss'
 import {Button} from 'react-bootstrap'
 import axios from '../../axios'
-import EmployeeList from './EmployeeList';
 import EmployeeForm from './EmployeeForm';
 import Swal from 'sweetalert2'
+import EmployeeTable from './EmployeeTable';
 
-const initialData = {EmployeeName:'', Phone:"", Joining_Date:"", Address:"", Salary:"", Password:""};
+const initialData = {EmployeeName:'', Phone:"", Joining_Date:"", Gender:"", BOD:"", Salary:"", Password:""};
 
 function Employee() {
 
@@ -118,19 +118,7 @@ function Employee() {
           </form>
       </div>
 
-      <div className="staff_page">
-        <ul className="staff_table">
-            <li className="d-flex justify-content-between staff_table_header">
-                <span className="staff_list"><b>No.</b></span>
-                <span className="staff_list"><b>Name</b></span>
-                <span className="staff_list"><b>Phone</b></span>
-                <span className="staff_list"><b>Join Date</b></span>
-                <span className="staff_list"><b>Salary</b></span>
-                <span className="staff_list"><b>Action</b></span>
-            </li>
-            <EmployeeList data={employee} search={search} handleModalShow={handleModalShow} handleDeleteEmployee={handleDeleteEmployee}/>
-        </ul>
-      </div>
+      <EmployeeTable data={employee} search={search} handleModalShow={handleModalShow} handleDeleteEmployee={handleDeleteEmployee}/>
 
       <EmployeeForm addModal={addModal} handleModalClose={handleModalClose} handleButtonSubmit={handleButtonSubmit} handleOnChange={handleOnChange} employeeData={employeeData}/>
     </div>

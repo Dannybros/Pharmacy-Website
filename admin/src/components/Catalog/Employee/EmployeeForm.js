@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Row, Col, Modal} from 'react-bootstrap'
+import {Button, Row, Col, Modal, Form} from 'react-bootstrap'
 
 function EmployeeForm({addModal, handleModalClose, handleButtonSubmit, handleOnChange, employeeData}) {
   return (
@@ -20,6 +20,17 @@ function EmployeeForm({addModal, handleModalClose, handleButtonSubmit, handleOnC
               <input type="text" className='form-control' name="EmployeeName" value={employeeData.EmployeeName} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
+              <label className='mb-1'>Gender:</label>
+              <Form.Select name="Gender" value={employeeData.Gender} onChange={handleOnChange}>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Form.Select>
+            </Col>
+            <Col sm={6} className="mb-3">
+              <label className='mb-1'>Birthday:</label>
+              <input type="date" className='form-control' name="BOD" value={employeeData.BOD} onChange={handleOnChange}/>
+            </Col>
+            <Col sm={6} className="mb-3">
               <label className='mb-1'>Phone:</label>
               <input type="text" className='form-control' name="Phone" value={employeeData.Phone} onChange={handleOnChange}
                 onKeyPress={(event) => {
@@ -27,10 +38,6 @@ function EmployeeForm({addModal, handleModalClose, handleButtonSubmit, handleOnC
                     event.preventDefault();
                   }
                 }}/>
-            </Col>
-            <Col sm={12} className="mb-3">
-              <label className='mb-1'>Address:</label>
-              <textarea type="text" className='form-control' style={{height:'65px'}} name="Address" value={employeeData.Address} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Joining Date:</label>

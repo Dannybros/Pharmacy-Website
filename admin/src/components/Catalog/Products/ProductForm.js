@@ -1,7 +1,23 @@
-import React from 'react'
-import {Button, Row, Col, Modal} from 'react-bootstrap'
+import React, {useState, useEffect}  from 'react'
+import axios from '../../axios'
+import {Button, Row, Col, Modal, Form} from 'react-bootstrap'
 
 function ProductForm({showModal, handleClose,handleOnChange, handleBtnSubmit, productInfo}) {
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategory= async()=>{
+      await axios.get('/category')
+      .then(res=>{
+        setCategories(res.data)
+      })
+      .catch(err=>alert(err))
+    }
+
+    fetchCategory();
+  }, [])
+  
   return (
     <Modal show={showModal} size="lg" onHide={handleClose}>
         <Modal.Header closeButton>
@@ -14,8 +30,16 @@ function ProductForm({showModal, handleClose,handleOnChange, handleBtnSubmit, pr
               <input type="text" className='form-control' name='name' value={productInfo.name} onChange={handleOnChange}/>
             </Col>
             <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Type:</label>
-              <input type="text" className='form-control' name='type' value={productInfo.type} onChange={handleOnChange}/>
+              <label className='mb-1'>Product Type:</label> <br/>
+              <Form.Select name="type" value={productInfo.type} onChange={handleOnChange}>
+                {categories.length>0&&
+                  categories.map((item, i)=>{
+                    return(
+                      <option value={item.Name} key={i}>{item.Name}</option>
+                    )
+                  })
+                }
+              </Form.Select>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Brand:</label>
