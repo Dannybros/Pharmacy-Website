@@ -2,13 +2,14 @@
 import mongoose from 'mongoose'
 
 const orderDetailSchema = new mongoose.Schema({
-    OrderDetailID:mongoose.ObjectId,
-    OrderID:String,
-    ProductID:String,
-    Amount:Number,
-    Total:Number
+    orderID:String,
+    productID:String,
+    productName:String,
+    productPrice:Number,
+    quantity:Number,
+    total:Number
 })
 
-const OrderDetailCollection = mongoose.model('order_detail', orderDetailSchema);
+const OrderDetailCollection = mongoose.model('order_details', orderDetailSchema);
 
 export default OrderDetailCollection;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material/styles';
-import {Table, TableBody, TableContainer, TableHead, TableRow, Paper, IconButton, Tooltip} from '@mui/material'
+import {Table, TableBody, TableContainer, TableHead, TableRow, Paper, IconButton, Tooltip, Chip} from '@mui/material'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -12,7 +12,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
-  }));
+}));
   
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
@@ -45,11 +45,11 @@ function OrderTable({data, search, setShowDetail}) {
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">Order ID</StyledTableCell>
-            <StyledTableCell align="right">Order Time</StyledTableCell>
-            <StyledTableCell align="right">Method</StyledTableCell>
-            <StyledTableCell align="right">Total</StyledTableCell>
-            <StyledTableCell align="right">Delivery</StyledTableCell>
-            <StyledTableCell align="right">Status</StyledTableCell>
+            <StyledTableCell align="center">Order Time</StyledTableCell>
+            <StyledTableCell align="center">Method</StyledTableCell>
+            <StyledTableCell align="center">Total</StyledTableCell>
+            <StyledTableCell align="center">Delivery</StyledTableCell>
+            <StyledTableCell align="center">Status</StyledTableCell>
             <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -61,12 +61,12 @@ function OrderTable({data, search, setShowDetail}) {
                   {!row.check&& <span className='alert_new_order'>new</span>}
                   ID
                 </StyledTableCell>
-                  <StyledTableCell align="right">Order Time</StyledTableCell>
-                  <StyledTableCell align="right">Method</StyledTableCell>
-                  <StyledTableCell align="right">Total</StyledTableCell>
-                  <StyledTableCell align="right">Delivery</StyledTableCell>
-                  <StyledTableCell align="right">
-                      <span className='order_status'>asdf</span>
+                  <StyledTableCell align="center">Order Time</StyledTableCell>
+                  <StyledTableCell align="center">Method</StyledTableCell>
+                  <StyledTableCell align="center">Total</StyledTableCell>
+                  <StyledTableCell align="center">Delivery</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Chip label="primary" color="primary" />
                   </StyledTableCell>
                   <StyledTableCell align="center">
                       <Tooltip title="View" arrow>

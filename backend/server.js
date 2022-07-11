@@ -7,6 +7,7 @@ import users from './route/Users.js'
 import employee from './route/Employee.js'
 import category from './route/Category.js'
 import supplier from './route/Supplier.js'
+import order from './route/Order.js'
 import {Server} from 'socket.io'
 
 dotenv.config();
@@ -38,6 +39,7 @@ app.use('/user', users);
 app.use('/employee', employee);
 app.use('/category', category)
 app.use('/supplier', supplier)
+app.use('/order', order)
 
 app.get('/', (req, res)=> {
     res.status(200).send("Hello World");

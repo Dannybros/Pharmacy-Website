@@ -61,7 +61,7 @@ function App() {
                 <Route path="/product/discover" element={<ProductList/>}/>
                 <Route path="/product/:productId" element={<Product/>}/>
                 <Route path="/cart" element={<Cart/>}/>
-                <Route path="/cart/payment" element={<Payment/>}/>
+                <Route path="/cart/payment/:total" element={<Payment/>}/>
                 <Route path="/order_list" element={<OrderList/>}/>
                 <Route path="/user" element={<User/>}/>
               </Routes>

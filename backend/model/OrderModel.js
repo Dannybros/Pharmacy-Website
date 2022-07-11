@@ -2,11 +2,24 @@
 import mongoose from 'mongoose'
 
 const orderSchema = new mongoose.Schema({
-    OrderID:mongoose.ObjectId,
-    OrderDate:String,
-    UserID:String,
-    Status:String
-})
+    customerID:String,
+    customerName:String,
+    customerPhone:Number,
+    customerAddress:{
+        addr:String,
+        coords:{
+            lat:String,
+            lng:String
+        }
+    },
+    orderTotal:Number,
+    paymentMethod:String,
+    deliveryStatus:{
+        type: Boolean,
+        default: false
+    },
+    employeeID:String
+}, { timestamps: true })
 
 const OrderCollection = mongoose.model('orders', orderSchema);
 

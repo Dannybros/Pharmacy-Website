@@ -4,7 +4,6 @@ import {Container, Row, Col, Button, Modal} from 'react-bootstrap'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useStateValue } from '../../Reducer/StateProvider';
 import {useNavigate} from 'react-router-dom'
-import PayMethod from './PayMethod';
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function Cart() {
@@ -12,7 +11,6 @@ function Cart() {
   const [{cart, currency}, dispatch] =useStateValue();
   const [user] = useLocalStorage('User');
   const [exchangeRate] = useLocalStorage('ExchangeRate');
-  const [showPayMethod, setShowPayMethod] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   const navigate = useNavigate();
@@ -53,7 +51,7 @@ function Cart() {
 
   const goPayment=()=>{
     if(user){
-      setShowPayMethod(true);
+      navigate(`/cart/payment/${totalCart}`);
     }else{
       setShowErrorModal(true);
     }
@@ -79,10 +77,6 @@ function Cart() {
   
   return (
     <div className='cart_page'>
-      {showPayMethod&&
-        <PayMethod click={()=>setShowPayMethod(false)}/> 
-      }
-
       <Modal show={showErrorModal} onHide={handleCloseErrorModal}>
         <Modal.Header closeButton>
           <Modal.Title>Warning</Modal.Title>

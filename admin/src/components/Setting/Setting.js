@@ -2,8 +2,11 @@ import React from 'react'
 import './Setting.scss'
 
 function Setting() {
+
   return (
-    <div>Setting</div>
+    <section className='setting'>
+      setting
+    </section>
   )
 }
 

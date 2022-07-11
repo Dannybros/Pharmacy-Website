@@ -3,10 +3,10 @@ import '../OrderList.scss'
 import Moment from 'react-moment'
 import {Modal, Row, Col} from 'react-bootstrap'
 import SearchIcon from '@mui/icons-material/Search';
-import OrderTable from './OrderTable';
+import OrderTable from '../OrderTable';
 import { Paper} from '@mui/material'
 
-function OrderList() {
+function PendingList() {
 
   const [showDetail, setShowDetail] = useState(false);
   const [search, setSearch] = useState(null);
@@ -51,4 +51,4 @@ function OrderList() {
   )
 }
 
-export default OrderList
+export default PendingList

@@ -1,145 +1,46 @@
 $phone:480px;
 $tablet:768px;
 
-.payment_page_container{
-    display: flex;
-    padding: 48px 12px;
+.payment_page{
+    width: 80%;
+    margin: 40px auto 0px;
+    h2{
+        border-bottom: 1px solid gray;
+        padding-bottom: 10px;
+    }
     @media (max-width:$tablet) {
-       flex-direction: column;
-       padding: 20px 12px;
+        width: 100%;
+        padding: 20px 12px;
+    }
+}
+.payment_container{
+    display: flex;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.84);
+    @media (max-width:$tablet) {
+        flex-direction: column;
+        padding: 20px 12px;
+    }
+    .payment_stepper{
+        width: 70%;
+        @media (max-width:$tablet) {
+            width: 100%;
+        }
     }
 }
 
-.payment_Card{
-    width: 70%;
-    padding: 0px 20px;
-    @media (max-width:$tablet) {
-        width: 100%;    
+.CC_form{
+    .card_img__list{
+        height: 50px;
+        display: flex;
+        justify-content: flex-start;
     }
-    .payment_customer_info{
-        font-size: 20px;
-        padding-bottom: 30px;
-        border-bottom: 1px solid grey;
-        h1{
-            margin-bottom: 10px;
-            width: 100%;
-            color: rgb(14, 91, 23);
-        }
-        label{
-            @media (max-width:$phone) {
-                font-size: 14px;
-            }
-        }
-        input, textarea{
-            font-size: 18px;
-            @media (max-width:$phone) {
-                font-size: 14px;
-            }
-        }
-        textarea{
-            height: 70px;
-        }
-    }
-    .payment__method{
-        padding: 30px 0 20px;
-        h1{
-            width: 100%;
-            color: rgb(14, 91, 23);
-        }
-        .tab-nav{
-            list-style: none; 
-            display: flex;
-            padding: 0;
-            margin: 20px auto;
-            border-radius: 2rem;
-            border: 1px solid grey;
-            li{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                font-weight: bold;
-                font-size: 16px;
-                padding: 7px 20px;
-                transition: all 0.7s;
-                border: none;
-                user-select: none;
-                border-bottom-left-radius: 2rem;
-                border-top-left-radius: 2rem;
-                @media (max-width:$phone) {
-                    padding: 5px;
-                    font-size: 12px;
-                }
-                &:last-child{
-                    border-radius: 0;
-                    border-bottom-right-radius: 2rem;
-                    border-top-right-radius: 2rem;
-                }
-                &.active{
-                    background: #5cb85c;
-                    color: white;
-                    img{
-                        display: block;
-                        margin-left: 20px;
-                        @media (max-width:$phone) {
-                            margin-left: 10px;
-                            transform: scale(0.7);
-                        }
-                    }
-                }
-                img{
-                    display: none;
-                    transition: all 2s ease;
-                }
-            }
-        }
-        .outlet{
-            .CC_form{
-                animation:fadeInUp 0.7s ease-in;
-            }
-            .Bcel_form{
-                animation:fadeInLeft 0.7s ease-in;
-            }
-            .card_img__list{
-                margin-top: 20px;
-                height: 50px;
-                display: flex;
-                justify-content: space-around;
-            }
-            label{
-                width: 100%;
-                margin: 10px 0;
-                text-align: left;
-                font-weight: bold;
-                text-indent: 5px;
-                font-size: 18px;
-                @media (max-width:$phone) {
-                    font-size: 14px;
-                }
-            }
-            input{
-                font-size: 18px;
-                border-radius: 5px;
-                border:1px solid grey;
-                width: 100%;
-                outline: none;
-                padding: 8px;
-                @media (max-width:$phone) {
-                    font-size: 14px;
-                }
-                &:focus{
-                    border:1px solid rgb(49, 173, 99);
-                }
-            }
-            button{
-                margin-top: 10px;
-                width: 100%;
-                font-size: 20px;
-            }
-        }
+    label{
+        margin-bottom: 10px;
     }
 }
-.payment_price_check{
+
+.price_teller{
     position: relative;
     width: 30%;
     padding: 20px;
@@ -152,26 +53,6 @@ $tablet:768px;
         position: sticky;
         top: 50px;
         background: rgb(255, 223, 96);
-    }
-}
-
-@keyframes fadeInLeft{
-    0%{
-        opacity: 0;
-        transform: translateX(100px);
-    }
-    100%{
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-@keyframes fadeInUp{
-    0%{
-        opacity: 0;
-        transform: translateY(100px);
-    }
-    100%{
-        opacity: 1;
-        transform: translateY(0);
+        font-size: 18px;
     }
 }

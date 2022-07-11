@@ -1,70 +1,68 @@
 import React, {useState} from 'react'
 import './Payment.scss';
 // import { CardNumberElement, CardCvcElement, CardExpiryElement} from '@stripe/react-stripe-js';
-import {Container, Row, Col} from 'react-bootstrap';
-import CC from './methods/CC';
-import BCEL from './methods/Bcel';
+import {Box, Stepper, Step, StepLabel, StepContent} from '@mui/material'
+import { useParams } from 'react-router-dom';
+import Address from './Address';
+import PaymentMethod from './PaymentMethod';
+import CC from './CC';
+import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function Payment() {
-  const [activeTab, setActiveTab] =useState('tab1');
+  
+  const {total} = useParams();
+  const [user] = useLocalStorage('User');
 
-  const handleClick=(e)=>{
-    setActiveTab(e.target.getAttribute('name'))
-  }
+  const initialOrder={userID:user._id,name:"", phone:"", address:{addr:"", coords:{lat:"", lng:""}}, method:"", total:total}
+
+  const [orderInfo, setOrderInfo] = useState(initialOrder);
+  const [activeStep, setActiveStep] = useState(0);
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
   return (
-    <div className='payment_page'>
-      <Container className='payment_page_container'>
-        <div className="payment_Card">
-          <Row className='payment_customer_info'>
-            <h1>Customer Address: </h1>
+    <section className='payment_page'>
+      <h2>Payment Details</h2>
 
-            <Col lg={6} xs={12} className="mb-2">
-                <label className='my-2'>Name: </label>
-                <div>
-                  <input type="text" className='form-control' placeholder='Name...'/>
-                </div>
-            </Col>
-            <Col lg={6} xs={12} className="mb-2">
-                <label className='my-2'>Phone: </label>
-                <div>
-                <input type="text" className='form-control' placeholder='020-554-784-66'/>
-                </div>
-            </Col>
-            <Col lg={12} xs={12}>
-                <label className='my-2'>Address: </label>
-                <div>
-                  <textarea className='form-control' placeholder='Type Address...'/>
-                </div>
-            </Col>
-          </Row>
-
-          <main className='payment__method'>
-            <h1>Card Payment method</h1>
+      <div className='payment_container'>
+        <Box  className="payment_stepper">
+          <Stepper activeStep={activeStep} orientation="vertical">
+            <Step>
+              <StepLabel> Customer Address</StepLabel>
+              <StepContent>
+                <Address handleNext={handleNext} setOrderInfo={setOrderInfo} orderInfo={orderInfo}/>
+              </StepContent>
+            </Step>
             
-            <ul className="tab-nav">
-                <li onClick={handleClick} name="tab1" className={activeTab === 'tab1'? "active" : ""}>
-                  Credit Card
-                </li>
-                <li onClick={handleClick} name="tab2" className={activeTab === 'tab2'? "active" : ""}>
-                  BCEL ONE PAY
-                </li>
-            </ul>
+            <Step>
+              <StepLabel> Payment Method</StepLabel>
+              <StepContent>
+                <PaymentMethod handleBack={handleBack} handleNext={handleNext} setOrderInfo={setOrderInfo} orderInfo={orderInfo}/>
+              </StepContent>
+            </Step>
 
-            <section className='outlet'>
-              {activeTab==='tab1'? <CC/> : <BCEL/>}
-            </section>
-
-          </main>
-        </div>
+            <Step>
+              <StepLabel> Customer Address</StepLabel>
+              <StepContent>
+                <CC handleBack={handleBack} orderInfo={orderInfo}/>
+              </StepContent>
+            </Step>
+          </Stepper>
+        </Box>
         
-        <div className="payment_price_check">
+        <Box className='price_teller'>
           <div className='payment__total'>
-            <h1>Total: $330</h1>
+            Total: {total}
           </div>
-        </div>
-      </Container>
-    </div>
+        </Box>
+      </div>
+    </section>
   )
 }
 

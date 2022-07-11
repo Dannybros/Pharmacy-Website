@@ -1,0 +1,9 @@
+$phone:500px;
+$tablet:768px;
+
+.setting{
+    width: calc(100% - 260px);
+    height: 100%;
+    padding: 30px;
+    display: flex;
+}

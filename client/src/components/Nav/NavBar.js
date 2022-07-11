@@ -72,8 +72,6 @@ function NavBar() {
     })
   }
 
-  console.log(user);
-
   const handleModalShow = () => setModalShow(true);
 
   const handleSwitch=()=> setOpenSidebar(true);

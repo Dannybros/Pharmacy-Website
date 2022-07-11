@@ -81,23 +81,6 @@ $tablet:768px;
     }
 }
 
-.order_status{
-    background-color: rgb(20, 184, 166);
-    border-radius: 12px;
-    color: rgb(255, 255, 255);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    line-height: 2;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    min-width: 20px;
-    padding: 0 8px;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
 .alert_new_order{
     position: absolute;
     top: 50%;

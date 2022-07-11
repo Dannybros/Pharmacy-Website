@@ -1,6 +1,5 @@
 import express from 'express'
 import EmployeeCollection from '../model/EmployeeModel.js';
-import mongoose from 'mongoose';
 
 const router = express.Router();
 
@@ -27,9 +26,9 @@ router.post('/delete', (req,res)=>{
 })
 
 router.post('/update', (req,res)=>{
-    const {_id, EmployeeName, Address, Joining_Date, Password, Phone, Salary} = req.body;
+    const {_id, EmployeeName, Gender, BOD, Joining_Date, Password, Phone, Salary} = req.body;
 
-    if(EmployeeName=="" || Address=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
+    if(EmployeeName=="" || Gender=="" || BOD=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
@@ -38,7 +37,8 @@ router.post('/update', (req,res)=>{
     EmployeeCollection.findByIdAndUpdate(_id, {
         EmployeeName,
         Phone:Number(Phone),
-        Address,
+        Gender,
+        BOD,
         Joining_Date,
         Password,
         Salary:Number(Salary),
@@ -53,9 +53,9 @@ router.post('/update', (req,res)=>{
 })
 
 router.post('/', (req, res)=>{
-    const {EmployeeName, Address, Joining_Date, Password, Phone, Salary} = req.body;
-    
-    if(EmployeeName=="" || Address=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
+    const {EmployeeName, Gender, BOD, Joining_Date, Password, Phone, Salary} = req.body;
+
+    if(EmployeeName=="" || Gender=="" || BOD=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
@@ -63,7 +63,8 @@ router.post('/', (req, res)=>{
 
     const employee = new EmployeeCollection({
         EmployeeName:EmployeeName,
-        Address:Address,
+        Gender:Gender,
+        BOD:BOD,
         Phone:parseInt(Phone),
         Joining_Date:Joining_Date,
         Salary:parseInt(Salary),
@@ -76,6 +77,7 @@ router.post('/', (req, res)=>{
             message:"Employee registered successfully",
             data:result
         })
+
     })
     .catch(err=>{
         res.status(500).json({

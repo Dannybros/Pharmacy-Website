@@ -1,78 +1,52 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './OrderList.scss'
 import {Button, Modal, Container, Row, Col} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
-import Pagination from './Pagination';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
-import CheckIcon from '@mui/icons-material/Check';
+import OrderTable from './OrderTable';
+import axios from '../axios/axios'
+//import io from 'socket.io-client';
+import moment from 'moment'
 
 function OrderList() {
 
   const navigate = useNavigate();
-
-  const [items] = useLocalStorage('Items');
   const [user] = useLocalStorage('User');
+  const [socket, setSocket] = useState();
+  const [orders, setOrders] = useState([]);
   const [orderSearch, setOrderSearch] = useState('');
   const [orderDate, setOrderDate] = useState('');
   const [viewDetail, setViewDetail] = useState(false);
 
-  function groupArrayOfObjects(list, key) {
-    return list.reduce(function(rv, x) {
-      (rv[x[key]] = rv[x[key]] || []).push(x);
-      return rv;
-    }, {});
-  };
-
-  const TestPopper = (props)=>{
-
-    const newItems = groupArrayOfObjects(props.data,"category");
-    const dates = Object.keys(newItems);
-    
-    const getItemsInSameCat=(date)=>{
-      let tempItems = newItems[date];
-      return tempItems;
+  useEffect(() => {
+    const fetchProducts= async()=>{
+      await axios.get('/order')
+      .then(res=>{
+        setOrders(res.data)
+      })
+      .catch(err=>alert(err))
     }
+
+    fetchProducts();
+  }, [])
+  
+  // useEffect(() => {
+  //   const s = io.connect("http://localhost:5000");
+  //   setSocket(s);
+  
+  //   return () => {
+  //     s.disconnect();
+  //   }
+  // }, [])
+  
+  // useEffect(() => {
+  //   if (socket==null) return
     
-    return(
-      <div>
-        {dates.map((date, i)=>{
-          return(
-            <article key={i}>
-              <div className='date_teller'>
-                <span>{date}</span>
-                <KeyboardArrowDownIcon />
-              </div>
-              <ul>
-                {getItemsInSameCat(date).map(item=>{
-                  return(
-                    <li className='order_table_list' key={item.title}>
-                      <main className='order__info'>
-                        <div>Order ID</div>
-                        <div>Order Total</div>
-                        <div>Order Time</div>
-                        <div>
-                          <Button variant='primary' disabled> <CheckIcon/> </Button>
-                        </div>
-                        <div>
-                          <Button variant='warning' disabled> <HourglassBottomIcon/> </Button>
-                        </div>
-                        <div>
-                          <Button variant='success' onClick={() => setViewDetail(true)}> <RemoveRedEyeIcon/> </Button>
-                        </div>
-                      </main>
-                    </li>
-                  )
-                })}
-              </ul>
-            </article>
-          )
-        })} 
-      </div>
-    )
-  }
+  //   socket.on("update_order", (data)=>{
+  //     setOrders(oldArray => [...oldArray, data.data]);
+  //   })
+
+  // }, [socket])  
 
   const handleSearchChange=(e)=>{
     setOrderSearch(e.target.value);
@@ -82,24 +56,24 @@ function OrderList() {
     setOrderDate(e.target.value);
   }
 
-  const filterData=(data, search, date)=>{
-    if(!search && !date) return data;
+  const filterData=(data)=>{
+    if(!orderSearch && !orderDate) return data;
 
-    const searchTerm = search.toLowerCase();
-    const dateTerm = date.toLowerCase()
+    const searchTerm = orderSearch.toLowerCase();
 
     const filterData = data.filter((item)=>{
-        return item.title.includes(searchTerm) && item.category.includes(dateTerm)
+      const dateTime = moment.utc(orderDate).format("YYYY-MM-DD");
+      console.log(dateTime);
+      return item.paymentMethod.includes(searchTerm) && item.createdAt.includes(dateTime)
     })
 
     return filterData
-}
+  }
 
   return (
     <div className='orderList'>
-      {
-        user?
-        <>
+      {user?
+        <div className='pb-4'>
           <section className='order_search_section'>
             <h1>Order List</h1>
             <div className='d-flex'>
@@ -107,34 +81,14 @@ function OrderList() {
               <input type="date" className='form-control' value={orderDate} onChange={handleDateChange}/>
             </div>
           </section>
+          <OrderTable data={filterData(orders)}/>
 
-          <section className='order_list_container'>
-            <ul className='order_header_title'>
-              <li className='order_table_list bold_header'>
-                <main className='order__info'>
-                  <div>Order ID</div>
-                  <div>Order Total</div>
-                  <div>Order Time</div>
-                  <div>Paid</div>
-                  <div>Delivery</div>
-                  <div>Action</div>
-                </main>
-              </li>
-            </ul>
-            <Pagination
-                key={filterData(items, orderSearch, orderDate)}
-                data={filterData(items, orderSearch, orderDate)}
-                RenderComp={TestPopper}
-                dataLimit={10}
-            />
-          </section>
-        </> :
+        </div> :
         <div className='non_user_page'>
           <h1 className='text-uppercase'>Please Log In To Access Order List Page...</h1>
           <Button onClick={()=>navigate('/user')}>Go TO LOGIN PAGE</Button>
         </div>
       }
-
       <Modal
         show={viewDetail}
         onHide={() => setViewDetail(false)}
