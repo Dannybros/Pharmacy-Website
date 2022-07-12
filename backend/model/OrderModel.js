@@ -12,6 +12,7 @@ const orderSchema = new mongoose.Schema({
             lng:String
         }
     },
+    orderItems:{ type : Array , "default" : [] },
     orderTotal:Number,
     paymentMethod:String,
     deliveryStatus:{

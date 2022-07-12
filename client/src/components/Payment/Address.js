@@ -66,7 +66,7 @@ function Address({handleNext, setOrderInfo, orderInfo}) {
                 </Col>
                 <Col sm={6} xs={12} className="mb-2">
                     <label className='my-2'>Phone: </label>
-                    <input type="text" className='form-control' name="phone" placeholder='020-554-784-66' onChange={handleOnChange} value={orderInfo.phone}
+                    <input type="text" className='form-control' name="phone" placeholder='020-xxx-xxx-xx' onChange={handleOnChange} value={orderInfo.phone}
                      onKeyPress={(event) => {
                         if (!/[0-9]/.test(event.key)) {
                           event.preventDefault();

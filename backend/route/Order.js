@@ -15,31 +15,20 @@ router.get('/', (req, res)=>{
     })
 })
 
-router.get('/get-detail', (req, res)=>{
-    
+router.post('/get-detail', (req, res)=>{
+    const {id} = req.body;
+
+    OrderDetailCollection.findOne({orderID:id}, (err, data)=>{
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.status(201).send(data);
+        }
+    })
 })
 
 router.post('/', async(req, res)=>{
     const {userID, name, address, phone, method, total, cart} = req.body;
-
-    const orderID = mongoose.Types.ObjectId();
-
-    await cart.map(item=>{
-        try {
-            const orderDetail = new OrderDetailCollection({
-                orderID:orderID,
-                productID:item.id,
-                productName:item.title,
-                productPrice: Number(item.price),
-                quantity:Number(item.quantity),
-                total:Number(item.quantity) * Number(item.price)
-            })
-
-            orderDetail.save();
-        } catch (error) {
-            res.status(400).send(error.message);
-        }
-    })
 
     const order = new OrderCollection({
         _id:orderID,
@@ -53,6 +42,7 @@ router.post('/', async(req, res)=>{
                 lng:address.coords.lat
             }
         },
+        orderItems:cart,
         orderTotal:Number(total),
         paymentMethod:method,
     })

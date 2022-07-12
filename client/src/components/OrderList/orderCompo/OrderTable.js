@@ -15,7 +15,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-function OrderTable({data, setViewDetail}) {
+function OrderTable({data, openDetailModal}) {
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
@@ -48,7 +48,7 @@ function OrderTable({data, setViewDetail}) {
                      data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                      .map((row, i) => {
 
-                        const date = moment.utc(row.createdAt).format("MM/DD/YYYY__hh:mm");
+                        const date = moment(row.createdAt).format("MM/DD/YYYY__hh:mm");
 
                         return(
                         <TableRow hover role="checkbox" tabIndex={-1} key={i}>
@@ -63,7 +63,7 @@ function OrderTable({data, setViewDetail}) {
                             </StyledTableCell>
                             <StyledTableCell align="center">
                                 <Tooltip title="View" arrow>
-                                <IconButton className='mx-1' aria-label="edit" style={{background:"#4caf50", color:"white"}}  onClick={() => setViewDetail(true)}>
+                                <IconButton className='mx-1' aria-label="edit" style={{background:"#4caf50", color:"white"}}  onClick={() => openDetailModal(row)}>
                                     <VisibilityIcon />
                                 </IconButton>
                                 </Tooltip>

@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import './OrderList.scss'
-import {Button, Modal, Container, Row, Col} from 'react-bootstrap'
+import {Button} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
-import OrderTable from './OrderTable';
 import axios from '../axios/axios'
 //import io from 'socket.io-client';
 import moment from 'moment'
+import OrderTable from './orderCompo/OrderTable';
+import OrderDetail from './orderCompo/OrderDetail';
 
 function OrderList() {
 
@@ -14,6 +15,7 @@ function OrderList() {
   const [user] = useLocalStorage('User');
   const [socket, setSocket] = useState();
   const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState([]);
   const [orderSearch, setOrderSearch] = useState('');
   const [orderDate, setOrderDate] = useState('');
   const [viewDetail, setViewDetail] = useState(false);
@@ -70,6 +72,11 @@ function OrderList() {
     return filterData
   }
 
+  const openDetailModal=(item)=>{
+    setSelectedOrder(item.orderItems)
+    setViewDetail(true)
+  }
+
   return (
     <div className='orderList'>
       {user?
@@ -81,7 +88,7 @@ function OrderList() {
               <input type="date" className='form-control' value={orderDate} onChange={handleDateChange}/>
             </div>
           </section>
-          <OrderTable data={filterData(orders)}/>
+          <OrderTable data={filterData(orders)} openDetailModal={openDetailModal}/>
 
         </div> :
         <div className='non_user_page'>
@@ -89,44 +96,8 @@ function OrderList() {
           <Button onClick={()=>navigate('/user')}>Go TO LOGIN PAGE</Button>
         </div>
       }
-      <Modal
-        show={viewDetail}
-        onHide={() => setViewDetail(false)}
-        dialogClassName="modal_view"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title">
-            Custom Modal Styling
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <p>
-            Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-            commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-            ipsam atque a dolores quisquam quisquam adipisci possimus
-            laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-            accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-            reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-            deleniti rem!
-          </p>
-          <Container>
-            <Row>
-              <Col xs={12} md={8}>
-                .col-xs-12 .col-md-8
-              </Col>
-              <Col xs={6} md={4}>
-                .col-xs-6 .col-md-4
-              </Col>
-            </Row>
-          </Container>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button onClick={() => setViewDetail(false)}>Close</Button>
-        </Modal.Footer>
-
-      </Modal>
+      
+      <OrderDetail viewDetail={viewDetail} setViewDetail={setViewDetail} data={selectedOrder}/>
 
     </div>
   )
