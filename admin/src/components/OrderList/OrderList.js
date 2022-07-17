@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Moment from 'react-moment'
 import SearchIcon from '@mui/icons-material/Search';
 import OrderTable from './OrderTable';
-import {Alert, Snackbar, Paper} from '@mui/material'
+import {Alert, Snackbar, Paper, Typography} from '@mui/material'
 import OrderDetail from './OrderDetail';
 import axios from '../axios'
 import Swal from 'sweetalert2'
@@ -132,11 +132,15 @@ function OrderList() {
   return (
     <section className='orderList'>
 
-      <Snackbar open={showAlert.state} autoHideDuration={6000} onClose={handelCloseAlert}>
-        <Alert onClose={handelCloseAlert} severity="success" sx={{ width: '100%' }}>
-          {showAlert.message}
+      <Snackbar open={showAlert.state} severity="success" autoHideDuration={5000} onClose={handelCloseAlert} anchorOrigin={{vertical:'top', horizontal:'center'}}>
+        <Alert onClose={handelCloseAlert} variant="filled" severity="success" sx={{ width: '100%' }}>
+          {showAlert.msg}
         </Alert>
       </Snackbar>
+
+      <Paper variant='outlined'>
+        <Typography sx={{mt:3, p:3}} style={{ fontWeight: 600 }} variant="h4" component="h4"> {status==="delivery"? "Deliveries" : "New Orders"} </Typography>
+      </Paper>
 
       <Paper className='search_order' variant='outlined'>
         <main>

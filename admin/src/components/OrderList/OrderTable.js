@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material/styles';
-import {Table, TableBody, TableContainer, TableHead, TableRow, Paper, IconButton, Tooltip, Chip, Typography} from '@mui/material'
+import {Table, TableBody, TableContainer, TableHead, TableRow, Paper, IconButton, Tooltip, Chip} from '@mui/material'
 import moment from 'moment'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -54,7 +54,7 @@ function OrderTable({data, search, handleShowDetails}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.length>0 ?
+          {data?.length>0 &&
             filterOrder(data, search).map((row, i) => {
               const date = moment(row.createdAt).format("MM/DD/YYYY____hh:mm A");
 
@@ -68,7 +68,7 @@ function OrderTable({data, search, handleShowDetails}) {
                     <StyledTableCell align="center">{row.paymentMethod}</StyledTableCell>
                     <StyledTableCell align="center">{row.orderTotal} KIP</StyledTableCell>
                     <StyledTableCell align="center">
-                      <Chip label={row.status} color={row.status==="pending"? "warning" : row.status==="On Delivery"? "secondary" :"primary"} />
+                      <Chip label={row.status} color={row.status==="Pending"? "warning" : row.status==="On Delivery"? "secondary" :"primary"} />
                     </StyledTableCell>
                     <StyledTableCell align="center">
                         <Tooltip title="View" arrow>
@@ -79,8 +79,7 @@ function OrderTable({data, search, handleShowDetails}) {
                     </StyledTableCell>
                 </StyledTableRow>
               )
-            }) :
-            <Typography sx={{m:3}} variant="h3" component="h2"> No Orders Yet...</Typography>
+            })
           }
         </TableBody>
       </Table>

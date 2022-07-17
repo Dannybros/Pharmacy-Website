@@ -4,8 +4,7 @@ import SideBar from './SideBar/SideBar';
 import {Button, Modal, Form} from 'react-bootstrap';
 import {NavLink, useNavigate} from 'react-router-dom'
 import {useStateValue } from '../../Reducer/StateProvider';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { Autocomplete, TextField } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
@@ -27,7 +26,7 @@ function NavBar() {
   const [{cart, currency}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [searchSelected, setSearchSelected] = useState([]);
+  const [searchItemID, setSearchItemID] = useState('');
 
   useEffect(() => {
     const fetchExchangeAPI=async()=>{
@@ -57,7 +56,7 @@ function NavBar() {
  
   const handleModalClose = () => {
     setModalShow(false);
-    setSearchSelected([]);
+    setSearchItemID('');
   }
   
   const handleCurrencyChange = (e)=>{
@@ -77,6 +76,15 @@ function NavBar() {
   const handleSwitch=()=> setOpenSidebar(true);
 
   const goToCart = () => navigate('../cart')
+
+  const handleSearchItem=async()=> {
+
+    if(searchItemID!==""){
+      await navigate(`./product/${searchItemID}`)
+      handleModalClose();
+    }
+
+  }
 
   return (
     <div className='nav_wrapper'>
@@ -168,20 +176,21 @@ function NavBar() {
 
       {/* search Modal */}
       <Modal show={modalShow} onHide={handleModalClose}>
-        <Modal.Header closeButton >
+        <Modal.Header >
           <Form className='search_form'>
             <Form.Group>
-              <Typeahead
-                id="search-type_ahead"
-                labelKey="name"
-                onChange={setSearchSelected}
-                options={items.map(item=>{return item.title;})}
-                placeholder="Search Item..."
-                selected={searchSelected}
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                onChange={(e, value)=>{
+                  setSearchItemID(value.id)
+                }}
+                options={items.map(item=>({id:item.id, label:item.title}))}
+                renderInput={(params) => <TextField {...params} label="Medicines" />}
               />
             </Form.Group> 
           </Form>
-          <Button type="submit" className='search_form_btn'>
+          <Button onClick={handleSearchItem} className='search_form_btn mx-1 py-3'>
             <SearchIcon/>
           </Button>
         </Modal.Header>

@@ -174,7 +174,10 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit}) {
 
         <Modal.Footer>
           <Button variant="warning" onClick={handleCloseDetails}>Close</Button>
-          <Button onClick={()=>handleSubmit(data._id, selectedEmployee)}>Update</Button>
+          <Button variant='danger'> Cancel Order </Button>
+          <Button onClick={()=>handleSubmit(data._id, selectedEmployee)}>
+            {data?.status==="Pending"? "Start Delivery" : "Complete Order"}
+          </Button>
         </Modal.Footer>
 
       </Modal>

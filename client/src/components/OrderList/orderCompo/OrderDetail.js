@@ -32,7 +32,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="ID"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="ID" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?._id}/> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -43,9 +43,9 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem>
                             <ListItemText 
                                 primary={
-                                    <Fragment> <Typography component="span" color="#757ce8"> Customer Name </Typography> </Fragment>
+                                    <Fragment> <Typography component="span" color="#757ce8"> {data?.customerName} </Typography> </Fragment>
                                 } 
-                                secondary="Address adf asdf asdf asdf "
+                                secondary="adds"
                             />
                         </ListItem>
                     </Col>
@@ -55,7 +55,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Date_Time"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Date_Time" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.createdAt}/> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -63,7 +63,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Payment Method"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Payment Method" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.paymentMethod} /> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -71,7 +71,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Total Amount"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Total Amount" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.orderTotal} /> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -79,7 +79,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Status"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Status" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.status} /> </ListItem>
                     </Col>
                 </Row>
             </List>
@@ -99,8 +99,8 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
-                        {data&&
-                        data.map((item)=>{
+                        {data!==null&&
+                        data.orderItems.map((item)=>{
                             return(
                                 <TableRow key={item.title} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row" style={{display:"flex"}}>

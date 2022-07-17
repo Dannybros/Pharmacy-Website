@@ -44,7 +44,7 @@ function OrderTable({data, openDetailModal}) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.length>0 &&
+                    {data?.length>0 &&
                      data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                      .map((row, i) => {
 
@@ -59,7 +59,7 @@ function OrderTable({data, openDetailModal}) {
                             <StyledTableCell align="center">{row.paymentMethod}</StyledTableCell>
                             <StyledTableCell align="center">{row.orderTotal}</StyledTableCell>
                             <StyledTableCell align="center">
-                                <Chip label={!row.deliveryStatus?"Pending":"Delivered"} color={row.deliveryStatus?"primary":"warning"} />
+                                <Chip label={row.status} color={row.status==="Pending"? "warning" : row.status==="On Delivery"? "secondary" :"primary"}/>
                             </StyledTableCell>
                             <StyledTableCell align="center">
                                 <Tooltip title="View" arrow>
@@ -77,7 +77,7 @@ function OrderTable({data, openDetailModal}) {
         <TablePagination
             rowsPerPageOptions={[5, 10, 20]}
             component="div"
-            count={data.length}
+            count={data?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

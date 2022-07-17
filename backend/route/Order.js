@@ -34,6 +34,17 @@ router.get('/delivery', (req, res)=>{
     })
 })
 
+router.post('/user', (req, res)=>{
+    const {_id} = req.body;
+    OrderCollection.find({customerID:_id}, (err, data)=>{
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.status(201).send(data);
+        }
+    })
+})
+
 router.post('/checked', (req, res)=>{
     const {_id} = req.body;
 
