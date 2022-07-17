@@ -68,17 +68,16 @@ function OrderList() {
   };
 
   const filterData=(data, status)=>{
-    if(!orderFilter.search && !orderFilter.date) return data;
+    if(!orderFilter.search && !orderFilter.date && status==="All") return data;
 
     const searchTerm = orderFilter.search.toLowerCase();
 
     const searchDate = orderFilter.date===""? "" : moment(orderFilter.date).format("YYYY-MM-DD")
 
-    const searchStatus = status==="All"? "" : status;
+    const searchStatus = status==="All"? "" : status.toLowerCase()
     
     const filterData = data.filter((item)=>{
-      console.log(item.status);
-      return item._id.includes(searchTerm) && item.createdAt.includes(searchDate) && item.status.includes(searchStatus)
+      return item.status.toLowerCase().includes(searchStatus) && item._id.includes(searchTerm) && item.createdAt.includes(searchDate)
     })
 
     return filterData
@@ -110,17 +109,17 @@ function OrderList() {
               indicatorColor="secondary"
               aria-label="secondary tabs example"
             >
-              <Tab value="All" label="All" />
-              <Tab value="Pending" label="Pending" />
-              <Tab value="On Delivery" label="Delivery" />
-              <Tab value="Completed" label="Completed" />
-              <Tab value="Cancelled" label="Cancelled" />
+              <Tab label="All" value="All" />
+              <Tab label="Pending"  value="Pending"/>
+              <Tab label="Delivery" value="Delivery"/>
+              <Tab label="Completed" value="Completed"/>
+              <Tab label="Cancelled" value="Cancelled"/>
             </Tabs>
           </Box>
           <Divider/>
-
-          <OrderTable data={filterData(orders)} openDetailModal={openDetailModal}/>
           
+          <OrderTable data={filterData(orders, orderFilter.status)} openDetailModal={openDetailModal}/>
+
           <OrderDetail viewDetail={viewDetail} setViewDetail={setViewDetail} data={selectedOrder}/>
 
         </div> :
