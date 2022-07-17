@@ -35,12 +35,12 @@ function OrderTable({data, openDetailModal}) {
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
-                    <StyledTableCell align="center">Order ID</StyledTableCell>
-                    <StyledTableCell align="center">Order Time</StyledTableCell>
-                    <StyledTableCell align="center">Method</StyledTableCell>
-                    <StyledTableCell align="center">Total</StyledTableCell>
-                    <StyledTableCell align="center">Delivery</StyledTableCell>
-                    <StyledTableCell align="center">Action</StyledTableCell>
+                        <StyledTableCell align="center"><b>Order ID</b></StyledTableCell>
+                        <StyledTableCell align="center"><b>Order Time</b></StyledTableCell>
+                        <StyledTableCell align="center"><b>Payment Method</b></StyledTableCell>
+                        <StyledTableCell align="center"><b>Total</b></StyledTableCell>
+                        <StyledTableCell align="center"><b>Status</b></StyledTableCell>
+                        <StyledTableCell align="center"><b>Action</b></StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

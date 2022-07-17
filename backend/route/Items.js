@@ -56,16 +56,8 @@ router.post('/update', (req,res)=>{
         if(err){
             res.status(500).json({message:"Updated Failed. Please Try Again"})
         }else{
-            res.status(201).json({data:data, message:"Updated Success"})
-
-            ItemCollection.find({}, (err, data)=>{
-                if(err){
-                    console.log(err);
-                }else{
-                    req.io.emit("update-products",{data:data});
-                }
-            })
-            
+            res.status(201).json({message:"Updated Success"})
+            req.io.emit("update-products", {data:data});
         }
     })
 
@@ -106,10 +98,6 @@ router.post('/', (req, res)=>{
             error:err
         });
     });
-})
-
-router.post('/test', (req, res)=>{
-    //req.io.emit("new-message",{message:"test2"});
 })
 
 export default router;

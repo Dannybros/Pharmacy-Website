@@ -1,0 +1,159 @@
+import React, {useState, useEffect} from 'react'
+import './OrderList.scss'
+import { useParams } from 'react-router-dom';
+import Moment from 'react-moment'
+import SearchIcon from '@mui/icons-material/Search';
+import OrderTable from './OrderTable';
+import {Alert, Snackbar, Paper} from '@mui/material'
+import OrderDetail from './OrderDetail';
+import axios from '../axios'
+import Swal from 'sweetalert2'
+import io from 'socket.io-client'
+
+function OrderList() {
+
+  const {status} = useParams();
+
+  const [showDetail, setShowDetail] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [search, setSearch] = useState(null);
+  const [socket, setSocket] = useState();
+  const [orders, setOrders] = useState([]);
+  const [showAlert, setShowAlert] = useState({state:false, msg:""});
+
+  useEffect(() => {
+    const fetchProducts= async()=>{
+      await axios.get(`/order/${status}`)
+      .then(res=>{
+        setOrders(res.data)
+      })
+      .catch((error)=>{
+        Swal.fire({
+          title: 'error',
+          text: error.response.data.message,
+          icon: 'warning',
+        })
+      })
+    }
+
+    fetchProducts();
+  }, [status])
+
+  useEffect(() => {
+    const s = io.connect("http://localhost:5000");
+    setSocket(s);
+  
+    return () => {
+      s.disconnect();
+    }
+  }, [])
+  
+  useEffect(() => {
+    if (socket==null) return
+    
+    socket.on("checked_order", (data)=>{
+      const updatedItem = data.data;
+      setOrders(oldItems=>{
+        return oldItems.map(order => {
+          return order._id === updatedItem._id ? { ...updatedItem} : order
+        })
+      })
+    })
+
+    socket.on('order_start_end', async(data)=>{
+       const updatedItem = data.data;
+
+       await setShowDetail(false);
+
+       setOrders((items)=>{items.filter((item)=>item._id!==updatedItem._id)});
+
+       setShowAlert({state:true, msg:data.message})
+    })
+
+  }, [socket])
+
+  const handleOnSearch=(e)=>{
+    setSearch(e.target.value);
+  }
+
+  const handleShowDetails=async(item)=>{
+    await setSelectedOrder(item);
+    setShowDetail(true);
+
+    if(!item.checked){
+      axios.post('/order/checked', {_id:item._id})
+     .then(res=>res)
+     .catch(err=>alert(err.response))
+   }
+  }
+
+  const handleCloseDetails=()=>{
+    setShowDetail(false);
+    setSelectedOrder(null);
+  }
+
+  const handleSubmit=(id, name)=>{
+    status==="pending"? startDelivery(id, name) : completeOrder(id)
+  }
+
+  const startDelivery=(id, name)=>{
+    if(name===""){
+      alert("Please Fill in the Employee")
+    }else{
+      axios.post('/order/start_delivery', {_id:id, empName:name})
+      .then(res=>{
+        
+      })
+      .catch((error)=>{
+        Swal.fire({
+          title: 'error',
+          text: error.response.data.message,
+          icon: 'warning',
+        })
+      })
+    }
+  }
+
+  const completeOrder=(id)=>{
+    axios.post('/order/complete_order', {_id:id})
+    .catch((error)=>{
+      Swal.fire({
+        title: 'error',
+        text: error.response.data.message,
+        icon: 'warning',
+      })
+    })
+  }
+
+  const handelCloseAlert=()=>{
+    setShowAlert({state:false, message:""})
+  }
+
+  return (
+    <section className='orderList'>
+
+      <Snackbar open={showAlert.state} autoHideDuration={6000} onClose={handelCloseAlert}>
+        <Alert onClose={handelCloseAlert} severity="success" sx={{ width: '100%' }}>
+          {showAlert.message}
+        </Alert>
+      </Snackbar>
+
+      <Paper className='search_order' variant='outlined'>
+        <main>
+          <input type="text" placeholder='Search...' className='form-control' onChange={handleOnSearch}/>
+          <SearchIcon className='search_icon'/>
+        </main>
+        <div style={{userSelect:"none"}}>
+          Today: &nbsp;
+          <b><Moment date={new Date()} format="YYYY/MM/DD"/></b>
+        </div>
+      </Paper>
+
+      <OrderTable data={orders} search={search} handleShowDetails={handleShowDetails}/>
+
+      <OrderDetail data={selectedOrder} showDetail={showDetail} handleCloseDetails={handleCloseDetails} handleSubmit={handleSubmit}/>
+    </section>
+  )
+}
+
+export default OrderList

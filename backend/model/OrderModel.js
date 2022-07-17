@@ -15,11 +15,15 @@ const orderSchema = new mongoose.Schema({
     orderItems:{ type : Array , "default" : [] },
     orderTotal:Number,
     paymentMethod:String,
-    deliveryStatus:{
+    status:{
+        type: String,
+        default: "Pending"
+    },
+    checked:{
         type: Boolean,
         default: false
     },
-    employeeID:String
+    employeeName:String
 }, { timestamps: true })
 
 const OrderCollection = mongoose.model('orders', orderSchema);

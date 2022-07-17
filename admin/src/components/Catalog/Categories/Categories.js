@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import {Card, Button, Row, Col, Modal} from 'react-bootstrap'
-import {Snackbar, Alert, AlertTitle} from '@mui/material';
 import './Categories.scss'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CreateIcon from '@mui/icons-material/Create';
@@ -24,7 +23,13 @@ function Categories() {
       .then(res=>{
         setCategory(res.data)
       })
-      .catch(err=>alert(err))
+      .catch((error)=>{
+        Swal.fire({
+          title: 'error',
+          text: error.response.data.message,
+          icon: 'warning',
+        })
+      })
     }
 
     fetchCategory();

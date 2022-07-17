@@ -1,6 +1,5 @@
 import express from 'express'
 import OrderCollection from '../model/OrderModel.js';
-import OrderDetailCollection from '../model/OrderDetailModel.js';
 import mongoose from 'mongoose'
 
 const router = express.Router();
@@ -15,14 +14,64 @@ router.get('/', (req, res)=>{
     })
 })
 
-router.post('/get-detail', (req, res)=>{
-    const {id} = req.body;
-
-    OrderDetailCollection.findOne({orderID:id}, (err, data)=>{
+router.get('/pending', (req, res)=>{
+    OrderCollection.find({status:"Pending"}, (err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
             res.status(201).send(data);
+        }
+    })
+})
+
+router.get('/delivery', (req, res)=>{
+    OrderCollection.find({status:"On Delivery"}, (err, data)=>{
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.status(201).send(data);
+        }
+    })
+})
+
+router.post('/checked', (req, res)=>{
+    const {_id} = req.body;
+
+    OrderCollection.findByIdAndUpdate(_id, {checked:true}, ({new:true}), (err, data)=>{
+        if(err){
+            res.status(500).json({
+                error:err
+            });
+        }else{
+            req.io.emit("checked_order", {data:data});
+        }
+    })
+})
+
+router.post('/start_delivery', (req, res)=>{
+    const {_id, empName} = req.body;
+
+    OrderCollection.findByIdAndUpdate(_id, {employeeName:empName, status:"On Delivery"}, ({new:true}), (err, data)=>{
+        if(err){
+            res.status(500).json({
+                error:err
+            });
+        }else{
+            req.io.emit("order_start_end", {data:data, message:`Start Delivery ID ${_id} by ${empName}`});
+        }
+    })
+})
+
+router.post('/complete_order', (req, res)=>{
+    const {_id} = req.body;
+
+    OrderCollection.findByIdAndUpdate(_id, {status:"Completed"}, ({new:true}), (err, data)=>{
+        if(err){
+            res.status(500).json({
+                error:err
+            });
+        }else{
+            req.io.emit("order_start_end", {data:data, message:`Order ID ${_id} completed`});
         }
     })
 })

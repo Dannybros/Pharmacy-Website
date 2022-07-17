@@ -99,7 +99,8 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((item)=>{
+                        {data&&
+                        data.map((item)=>{
                             return(
                                 <TableRow key={item.title} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row" style={{display:"flex"}}>

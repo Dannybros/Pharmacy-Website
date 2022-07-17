@@ -60,7 +60,12 @@ function Products() {
     })
     
     socket.on("update-products", (data)=>{
-      setProducts(data.data)
+      const updatedItem = data.data;
+      setProducts(oldItems=>{
+        return oldItems.map(item => {
+          return item._id === updatedItem._id ? { ...updatedItem} : item
+        })
+      })
     })
 
   }, [socket])  

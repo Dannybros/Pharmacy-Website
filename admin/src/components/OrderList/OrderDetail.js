@@ -1,20 +1,40 @@
-import React, {Fragment} from 'react'
+import React, {useEffect, useState, Fragment} from 'react'
 import {Button, Modal, Row, Col} from 'react-bootstrap'
+import axios from '../axios'
 import { styled } from '@mui/material/styles';
-import {Divider, List, ListItem, ListItemText, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper} from '@mui/material'
+import {Divider, List, ListItem, ListItemText, TextField, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper, FormControl, MenuItem, Select, InputLabel} from '@mui/material'
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
 }));
 
-function OrderDetail({viewDetail, setViewDetail, data}) {
+function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit}) {
+
+    const [employee, setEmployee] = useState([]);
+    const [selectedEmployee, setSelectedEmployee] = useState("");
+
+    useEffect(() => {
+        const fetchEmployee= async()=>{
+          await axios.get('/employee')
+          .then(res=>{
+            setEmployee(res.data)
+          })
+          .catch(err=>alert(err))
+        }
+    
+        fetchEmployee();
+      }, [])
+      
+
+      const handleChange = (event) => {
+        setSelectedEmployee(event.target.value);
+      };
 
   return (
     <Modal
-        show={viewDetail}
-        onHide={() => setViewDetail(false)}
+        show={showDetail}
+        onHide={handleCloseDetails}
         size="lg"
-        //dialogClassName="modal_view"
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
@@ -32,7 +52,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="ID"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="ID" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?._id}/> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -43,9 +63,9 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem>
                             <ListItemText 
                                 primary={
-                                    <Fragment> <Typography component="span" color="#757ce8"> Customer Name </Typography> </Fragment>
+                                    <Fragment> <Typography component="span" color="#757ce8"> {data?.customerName} </Typography> </Fragment>
                                 } 
-                                secondary="Address adf asdf asdf asdf "
+                                secondary="adds"
                             />
                         </ListItem>
                     </Col>
@@ -55,7 +75,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Date_Time"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Date_Time" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.createdAt}/> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -63,7 +83,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Payment Method"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Payment Method" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.paymentMethod} /> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -71,7 +91,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Total Amount"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Total Amount" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.orderTotal} /> </ListItem>
                     </Col>
                 </Row>
                 <Row>
@@ -79,16 +99,17 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Status"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary="Status" /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.status} /> </ListItem>
                     </Col>
                 </Row>
             </List>
+
             <Divider/>
-            <Typography sx={{ mt: 2, mb:2}} variant="h6" component="div">
+
+            <Typography sx={{ mb: 2, mt:2}} variant="h6" component="div">
                <b>Order Items</b>
             </Typography>
-
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ mb: 4}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <StyledTableRow>
@@ -99,7 +120,8 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((item)=>{
+                        {data!==null &&
+                         data.orderItems.map((item)=>{
                             return(
                                 <TableRow key={item.title} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row" style={{display:"flex"}}>
@@ -117,11 +139,42 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         })}
                     </TableBody>
                 </Table>
-                </TableContainer>
+            </TableContainer>
+
+            <Divider/>
+
+            {data?.status==="Pending"?
+            
+            <FormControl sx={{mt:4,  minWidth: 400 }}>
+                <InputLabel id="demo-simple-select-label">Employee Name</InputLabel>
+                <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectedEmployee}
+                label="Employee Name"
+                onChange={handleChange}
+                >
+                {employee.map((emp)=>(
+                    <MenuItem value={emp.EmployeeName} key={emp._id}>{emp.EmployeeName}</MenuItem>
+                ))}
+                </Select>
+            </FormControl> :
+            <TextField
+                sx={{mt:4,  minWidth: 400 }}
+                id="outlined-read-only-input"
+                label="Employee Name"
+                defaultValue={data?.employeeName}
+                InputProps={{
+                readOnly: true,
+                }}
+            />
+            }
+
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={() => setViewDetail(false)}>Close</Button>
+          <Button variant="warning" onClick={handleCloseDetails}>Close</Button>
+          <Button onClick={()=>handleSubmit(data._id, selectedEmployee)}>Update</Button>
         </Modal.Footer>
 
       </Modal>

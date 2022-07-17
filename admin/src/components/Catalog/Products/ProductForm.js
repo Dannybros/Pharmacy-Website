@@ -2,7 +2,7 @@ import React, {useState, useEffect}  from 'react'
 import axios from '../../axios'
 import {Button, Row, Col, Modal, Form} from 'react-bootstrap'
 
-function ProductForm({showModal, handleClose,handleOnChange, handleBtnSubmit, productInfo}) {
+function ProductForm({showModal, handleClose, handleOnChange, handleBtnSubmit, productInfo}) {
 
   const [categories, setCategories] = useState([]);
 

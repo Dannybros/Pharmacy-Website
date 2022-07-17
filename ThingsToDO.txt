@@ -1,9 +1,6 @@
 Admin website:
-    Replace order, employee, supplier page with Material UI Table, Card
-    Replace Sidebar with Material UI List, Drawer
+    axios post start delivery and update the database
+    create Alert 
 
 Client website:
-    Replace Payment with Material UI Stepper, Typography, Input
-    Replace order page with Material UI Table, Card
-    Payment page with Google Map API
-    Credit Card Confirmation
+    Send private message to client about start delivery
