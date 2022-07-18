@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import './UserPage.scss'
 import {Container, Row, Col, Button, Spinner, Toast, ToastContainer} from 'react-bootstrap'
-import { useLocalStorage } from '../../../Reducer/useLocalStorage'
 import axios from '../../axios/axios'
+import { useStateValue } from '../../../Reducer/StateProvider'
 
 function UserPage() {
 
     const initials = {username:"", pw:"",  cpw:"", email:"", age:"", hint:"", firstName:"", lastName:""};
-    const [user, setUser] = useLocalStorage("User");
+    const [{user}, dispatch] = useStateValue();
     const [userInfo, setUserInfo] = useState({...initials, ...user});
     const [editState, setEditState] = useState(false);
     const [btnLoading, setBtnLoading] = useState(false);
@@ -46,7 +46,10 @@ function UserPage() {
 
         await axios.post('/user/update-all', userInfo)
         .then(res=>{
-            setUser(res.data.data);
+            dispatch({
+                type:"ADD_USER",
+                user:res.data.data
+            })
             openToast({variant:"Success", header:"Info", message:"Info Updated Successfully !!"});
             setEditState(false);
         })

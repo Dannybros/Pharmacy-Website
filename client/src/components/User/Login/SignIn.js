@@ -2,13 +2,14 @@ import React, {useState} from 'react'
 import './Login.scss';
 import {Row, Col, Button, Spinner, Toast, ToastContainer} from 'react-bootstrap'
 import axios from '../../axios/axios'
-import { useLocalStorage } from '../../../Reducer/useLocalStorage';
 import ForgotPw from './ForgotPw';
+import { useStateValue } from '../../../Reducer/StateProvider';
 
-function SignIn({setUser}) {
+function SignIn() {
   
   const initials = {username:"", password:"", cPassword:"", age:"", email:"", hint:"", firstName:"", lastName:""};
-  const [user] = useLocalStorage('User');
+
+  const [{user}, dispatch]= useStateValue();
 
   const [signUpState, setSignUpState] = useState(false);
   const [showForgotPw, setShowForgotPw] = useState(false);
@@ -55,33 +56,26 @@ function SignIn({setUser}) {
     e.preventDefault();
     setBtnLoading(true)
 
-    if(signUpState){
-      //sign up
-      await axios.post('/user/signup', formData)
-      .then(res=>{
-        openToast({variant:"Success", header:"Info", message:"Sign Up in successfully !!"});
-      })
-      .catch((error)=>{
-        openToast({variant:"Warning", header:"Warning", message:error.response.data.message})
-      })
+    const signURL = signUpState? '/user/signup' : '/user/login';
 
-      await setFormData(initials);
-      setBtnLoading(false);
+    await axios.post(signURL, formData)
+    .then(res=>{
 
-    }else{
-     //log in
-     await axios.post('/user/login', formData)
-     .then(res=>{
-        setUser(res.data.result);
-        openToast({variant:"Success", header:"Info", message:"Logged in successfully !!"})
-     })
-     .catch((error)=>{
-        openToast({variant:"Warning", header:"Warning", message:error.response.data.message})
-      })
+      console.log(res.data.result);
+      !signUpState&&  
+        dispatch({
+          type:"ADD_USER",
+          user:res.data.result
+        });
+      
+      openToast({variant:"Success", header:"Info", message:"Sign Up in successfully !!"});
+    })
+    .catch((error)=>{
+      openToast({variant:"Warning", header:"Warning", message:error.response.data.message})
+    })
 
-     await setFormData(initials);
-     setBtnLoading(false);
-    }
+    setFormData(initials);
+    setBtnLoading(false);
   }
 
   const ThrowToast = ()=>{
@@ -98,7 +92,7 @@ function SignIn({setUser}) {
   }
 
   return (
-    <div className='login_page' key={user}>
+    <div className='login_page' val={user}>
       
       {/* toast msg */}
       <ToastContainer position="top-center" className="p-3">
@@ -107,7 +101,7 @@ function SignIn({setUser}) {
 
       {showForgotPw?
         <ForgotPw goToLog={goBackToLoginFromFP} openToast={openToast}/>:
-        <form className='px-4 py-3' onSubmit={handleSubmit} key={user}>
+        <form className='px-4 py-3' onSubmit={handleSubmit}>
           <h3 className='mb-3'> {!signUpState ? "Login":"Sign Up"}</h3>
           <Row className='login_input_field'>
             {signUpState ?

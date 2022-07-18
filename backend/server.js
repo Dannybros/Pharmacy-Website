@@ -54,8 +54,15 @@ const io = new Server(server, {
     },
 });
 
-io.on('connection', (socket)=>{
-    console.log(`User Connected ${socket.id}`);
+global.onlineUsers = new Map();
 
-    socket.to(socket.id).emit('connected', socket.id);
+console.log(onlineUsers);
+io.on('connection', (socket)=>{
+    
+    socket.on('User_Online', (userId)=>{
+        onlineUsers.set(userId, socket.id)
+        
+        console.log(onlineUsers);
+        socket.emit("Test", {message:"Hello"})
+    })
 })

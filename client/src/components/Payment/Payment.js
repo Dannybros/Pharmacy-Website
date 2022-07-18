@@ -6,12 +6,12 @@ import { useParams } from 'react-router-dom';
 import Address from './Address';
 import PaymentMethod from './PaymentMethod';
 import CC from './CC';
-import { useLocalStorage } from '../../Reducer/useLocalStorage';
+import { useStateValue } from '../../Reducer/StateProvider';
 
 function Payment() {
   
   const {total} = useParams();
-  const [user] = useLocalStorage('User');
+  const [{user}] = useStateValue();
 
   const initialOrder={userID:user._id,name:"", phone:"", address:{addr:"", coords:{lat:"", lng:""}}, method:"", total:total}
 

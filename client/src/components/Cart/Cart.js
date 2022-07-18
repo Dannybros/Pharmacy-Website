@@ -8,8 +8,7 @@ import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function Cart() {
 
-  const [{cart, currency}, dispatch] =useStateValue();
-  const [user] = useLocalStorage('User');
+  const [{cart, currency, user}, dispatch] =useStateValue();
   const [exchangeRate] = useLocalStorage('ExchangeRate');
   const [showErrorModal, setShowErrorModal] = useState(false);
 
@@ -50,7 +49,7 @@ function Cart() {
   }
 
   const goPayment=()=>{
-    if(user){
+    if(Object.keys(user).length !== 0){
       navigate(`/cart/payment/${totalCart}`);
     }else{
       setShowErrorModal(true);

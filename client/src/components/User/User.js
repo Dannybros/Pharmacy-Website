@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react'
-import { useLocalStorage } from '../../Reducer/useLocalStorage'
+import { useStateValue } from '../../Reducer/StateProvider';
 import SignIn from './Login/SignIn';
 import UserPage from './UserSection/UserPage';
 
 function User() {
-    const [user, setUser] =  useLocalStorage("User");
+
+    const [{user}] = useStateValue();
 
     useEffect(() => {
       if (Object.keys(user).length === 0) {
@@ -17,7 +18,7 @@ function User() {
   return (
     <div>
         {Object.keys(user).length === 0?
-            <SignIn setUser={setUser} key={user}/>:
+            <SignIn/>:
             <UserPage/>
         }
     </div>

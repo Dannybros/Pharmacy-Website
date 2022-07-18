@@ -2,19 +2,17 @@ import React, {useState, useEffect} from 'react'
 import './OrderList.scss'
 import {Button} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
-import { useLocalStorage } from '../../Reducer/useLocalStorage';
 import {Tabs, Tab, Box, Divider} from '@mui/material'
 import axios from '../axios/axios'
-import io from 'socket.io-client';
 import moment from 'moment'
 import OrderTable from './orderCompo/OrderTable';
 import OrderDetail from './orderCompo/OrderDetail';
+import { useStateValue } from '../../Reducer/StateProvider';
 
 function OrderList() {
 
   const navigate = useNavigate();
-  const [user] = useLocalStorage('User');
-  const [socket, setSocket] = useState();
+  const [{user}] = useStateValue();
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderFilter, setOrderFilter] = useState({search:"", date:"", status:"All"});

@@ -9,15 +9,17 @@ export const StateProvider =({reducer, initialState, children})=>{
     
     const [cart, setCart] = useLocalStorage("Cart");
     const [currency, setCurrency] = useLocalStorage("Currency");
+    const [user, setUser] = useLocalStorage("User");
     
     useEffect(() => {
         setCart(redux[0].cart);
         setCurrency(redux[0].currency);
-    }, [setCart,setCurrency, redux])
+        setUser(redux[0].user);
+    }, [setCart,setCurrency,setUser, redux])
 
     return (
-        //<StateContext.Provider value={redux} props={cart}>
-        <StateContext.Provider value={redux} props={{cart, currency}}>
+        //<StateContext.Provider value={redux} props={cart}>   props={{cart, currency, user}}
+        <StateContext.Provider value={redux} props={initialState} obj={{cart, currency, user}}>
             {children}
         </StateContext.Provider>
     )

@@ -5,10 +5,8 @@ import {Button, Modal, Form} from 'react-bootstrap';
 import {NavLink, useNavigate} from 'react-router-dom'
 import {useStateValue } from '../../Reducer/StateProvider';
 import { Autocomplete, TextField } from '@mui/material';
-
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -17,13 +15,13 @@ import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import logoImg from '../../img/MedLogo.png';
 import Selector from './Select';
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
+import ProfileMenu from './ProfileMenu';
 
 function NavBar() {
   const navigate = useNavigate();
   const [items] = useLocalStorage("Items");
-  const [user] = useLocalStorage("User", {});
   const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
-  const [{cart, currency}, dispatch] = useStateValue();
+  const [{cart, currency, user, socket}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchItemID, setSearchItemID] = useState('');
@@ -53,6 +51,21 @@ function NavBar() {
 
     fetchExchangeAPI();
   }, [setExchange, exchange])
+
+  useEffect(() => {
+    if(Object.keys(user).length!==0){
+      socket.emit("User_Online", user._id);
+  
+      socket.on("Test", (data)=>{
+        alert(data.message)
+      })
+    }
+
+    return()=>{
+      socket.disconnect();
+    }
+  }, [socket, user])
+  
  
   const handleModalClose = () => {
     setModalShow(false);
@@ -74,6 +87,12 @@ function NavBar() {
   const handleModalShow = () => setModalShow(true);
 
   const handleSwitch=()=> setOpenSidebar(true);
+
+  const handleLogOut =()=>{
+    dispatch({
+      type:"LOG_OUT"
+    })
+  }
 
   const goToCart = () => navigate('../cart')
 
@@ -113,7 +132,7 @@ function NavBar() {
               {cart.reduce((count, curItem) => {
                 return count + curItem.quantity;
               }, 0)}
-          </span>
+            </span>
           </div>
            
           {/* search box only for phone size */}
@@ -141,10 +160,6 @@ function NavBar() {
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/order_list">
               <li>Order List <AddIcon className='plus_icon'/></li>
             </NavLink>
-
-            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/user">
-              <li>User <AddIcon className='plus_icon'/></li>
-            </NavLink>
           </ul>
 
           <div className='currency_selector'>
@@ -154,17 +169,11 @@ function NavBar() {
             </select>
           </div>
 
-          <Button variant='primary mx-2 py-1 px-2 ' className='main_search_btn' onClick={handleModalShow}>
+          <Button variant='primary mx-4 py-1 px-2 ' className='main_search_btn' onClick={handleModalShow}>
             <SearchIcon/>
           </Button>
-
-          <div className='user_box'>
-            <div className='user_name_box'>
-              <PersonOutlineIcon className='user_icon'/>
-              {Object.keys(user).length !== 0? user.username : "Guest"}
-            </div>
-            <p>{Object.keys(user).length !== 0? user.email : "Email None"}</p>
-          </div>
+          
+          <ProfileMenu user={user} handleLogOut={handleLogOut}/>
 
         </div>
       </section>

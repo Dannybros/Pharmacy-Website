@@ -1,9 +1,14 @@
+import io from 'socket.io-client';
+
 const localCart = JSON.parse(localStorage.getItem("Medicine-Shop-Cart"));
 const localCurrency = JSON.parse(localStorage.getItem("Medicine-Shop-Currency"));
+const localUser = JSON.parse(localStorage.getItem("Medicine-Shop-User"));
 
 export const initialState={
     cart: localCart? localCart: [],
-    currency:localCurrency? {label:localCurrency.label, abbr:localCurrency.abbr} : {label:"LAOKIP", abbr:"LAK"}
+    currency:localCurrency? {label:localCurrency.label, abbr:localCurrency.abbr} : {label:"LAOKIP", abbr:"LAK"},
+    user:localUser? localUser : {},
+    socket: io.connect("http://localhost:5000")
 };
 
 const reducer = (state, action)=>{
@@ -13,6 +18,18 @@ const reducer = (state, action)=>{
         ...updatedCart[updatedItemIndex]
     };
     switch (action.type) {
+        case 'ADD_USER':
+            return{
+                ...state,
+                user: action.user,
+            };
+
+        case 'LOG_OUT':
+            return{
+                ...state,
+                user: {},
+            };
+
         case 'ADD_TO_BASKET':
             updatedCart.push({ ...action.item, quantity: 1 });
             return{
@@ -61,7 +78,7 @@ const reducer = (state, action)=>{
                     abbr:action.abbr
                 },
             };
-
+        
         default:
             return state;
     }
