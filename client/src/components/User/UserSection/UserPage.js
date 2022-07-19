@@ -6,9 +6,8 @@ import { useStateValue } from '../../../Reducer/StateProvider'
 
 function UserPage() {
 
-    const initials = {username:"", pw:"",  cpw:"", email:"", age:"", hint:"", firstName:"", lastName:""};
     const [{user}, dispatch] = useStateValue();
-    const [userInfo, setUserInfo] = useState({...initials, ...user});
+    const [userInfo, setUserInfo] = useState({...user, pw:""});
     const [editState, setEditState] = useState(false);
     const [btnLoading, setBtnLoading] = useState(false);
     const [showToast, setShowToast] = useState({state:false, variant:"", header:"", message:""});
@@ -16,19 +15,13 @@ function UserPage() {
     const handleOnChange =(e)=>{
         setUserInfo({...userInfo, [e.target.name]: e.target.value});
     }
-    
-    const handleOnChangeOnlyNumber=(e)=>{
-        if(e.target.validity.valid){
-            setUserInfo({...userInfo, age: (e.target.validity.valid) ? e.target.value : userInfo.age});
-        }
-    }
 
     const btnDefault = ()=>{
-        setUserInfo({...initials, ...user})
+        setUserInfo({...user, pw:""})
     }
 
     const btnCancelState =()=>{
-        setUserInfo({...initials, ...user});
+        setUserInfo({...user, pw:""});
         setEditState(false);
     }
 
@@ -44,7 +37,7 @@ function UserPage() {
     const updateUserInfo =async()=>{
         setBtnLoading(true)
 
-        await axios.post('/user/update-all', userInfo)
+        await axios.post('/user/update/info', userInfo)
         .then(res=>{
             dispatch({
                 type:"ADD_USER",
@@ -63,12 +56,12 @@ function UserPage() {
     const ThrowToast = ()=>{
         return(
             <Toast onClose={() => setShowToast({...showToast, state:false})} show={showToast.state} bg={showToast.variant.toLowerCase()} delay={5000} autohide>
-            <Toast.Header>
-                <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                <strong className="me-auto">{showToast.header}</strong>
-                <small className="text-muted ">just now</small>
-            </Toast.Header>
-            <Toast.Body className={showToast.variant === 'Success'? 'text-white text-uppercase' : 'text-uppercase'}>{showToast.message}</Toast.Body>
+                <Toast.Header>
+                    <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+                    <strong className="me-auto">{showToast.header}</strong>
+                    <small className="text-muted ">just now</small>
+                </Toast.Header>
+                <Toast.Body className={showToast.variant === 'Success'? 'text-white text-uppercase' : 'text-uppercase'}>{showToast.message}</Toast.Body>
             </Toast>
         )
     }
@@ -97,8 +90,8 @@ function UserPage() {
                     <input type="text" name='lastName' value={userInfo.lastName} className='form-control' placeholder='Last Name*' autoComplete="on" onChange={handleOnChange} disabled={!editState&& true}/>
                 </Col>
                 <Col xs={6}>
-                    <label>Age</label>
-                    <input type="text" name='age' placeholder='Age...' pattern="[0-9]*" className='form-control' value={userInfo.age}  autoComplete="off" onChange={handleOnChangeOnlyNumber} disabled={!editState&& true}/>
+                    <label>Birthday</label>
+                    <input type="date" name='birthday' placeholder='Birthday...' className='form-control' value={userInfo.birthday} onChange={handleOnChange} disabled={!editState&& true}/>
                 </Col>
                 <Col xs={6}>
                     <label>Email</label>
@@ -114,16 +107,10 @@ function UserPage() {
                 </Col>
                 {
                     editState&&
-                    <>
-                        <Col xs={6}>
-                            <label>New Password</label>
-                            <input type="password" name='pw' placeholder='Password...' className='form-control' autoComplete="off" onChange={handleOnChange} value={userInfo.pw}/>
-                        </Col>
-                        <Col xs={6}>
-                            <label>Confirm Password</label>
-                            <input type="password" name='cpw' placeholder='Password...' className='form-control' autoComplete="off" onChange={handleOnChange}  value={userInfo.cpw}/>
-                        </Col>
-                    </>
+                    <Col xs={6}>
+                        <label>New Password</label>
+                        <input type="text" name='pw' placeholder='Password...' className='form-control' autoComplete="off" onChange={handleOnChange} value={userInfo.pw}/>
+                    </Col>
                 }
                 
             </Row>

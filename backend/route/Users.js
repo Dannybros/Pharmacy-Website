@@ -7,6 +7,16 @@ import * as EmailValidator from 'email-validator';
 const router = express.Router();
 dotenv.config();
 
+router.get('/get-all', (req, res)=>{
+    UserCollection.find({}, (err, data)=>{
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.status(201).send(data);
+        }
+    })
+})
+
 router.post('/login', async (req, res)=>{
     const {username, password} = req.body;
 
@@ -32,9 +42,9 @@ router.post('/login', async (req, res)=>{
 
 router.post('/signup', async (req, res)=>{
 
-    const { email, age, username, password, firstName, lastName, cPassword, hint } = req.body;
+    const { email, bod, username, password, firstName, lastName, cPassword, hint } = req.body;
 
-    if(email=='' || age=='' || username=='' || password=='' || firstName=='' || lastName=='' || cPassword=='' || hint==''){
+    if(email=='' || bod=='' || username=='' || password=='' || firstName=='' || lastName=='' || cPassword=='' || hint==''){
         return res.status(400).json({message: "Please fil in all the fields"});
     }
 
@@ -56,7 +66,7 @@ router.post('/signup', async (req, res)=>{
 
     const hashPw= await bcrypt.hash(password, 10);
 
-    await UserCollection.create({email, age:Number(age), username, hint, password:hashPw, firstName, lastName});
+    await UserCollection.create({email, birthday:bod, username, hint, password:hashPw, firstName, lastName});
 
     res.status(201).json({message:"You have sign up successfully!"});
 
@@ -104,11 +114,11 @@ router.post('/change-pw', async (req, res)=>{
     })
 })
 
-router.post('/update-all', async (req, res)=>{
-    const {_id, email, age, username, pw, firstName, lastName, cpw, hint } = req.body;
+router.post('/update/info', async (req, res)=>{
+    const {_id, email, birthday, username, pw, firstName, lastName,  hint } = req.body;
 
     //check if there is empty fields
-    if(email=='' || age=='' || username=='' || pw=='' || firstName=='' || lastName=='' || cpw=='' || hint==''){
+    if(email=='' || birthday=='' || username=='' || pw=='' || firstName=='' || lastName=='' || hint==''){
         return res.status(400).json({message: "Please fil in all the fields"});
     }
 
@@ -137,18 +147,13 @@ router.post('/update-all', async (req, res)=>{
 
     if(existingUserName) return res.status(400).json({message: "username already exit!"});
 
-    //check if password and confirm password is same
-    if(pw !== cpw){
-        return res.status(400).json({message: "Password don't match!"});
-    } 
-
     //crypt new password
     const newPw = await bcrypt.hash(pw, 10);
 
     //update all the info except id
     UserCollection.findByIdAndUpdate(_id, {
         email,
-        age:Number(age),
+        birthday,
         hint,
         username,
         firstName,

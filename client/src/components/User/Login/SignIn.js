@@ -7,7 +7,7 @@ import { useStateValue } from '../../../Reducer/StateProvider';
 
 function SignIn() {
   
-  const initials = {username:"", password:"", cPassword:"", age:"", email:"", hint:"", firstName:"", lastName:""};
+  const initials = {username:"", password:"", cPassword:"", bod:"", email:"", hint:"", firstName:"", lastName:""};
 
   const [{user}, dispatch]= useStateValue();
 
@@ -24,12 +24,6 @@ function SignIn() {
   const handleOnClear =()=>{
     setFormData(initials);
     setBtnLoading(false);
-  }
-  
-  const handleOnChangeOnlyNumber=(e)=>{
-    if(e.target.validity.valid){
-      setFormData({...formData, age: (e.target.validity.valid) ? e.target.value : formData.age});
-    }
   }
   
   const changeFormState=()=>{
@@ -61,20 +55,20 @@ function SignIn() {
     await axios.post(signURL, formData)
     .then(res=>{
 
-      console.log(res.data.result);
       !signUpState&&  
         dispatch({
           type:"ADD_USER",
           user:res.data.result
         });
       
+      setFormData(initials)
       openToast({variant:"Success", header:"Info", message:"Sign Up in successfully !!"});
+      
     })
     .catch((error)=>{
       openToast({variant:"Warning", header:"Warning", message:error.response.data.message})
     })
 
-    setFormData(initials);
     setBtnLoading(false);
   }
 
@@ -113,7 +107,7 @@ function SignIn() {
                   <input type="text" name='lastName' placeholder='Last Name...' value={formData.lastName}  autoComplete="on" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
-                  <input type="text" name='age' placeholder='Age...'  pattern="[0-9]*" value={formData.age}  autoComplete="off" onChange={handleOnChangeOnlyNumber}/>
+                  <input type="date" name='bod' placeholder='Birthday...' value={formData.bod} onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
                   <input type="text" name='email' placeholder='Email...' value={formData.email} autoComplete="off" onChange={handleOnChange}/>
