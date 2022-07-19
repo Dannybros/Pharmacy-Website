@@ -1,6 +1,6 @@
 import React, {useEffect, useState, Fragment} from 'react'
 import {Button, Modal, Row, Col} from 'react-bootstrap'
-import axios from '../axios'
+import axios from '../../axios'
 import { styled } from '@mui/material/styles';
 import {Divider, List, ListItem, ListItemText, TextField, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper, FormControl, MenuItem, Select, InputLabel} from '@mui/material'
 
@@ -8,7 +8,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
 }));
 
-function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit}) {
+function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report}) {
 
     const [employee, setEmployee] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState("");
@@ -23,12 +23,12 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit}) {
         }
     
         fetchEmployee();
-      }, [])
+    }, [])
       
 
-      const handleChange = (event) => {
+    const handleChange = (event) => {
         setSelectedEmployee(event.target.value);
-      };
+    };
 
   return (
     <Modal
@@ -106,7 +106,7 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit}) {
 
             <Divider/>
 
-            <Typography sx={{ mb: 2, mt:2}} variant="h6" component="div">
+            <Typography sx={{ mb: 1, mt:2}} variant="h6" component="div">
                <b>Order Items</b>
             </Typography>
             <TableContainer component={Paper} sx={{ mb: 4}}>
@@ -141,44 +141,49 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit}) {
                 </Table>
             </TableContainer>
 
+            <Row className='mb-4'>
+                <Col xs={6} md={4} className="d-flex align-items-center"> <b className='w-100 text-center'>Employee For Order : </b></Col>
+                <Col xs={6} md={8}>
+                    {data?.status==="Pending"?
+                    <FormControl>
+                        sx={{width:"100%"}}
+                        <InputLabel id="demo-simple-select-label">Employee Name</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={selectedEmployee}
+                        label="Employee Name"
+                        onChange={handleChange}
+                        >
+                        {employee.map((emp)=>(
+                            <MenuItem value={emp.EmployeeName} key={emp._id}>{emp.EmployeeName}</MenuItem>
+                        ))}
+                        </Select>
+                    </FormControl>:
+                    <TextField
+                        sx={{width:"100%"}}
+                        id="outlined-read-only-input"
+                        label="Employee Name"
+                        defaultValue={data?.employeeName}
+                        InputProps={{
+                        readOnly: true,
+                        }}
+                    />
+                    }
+                </Col>
+            </Row>
             <Divider/>
-
-            {data?.status==="Pending"?
-            
-            <FormControl sx={{mt:4,  minWidth: 400 }}>
-                <InputLabel id="demo-simple-select-label">Employee Name</InputLabel>
-                <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={selectedEmployee}
-                label="Employee Name"
-                onChange={handleChange}
-                >
-                {employee.map((emp)=>(
-                    <MenuItem value={emp.EmployeeName} key={emp._id}>{emp.EmployeeName}</MenuItem>
-                ))}
-                </Select>
-            </FormControl> :
-            <TextField
-                sx={{mt:4,  minWidth: 400 }}
-                id="outlined-read-only-input"
-                label="Employee Name"
-                defaultValue={data?.employeeName}
-                InputProps={{
-                readOnly: true,
-                }}
-            />
-            }
-
         </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="warning" onClick={handleCloseDetails}>Close</Button>
-          <Button variant='danger'> Cancel Order </Button>
-          <Button onClick={()=>handleSubmit(data._id, selectedEmployee)}>
-            {data?.status==="Pending"? "Start Delivery" : "Complete Order"}
-          </Button>
-        </Modal.Footer>
+        
+        {!report&&
+            <Modal.Footer>
+            <Button variant="warning" onClick={handleCloseDetails}>Close</Button>
+            <Button variant='danger'> Cancel Order </Button>
+            <Button onClick={()=>handleSubmit(data._id, data.customerID, selectedEmployee)}>
+                {data?.status==="Pending"? "Start Delivery" : "Complete Order"}
+            </Button>
+            </Modal.Footer>
+        }
 
       </Modal>
   )

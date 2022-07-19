@@ -12,7 +12,7 @@ import { useStateValue } from '../../Reducer/StateProvider';
 function OrderList() {
 
   const navigate = useNavigate();
-  const [{user}] = useStateValue();
+  const [{user, socket}] = useStateValue();
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderFilter, setOrderFilter] = useState({search:"", date:"", status:"All"});
@@ -30,28 +30,17 @@ function OrderList() {
     fetchProducts();
   }, [user])
   
-  // useEffect(() => {
-  //   const s = io.connect("http://localhost:5000");
-  //   setSocket(s);
-  
-  //   return () => {
-  //     s.disconnect();
-  //   }
-  // }, [])
-  
-  // useEffect(() => {
-  //   if (socket==null) return
+  useEffect(() => {
+    socket.on("order_update", (data)=>{
+      const updatedItem = data.data;
+      setOrders(oldItems=>{
+        return oldItems.map(item => {
+          return item._id === updatedItem._id ? { ...updatedItem} : item
+        })
+      })
+    })
 
-  //   socket.on("order_start_end", (data)=>{
-  //     const updatedItem = data.data;
-  //     setOrders(oldItems=>{
-  //       return oldItems.map(item => {
-  //         return item._id === updatedItem._id ? { ...updatedItem} : item
-  //       })
-  //     })
-  //   })
-
-  // }, [socket])  
+  }, [socket])  
 
   const handleSearchChange=(e)=>{
     setOrderFilter({...orderFilter, search:e.target.value});

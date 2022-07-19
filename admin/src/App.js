@@ -2,19 +2,26 @@ import './App.scss';
 import {Routes, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from './components/Nav/Nav'
+//
 import Sidebar from './components/Sidebar/Sidebar';
+//
 import Home from './components/Home/Home';
+//
 import Import from './components/Imports/Import/Import'
 import ImportList from './components/Imports/ImportList/ImportList'
+//
 import OrderList from './components/OrderList/OrderList'
+import OrderReport from './components/OrderList/OrderReport'
+//
 import Categories from './components/Catalog/Categories/Categories'
 import Products from './components/Catalog/Products/Products'
 import Employee from './components/Catalog/Employee/Employee';
 import Supplier from './components/Catalog/Supplier/Supplier'
+//
 import ProductReport from './components/Report/Products/ProductReport'
 import CustomerReport from './components/Report/Customers/CustomerReport'
 import ImportReport from './components/Report/Imports/ImportReport'
-import OrderReport from './components/Report/Orders/OrderReport'
+//
 import Setting from './components/Setting/Setting'
 
 function App() {

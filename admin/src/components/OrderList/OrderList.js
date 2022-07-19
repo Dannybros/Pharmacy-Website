@@ -1,23 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import './OrderList.scss'
 import { useParams } from 'react-router-dom';
+import {Alert, Snackbar, Paper, Typography} from '@mui/material'
 import Moment from 'react-moment'
 import SearchIcon from '@mui/icons-material/Search';
-import OrderTable from './OrderTable';
-import {Alert, Snackbar, Paper, Typography} from '@mui/material'
-import OrderDetail from './OrderDetail';
+import OrderTable from './OrderCompo/OrderTable';
+import OrderDetail from './OrderCompo/OrderDetail';
 import axios from '../axios'
 import Swal from 'sweetalert2'
-import io from 'socket.io-client'
+import {SocketContext} from '../../context/Socket'
 
 function OrderList() {
 
   const {status} = useParams();
+  const socket = useContext(SocketContext);
 
   const [showDetail, setShowDetail] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [search, setSearch] = useState(null);
-  const [socket, setSocket] = useState();
   const [orders, setOrders] = useState([]);
   const [showAlert, setShowAlert] = useState({state:false, msg:""});
 
@@ -40,16 +40,6 @@ function OrderList() {
   }, [status])
 
   useEffect(() => {
-    const s = io.connect("http://localhost:5000");
-    setSocket(s);
-  
-    return () => {
-      s.disconnect();
-    }
-  }, [])
-  
-  useEffect(() => {
-    if (socket==null) return
     
     socket.on("checked_order", (data)=>{
       const updatedItem = data.data;
@@ -92,18 +82,15 @@ function OrderList() {
     setSelectedOrder(null);
   }
 
-  const handleSubmit=(id, name)=>{
-    status==="pending"? startDelivery(id, name) : completeOrder(id)
+  const handleSubmit=(id, customerID, name)=>{
+    status==="pending"? startDelivery(id, customerID, name) : completeOrder(id, customerID)
   }
 
-  const startDelivery=(id, name)=>{
+  const startDelivery=(id, customerID, name)=>{
     if(name===""){
       alert("Please Fill in the Employee")
     }else{
-      axios.post('/order/start_delivery', {_id:id, empName:name})
-      .then(res=>{
-        
-      })
+      axios.post('/order/start_delivery', {_id:id, customerID:customerID, empName:name})
       .catch((error)=>{
         Swal.fire({
           title: 'error',
@@ -114,11 +101,11 @@ function OrderList() {
     }
   }
 
-  const completeOrder=(id)=>{
-    axios.post('/order/complete_order', {_id:id})
+  const completeOrder=(id, customerID)=>{
+    axios.post('/order/complete_order', {_id:id, customerID:customerID})
     .catch((error)=>{
       Swal.fire({
-        title: 'error',
+        title: 'error', 
         text: error.response.data.message,
         icon: 'warning',
       })

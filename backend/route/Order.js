@@ -60,7 +60,7 @@ router.post('/checked', (req, res)=>{
 })
 
 router.post('/start_delivery', (req, res)=>{
-    const {_id, empName} = req.body;
+    const {_id, customerID, empName} = req.body;
 
     OrderCollection.findByIdAndUpdate(_id, {employeeName:empName, status:"On Delivery"}, ({new:true}), (err, data)=>{
         if(err){
@@ -69,12 +69,14 @@ router.post('/start_delivery', (req, res)=>{
             });
         }else{
             req.io.emit("order_start_end", {data:data, message:`Start Delivery ID ${_id} by ${empName}`});
+            const clientSocket = onlineUsers.get(customerID);
+            req.io.to(clientSocket).emit("order_update", {data:data})
         }
     })
 })
 
 router.post('/complete_order', (req, res)=>{
-    const {_id} = req.body;
+    const {_id, customerID} = req.body;
 
     OrderCollection.findByIdAndUpdate(_id, {status:"Completed"}, ({new:true}), (err, data)=>{
         if(err){
@@ -83,6 +85,8 @@ router.post('/complete_order', (req, res)=>{
             });
         }else{
             req.io.emit("order_start_end", {data:data, message:`Order ID ${_id} completed`});
+            const clientSocket = onlineUsers.get(customerID);
+            req.io.to(clientSocket).emit("order_update", {data:data})
         }
     })
 })
@@ -91,7 +95,6 @@ router.post('/', async(req, res)=>{
     const {userID, name, address, phone, method, total, cart} = req.body;
 
     const order = new OrderCollection({
-        _id:orderID,
         customerID:userID,
         customerName:name,
         customerPhone:Number(phone),
