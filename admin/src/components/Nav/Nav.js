@@ -7,13 +7,25 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from '../Sidebar/Sidebar'
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import jwt_decode from "jwt-decode";
+import { useStateValue } from '../../context/StateProvider';
 
 function Nav() {
+
+    const [{user}, dispatch] = useStateValue();
 
     const [canvasShow, setCanvasShow] = useState(false);
 
     const handleClose = () => setCanvasShow(false);
     const handleShow = () => setCanvasShow(true);
+
+    const admin = user? jwt_decode(user) : user
+
+    const handleLogOut=()=>{
+        dispatch({
+            type:'LOG_OUT'
+        })
+    }
 
   return (
     <div className='nav'>
@@ -23,7 +35,7 @@ function Nav() {
             <Dropdown className='user_box' >
                 <Dropdown.Toggle className='user_box_header'>
                     <img src={avatar} alt="user_avatar"/>
-                    &nbsp;&nbsp;&nbsp; Demo demo &nbsp;
+                    &nbsp;&nbsp;&nbsp; {admin?.name} &nbsp;
                 </Dropdown.Toggle>
                 
                 <Dropdown.Menu className='user_box_menu'>
@@ -32,18 +44,15 @@ function Nav() {
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        ID: &nbsp;<b>James Rodes</b>
+                        ID: &nbsp;<b>{admin?.id}</b>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                        Name: &nbsp;<b>James Rodes</b>
+                        Name: &nbsp;<b className='text-capitalize'>{admin?.name}</b>
                     </Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item>
-                        Password: &nbsp;<b>adfasdfa</b>
-                    </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <div className='logout_box'>
+            <div className='logout_box' onClick={handleLogOut}>
                 <LogoutIcon className='logout_icon'/>
                 Logout
             </div>

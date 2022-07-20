@@ -1,8 +1,10 @@
 import React, {useEffect, useState, Fragment} from 'react'
-import {Button, Modal, Row, Col} from 'react-bootstrap'
+import {Modal, Row, Col} from 'react-bootstrap'
 import axios from '../../axios'
 import { styled } from '@mui/material/styles';
-import {Divider, List, ListItem, ListItemText, TextField, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper, FormControl, MenuItem, Select, InputLabel} from '@mui/material'
+import {Button, Divider, List, ListItem, ListItemText, TextField, Tooltip, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper, FormControl, MenuItem, Select, InputLabel} from '@mui/material'
+import { useStateValue } from '../../../context/StateProvider';
+import jwt_decode from 'jwt-decode'
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
@@ -11,6 +13,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report}) {
 
     const [employee, setEmployee] = useState([]);
+    const [{user}] = useStateValue();
     const [selectedEmployee, setSelectedEmployee] = useState("");
 
     useEffect(() => {
@@ -177,11 +180,23 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
         
         {!report&&
             <Modal.Footer>
-            <Button variant="warning" onClick={handleCloseDetails}>Close</Button>
-            <Button variant='danger'> Cancel Order </Button>
-            <Button onClick={()=>handleSubmit(data._id, data.customerID, selectedEmployee)}>
-                {data?.status==="Pending"? "Start Delivery" : "Complete Order"}
-            </Button>
+                <Tooltip title="Only Employee Who Took Order, Can Cancel or Complete Order" placement="top-end">
+                    <Button color="warning" variant='contained' onClick={handleCloseDetails}>Close</Button>
+                </Tooltip>
+                <Button 
+                color='error' 
+                variant='contained' sx={{mx:2}}
+                disabled={data?.status==="On Delivery" && jwt_decode(user)?.name !==selectedEmployee && true}> 
+                    Cancel Order 
+                </Button>
+                <Tooltip title="Add" placement="top-end">
+                    <Button 
+                        variant='contained' 
+                        onClick={()=>handleSubmit(data._id, data.customerID, selectedEmployee)}
+                        disabled={data?.status==="On Delivery" && jwt_decode(user)?.name !==selectedEmployee && true}>
+                        {data?.status==="Pending"? "Start Delivery" : "Complete Order"}
+                    </Button>
+                </Tooltip>
             </Modal.Footer>
         }
 

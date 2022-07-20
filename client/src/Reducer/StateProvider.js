@@ -15,6 +15,7 @@ export const StateProvider =({reducer, initialState, children})=>{
         setCart(redux[0].cart);
         setCurrency(redux[0].currency);
         setUser(redux[0].user);
+        localStorage.setItem('Medicine-Shop-Lang', redux[0].lang);
     }, [setCart,setCurrency,setUser, redux])
 
     return (

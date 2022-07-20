@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom'
-import { SocketContext, socket } from './context/Socket';
+import { StateProvider } from './context/StateProvider';
+import reducer, { initialState } from './context/reducer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <SocketContext.Provider value={socket}>
+      <StateProvider initialState={initialState} reducer={reducer}>
         <App />
-      </SocketContext.Provider>
+      </StateProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

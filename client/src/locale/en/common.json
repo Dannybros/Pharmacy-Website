@@ -1,0 +1,175 @@
+{
+    "Home":{
+        "nav":{
+            "list1":"Home",
+            "list2":"Shop",
+            "list3":"Order List",
+            "list4":"About Us",
+            "phone":"Phone",
+            "guest":"Guest"
+        },
+        "Hero":{
+            "button":"Shop Now",
+            "heading1":"BRINGING THE MEDICINE AT YOUR DOOR",
+            "heading2":"Dedicated to health and wellness. Healthier & happier!"
+        },
+        "Grid":{
+            "item1":{
+                "title":"CONTACT NUMBER",
+                "des":"Please Contact This Number If You Have Any Question"
+            },
+            "item2":{
+                "title":"WORKING HOURS"
+            },
+            "item3":{
+                "title":"BEST PRICE OFFERS",
+                "des":"Affordable services, lower price. Quality products at a lower price. Custom website at affordable prices"
+            },
+            "button":"More About Us"
+            
+        },
+        "Intro":{
+            "item1":{
+                "p1":"Medicines are a core part of health-care services and their use has grown enormously during the last century with the advent of effective antibiotics, anesthetics, painkillers and many other medicines.",
+
+                "p2":"They can cure diseases, relieve symptoms and prevent future ill-health. Appropriate medicine use means providing the right medicine at the right dose, when it is needed, and avoiding medicines that are unnecessary or are unlikely to result in health benefits. It means choosing the treatment with the best effectiveness and safety profile among available alternatives and the least costly of equivalent treatments.",
+
+                "p3":"These decisions require knowledge of a person’s health condition, life situation and preferences and access to unbiased, comparative information on the benefits and harmful effects of the range of available treatment options."
+            },
+            "item2":{
+                "p1":"Plant-based remedies, such as those most commonly used in Eastern Asia, are effective at treating a number of symptoms and ailments. While they may not cure diseases and heal all chronic conditions, herbal remedies can ease the symptoms of these ailments.",
+                
+                "p2":"They can treat coughs, colds, flu, fevers and sore throats. Some remedies can support the entire immune system, making them ideal for supplementary medication.",
+
+                "p3":{
+                    "title":"Here are some of the other benefits of traditional medicines:",
+                    "list1":"more affordable than most conventional medicines",
+                    "list2":"easy to obtain and don’t require prescriptions",
+                    "list3":"strengthen the overall immune system",
+                    "list4":"more affordable than most conventional medicines.",
+                    "list5":"found in nature, so cost very little to harvest and produce"
+                }
+            }
+        },
+        "Category":{
+            "button":"See More"
+        },
+        "Reviews":{
+            "button":"See More"
+        },
+        "Footer":{
+            "About":{
+                "title":"About",
+                "heading":"Scanfcode.com CODE WANTS TO BE SIMPLE is an initiative to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm."
+            },
+            "companyHeading":"Korea Education Fund was established on January 26, 2005 for the purpose of facilitating public support, in addition to the state funding, for education in cooperation with organizations and individuals at home and abroad in keeping with the global trend of educational development.",
+            "contact":{
+                "title":"INFO",
+                "list1":"PHONE",
+                "list2":"Email",
+                "list3":"Address"
+            },
+            "links":{
+                "title":"QUICK LINKS",
+                "list1":"Shop",
+                "list2":"OrderLIst",
+                "list3":"About US"
+            }
+        }
+    },
+    "Shop":{
+        "title":"Category",
+        "btn1":"View",
+        "btn2":"Add Cart"
+    },
+    "Cart":{
+        "title":"Cart",
+        "btnClear":"Clear All",
+        "item":{
+            "btnView":"View",
+            "btnDel":"Del"
+        },
+        "Receipt":{
+            "title":"Receipt",
+            "header":{
+                "list1":"Item",
+                "list2":"Price",
+                "list3":"Amount",
+                "list4":"Total"
+            },
+            "Total":"Total",
+            "btnCheck":"Check Out"
+        }
+    },
+    "Payment":{
+        "heading":"Payment Details",
+        "stepper":{
+            "step1":{
+                "title":"Customer Info",
+                "input1":"Name",
+                "input2":"Phone",
+                "input3":"Address",
+                "btnAddr1":"Current Location",
+                "btnAddr2":"Other Location"
+            },
+            "step2":{
+                "title":"Payment Method"
+            },
+            "step3":{
+                "title":"Payment",
+                "method1":{
+                    "input1":"Card Name",
+                    "input2":"Card Number",
+                    "input3":"Card Expire"
+                },
+                "method2":"For Payment with {{method}}, Please do payment transaction delivery employee.",
+                "btnAddr2":"Other Location"
+            },
+            "btnContinue":"Next",
+            "btnBack":"Back",
+            "btnFInish":"Finish"
+        }
+    },
+    "OrderList":{
+        "heading":"Order List",
+        "search":"Search...",
+        "table":{
+            "header1":"Order ID",
+            "header2":"Order Time",
+            "header3":"Payment Method",
+            "header4":"Total",
+            "header5":"Status",
+            "header6":"Action"
+        },
+        "tab":{
+            "header1":"All",
+            "header2":"Pending",
+            "header3":"On Delivery",
+            "header4":"Completed",
+            "header5":"Cancelled"
+        }
+    },
+    "OrderDetail":{
+        "title":"Order Detail Info",
+        "part1":{
+            "heading":"Detail",
+            "list1":"ID",
+            "list2":{
+                "p1":"Customer Name",
+                "p2":"Address"
+            },
+            "list3":"Date_Time",
+            "list4":"Payment Method",
+            "list5":"Total Amount",
+            "list6":"Status"
+        },
+        "part2":{
+            "heading":"Detail",
+            "list1":"Name",
+            "list2":"Price",
+            "list3":"Amount",
+            "list4":"Total"
+        },
+        "btnClose":"Close"
+    }
+}

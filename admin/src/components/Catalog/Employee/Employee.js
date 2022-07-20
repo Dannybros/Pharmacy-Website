@@ -6,7 +6,7 @@ import EmployeeForm from './EmployeeForm';
 import Swal from 'sweetalert2'
 import EmployeeTable from './EmployeeTable';
 
-const initialData = {EmployeeName:'', Phone:"", Joining_Date:"", Gender:"", BOD:"", Salary:"", Password:""};
+const initialData = {EmployeeName:'', Phone:"", Joining_Date:"", Gender:"", BOD:"", Salary:""};
 
 function Employee() {
 
@@ -57,6 +57,8 @@ function Employee() {
     await axios.post(apiURL, employeeData)
     .then(res=>{
       selectedItem? updateState(res.data.data) : setEmployee(oldArray => [...oldArray, res.data.data]);
+      
+      setAddModal(false);
       Swal.fire({
         title: 'success',
         text: res.data.message,
@@ -70,8 +72,6 @@ function Employee() {
         icon: 'warning',
       })
     })
-
-    setAddModal(false);
   }
 
   const handleDeleteEmployee=(id)=>{

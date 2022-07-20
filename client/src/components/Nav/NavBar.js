@@ -3,7 +3,6 @@ import './NavBar.scss';
 import SideBar from './SideBar/SideBar';
 import {Button, Modal, Form} from 'react-bootstrap';
 import {NavLink, useNavigate} from 'react-router-dom'
-import {useStateValue } from '../../Reducer/StateProvider';
 import { Autocomplete, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
@@ -14,11 +13,16 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import logoImg from '../../img/MedLogo.png';
 import Selector from './Select';
+import {useStateValue } from '../../Reducer/StateProvider';
 import { useLocalStorage } from '../../Reducer/useLocalStorage';
+import {useTranslation} from 'react-i18next'
 import ProfileMenu from './ProfileMenu';
 
 function NavBar() {
   const navigate = useNavigate();
+
+  const {t} = useTranslation();
+  
   const [items] = useLocalStorage("Items");
   const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
   const [{cart, currency, user, socket}, dispatch] = useStateValue();
@@ -65,8 +69,9 @@ function NavBar() {
       socket.disconnect();
     }
   }, [socket, user])
-  
- 
+
+  const handleModalShow = () => setModalShow(true);
+
   const handleModalClose = () => {
     setModalShow(false);
     setSearchItemID('');
@@ -83,8 +88,6 @@ function NavBar() {
       abbr:currencyAbbr
     })
   }
-
-  const handleModalShow = () => setModalShow(true);
 
   const handleSwitch=()=> setOpenSidebar(true);
 
@@ -150,15 +153,15 @@ function NavBar() {
         <div className='menu_list'>
           <ul>
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/">
-              <li>Home <AddIcon className='plus_icon'/> </li>
+              <li>{t('Home.nav.list1')} <AddIcon className='plus_icon'/> </li>
             </NavLink>
 
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/product/discover">
-              <li>Shop <AddIcon className='plus_icon'/></li>
+              <li>{t('Home.nav.list2')} <AddIcon className='plus_icon'/></li>
             </NavLink>
 
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/order_list">
-              <li>Order List <AddIcon className='plus_icon'/></li>
+              <li>{t('Home.nav.list3')} <AddIcon className='plus_icon'/></li>
             </NavLink>
           </ul>
 

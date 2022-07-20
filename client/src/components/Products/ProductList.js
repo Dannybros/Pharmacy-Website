@@ -82,7 +82,6 @@ function ProductList() {
                         )
                     })}
                 </div>
-                
             </CSSTransition>
         </div>
     )
@@ -162,7 +161,7 @@ function ProductList() {
                       </p>
                       <div className='d-flex justify-content-between'>
                         <button onClick={()=>navigate(`../product/${item.id}`)}> View </button>
-                        <button onClick={()=>AddToCart(item)} style={{background:checkItemInCart(item.id)? "#135118": "#33b33e"}}> Add Cart </button>
+                        <button onClick={()=>AddToCart(item)} style={{background:checkItemInCart(item.id)? "#135118": "#4caf50"}}> Add Cart </button>
                       </div>
                     </div>
                   </div>

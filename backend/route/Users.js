@@ -1,11 +1,34 @@
 import express from 'express'
 import UserCollection from '../model/UserModel.js';
+import AdminsCollection from '../model/adminsModel.js';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 import * as EmailValidator from 'email-validator';
 
 const router = express.Router();
 dotenv.config();
+
+router.post('/admin/login', async(req, res)=>{
+    const {username, password} = req.body;
+
+    const existingUser = await AdminsCollection.findOne({adminName: username});
+
+    if(!existingUser) return res.status(403).json({status:"error", message:"Username or Password is incorrect"})
+    
+    const isPasswordCorrect = await bcrypt.compare(password, existingUser.adminPassword); 
+
+    if(!isPasswordCorrect) return res.status(403).json({status:"error", message:"Username or Password is incorrect"})
+
+    //require('crypto').randomBytes(64).toString('hex') from git bash -> type "node" first
+    const secret_key = process.env.JWTAUTHKEY
+
+    const user = {name:username, id:existingUser.adminID}
+
+    const token = jwt.sign(user, secret_key, {expiresIn: '5h' });
+
+    await res.json({status:"success", token:token})
+})
 
 router.get('/get-all', (req, res)=>{
     UserCollection.find({}, (err, data)=>{

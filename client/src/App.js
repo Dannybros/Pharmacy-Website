@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './locale/i18n';
 import axios from 'axios';
 import {Routes, Route} from 'react-router-dom';
 import GridLoader from "react-spinners/GridLoader";
@@ -12,11 +13,14 @@ import User from './components/User/User';
 import NavBar from './components/Nav/NavBar';
 import OrderList from './components/OrderList/OrderList';
 import { useLocalStorage } from './Reducer/useLocalStorage';
+import { useStateValue } from './Reducer/StateProvider';
 
 function App() {
 
   const [items, setItems] = useLocalStorage('Items', []);
   const [loading, setLoading] = useState(true);
+  const [{language}] = useStateValue();
+  const [font, setFont] = useState();
 
   useEffect(() => {
     const source = axios.CancelToken.source()
@@ -42,12 +46,17 @@ function App() {
 
     return ()=>{
       source.cancel();
-      
     }
   }, [setItems])
 
+  useEffect(() => {
+   if(language==="en") setFont("Times New Roman");
+   if(language==="la") setFont("Phetsarath OT");
+  }, [language])
+  
+
   return (
-      <div style={{fontFamily:"Oswald"}}>
+      <div style={{fontFamily:`${font} !important`}}>
         {
           !items.length > 0 ?
           <div className='spinner_box'>

@@ -22,6 +22,7 @@ function EmployeeForm({addModal, handleModalClose, handleButtonSubmit, handleOnC
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Gender:</label>
               <Form.Select name="Gender" value={employeeData.Gender} onChange={handleOnChange}>
+                <option value="" disabled></option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </Form.Select>
@@ -51,10 +52,6 @@ function EmployeeForm({addModal, handleModalClose, handleButtonSubmit, handleOnC
                     event.preventDefault();
                   }
                 }}/>
-            </Col>
-            <Col sm={6} className="mb-3">
-              <label className='mb-1'>Password:</label>
-              <input type="text" className='form-control' name="Password" value={employeeData.Password} onChange={handleOnChange}/>
             </Col>
           </Row>
         </Modal.Body>

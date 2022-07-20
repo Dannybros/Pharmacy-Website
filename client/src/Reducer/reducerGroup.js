@@ -3,12 +3,14 @@ import io from 'socket.io-client';
 const localCart = JSON.parse(localStorage.getItem("Medicine-Shop-Cart"));
 const localCurrency = JSON.parse(localStorage.getItem("Medicine-Shop-Currency"));
 const localUser = JSON.parse(localStorage.getItem("Medicine-Shop-User"));
+const localLang = localStorage.getItem("Medicine-Shop-Lang")
 
 export const initialState={
     cart: localCart? localCart: [],
     currency:localCurrency? {label:localCurrency.label, abbr:localCurrency.abbr} : {label:"LAOKIP", abbr:"LAK"},
     user:localUser? localUser : {},
-    socket: io.connect("http://localhost:5000")
+    socket: io.connect("http://localhost:5000"),
+    lang:localLang? localLang : 'en'
 };
 
 const reducer = (state, action)=>{
@@ -28,6 +30,12 @@ const reducer = (state, action)=>{
             return{
                 ...state,
                 user: {},
+            };
+        
+        case 'SWITCH_LANG':
+            return{
+                ...state,
+                lang: action.lang,
             };
 
         case 'ADD_TO_BASKET':

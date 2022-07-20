@@ -1,5 +1,8 @@
 import express from 'express'
 import EmployeeCollection from '../model/EmployeeModel.js';
+import AdminsCollection from '../model/adminsModel.js';
+import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 
 const router = express.Router();
 
@@ -13,8 +16,11 @@ router.get('/', (req, res)=>{
     })
 })
 
-router.post('/delete', (req,res)=>{
+router.post('/delete', async(req,res)=>{
     const {id} = req.body;
+
+    await AdminsCollection.findOneAndRemove({adminID:id});
+
     EmployeeCollection.find({_id: id}, (err, data)=>{
         if(err){
             res.status(500).json({error:err});
@@ -23,9 +29,11 @@ router.post('/delete', (req,res)=>{
             
         }
     }).deleteOne();
+
+    
 })
 
-router.post('/update', (req,res)=>{
+router.post('/update', async(req,res)=>{
     const {_id, EmployeeName, Gender, BOD, Joining_Date, Password, Phone, Salary} = req.body;
 
     if(EmployeeName=="" || Gender=="" || BOD=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
@@ -34,13 +42,17 @@ router.post('/update', (req,res)=>{
         });
     }
 
+    await AdminsCollection.findOneAndUpdate({adminID:_id}, {
+        adminName:EmployeeName,
+        adminPassword: await bcrypt.hash(EmployeeName, 10),
+    })
+
     EmployeeCollection.findByIdAndUpdate(_id, {
         EmployeeName,
         Phone:Number(Phone),
         Gender,
         BOD,
         Joining_Date,
-        Password,
         Salary:Number(Salary),
     }, ({new:true}), (err, data)=>{
         if(err){
@@ -52,23 +64,31 @@ router.post('/update', (req,res)=>{
 
 })
 
-router.post('/', (req, res)=>{
-    const {EmployeeName, Gender, BOD, Joining_Date, Password, Phone, Salary} = req.body;
+router.post('/', async(req, res)=>{
+    const {EmployeeName, Gender, BOD, Joining_Date, Phone, Salary} = req.body;
 
-    if(EmployeeName=="" || Gender=="" || BOD=="" || Joining_Date=="" || Password=="" || Phone=="" || Salary==""){
+    if(EmployeeName=="" || Gender=="" || BOD=="" || Joining_Date=="" || Phone=="" || Salary==""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
     }
 
+    const newEmpID = mongoose.Types.ObjectId();
+
+    await new AdminsCollection({
+        adminName:EmployeeName,
+        adminPassword: await bcrypt.hash(EmployeeName, 10),
+        adminID:newEmpID
+    }).save()
+
     const employee = new EmployeeCollection({
+        _id:newEmpID,
         EmployeeName:EmployeeName,
         Gender:Gender,
         BOD:BOD,
         Phone:parseInt(Phone),
         Joining_Date:Joining_Date,
-        Salary:parseInt(Salary),
-        Password:Password
+        Salary:parseInt(Salary)
     })
 
     employee.save()

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import './OrderList.scss'
 import { useParams } from 'react-router-dom';
 import {Alert, Snackbar, Paper, Typography} from '@mui/material'
@@ -8,12 +8,12 @@ import OrderTable from './OrderCompo/OrderTable';
 import OrderDetail from './OrderCompo/OrderDetail';
 import axios from '../axios'
 import Swal from 'sweetalert2'
-import {SocketContext} from '../../context/Socket'
+import { useStateValue } from '../../context/StateProvider';
 
 function OrderList() {
 
   const {status} = useParams();
-  const socket = useContext(SocketContext);
+  const [{socket}] = useStateValue();
 
   const [showDetail, setShowDetail] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);

@@ -10,7 +10,7 @@ function CustomerDetail({addModal, handleModalClose, selectedCustomer}) {
         size="lg" 
       >
         <Modal.Header>
-          <Modal.Title>Employee Details</Modal.Title>
+          <Modal.Title>Customer Details</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

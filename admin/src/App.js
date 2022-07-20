@@ -1,14 +1,16 @@
+import React from 'react'
 import './App.scss';
 import {Routes, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ProtectedRoute from './Protected.Route';
+//
+import SignIn from './components/SignIn/SignIn';
+//
 import Nav from './components/Nav/Nav'
 //
 import Sidebar from './components/Sidebar/Sidebar';
 //
 import Home from './components/Home/Home';
-//
-import Import from './components/Imports/Import/Import'
-import ImportList from './components/Imports/ImportList/ImportList'
 //
 import OrderList from './components/OrderList/OrderList'
 import OrderReport from './components/OrderList/OrderReport'
@@ -20,32 +22,30 @@ import Supplier from './components/Catalog/Supplier/Supplier'
 //
 import ProductReport from './components/Report/Products/ProductReport'
 import CustomerReport from './components/Report/Customers/CustomerReport'
-import ImportReport from './components/Report/Imports/ImportReport'
 //
 import Setting from './components/Setting/Setting'
 
 function App() {
+
   return (
     <div className="App">
-      <Nav/>
-      <div className='d-flex web_container'>
-        <Sidebar/>
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/catalog/categories" element={<Categories/>}/>
-          <Route path="/catalog/products" element={<Products/>}/>
-          <Route path="/catalog/employees" element={<Employee/>}/>
-          <Route path="/catalog/suppliers" element={<Supplier/>}/>
-          <Route path="/imports" element={<Import/>}/>
-          <Route path="/imports/orders" element={<ImportList/>}/>
-          <Route path="/order/:status" element={<OrderList/>}/>
-          <Route path="/report/products" element={<ProductReport/>}/>
-          <Route path="/report/customers" element={<CustomerReport/>}/>
-          <Route path="/report/imports" element={<ImportReport/>}/>
-          <Route path="/report/orders" element={<OrderReport/>}/>
-          <Route path="/setting" element={<Setting/>}/>
-        </Routes>
-      </div>
+        <Nav/>
+        <div className='d-flex web_container'>
+          <Sidebar/>
+          <Routes>
+            <Route path="/" element={<ProtectedRoute Compo={<Home/>}/>}/>
+            <Route path="/catalog/categories" element={<ProtectedRoute Compo={<Categories/>}/>}/>
+            <Route path="/catalog/products" element={<ProtectedRoute Compo={<Products/>}/>}/>
+            <Route path="/catalog/employees" element={<ProtectedRoute Compo={<Employee/>}/>}/>
+            <Route path="/catalog/suppliers" element={<ProtectedRoute Compo={<Supplier/>}/>}/>
+            <Route path="/order/:status" element={<ProtectedRoute Compo={<OrderList/>}/>}/>
+            <Route path="/report/products" element={<ProtectedRoute Compo={<ProductReport/>}/>}/>
+            <Route path="/report/customers" element={<ProtectedRoute Compo={<CustomerReport/>}/>}/>
+            <Route path="/report/orders" element={<ProtectedRoute Compo={<OrderReport/>}/>}/>
+            <Route path="/setting" element={<ProtectedRoute Compo={<Setting/>}/>}/>
+            <Route path="/sign-in" element={<SignIn />}/>
+          </Routes>
+        </div>
     </div>
   );
 }
