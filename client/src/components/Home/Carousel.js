@@ -2,7 +2,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import './Home.scss';
 
-const CarouselBox=({CarouselItem, arrow})=>{
+const CarouselBox=({CarouselItem, data, arrow})=>{
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -33,11 +33,9 @@ const CarouselBox=({CarouselItem, arrow})=>{
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
     >
-        <CarouselItem/>
-        <CarouselItem/>
-        <CarouselItem/>
-        <CarouselItem/>
-        <CarouselItem/>
+        {data.map((item, i)=>(
+            <CarouselItem key={i} data={item}/>
+        ))}
         
     </Carousel>
   )

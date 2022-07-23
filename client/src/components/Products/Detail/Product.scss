@@ -222,3 +222,27 @@ $phone:480px;
         }
     }
 }
+.product_review_bg{
+    height: 60vh;
+    width: 100%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05)), url('../../../img/about/aboutus.jpg') no-repeat left bottom;
+    background-size: cover;
+    @media (max-width:500px) {
+       height: 90vh;
+    }
+    .review_box{
+        width: 500px;
+        .rating_box{
+            transform:scale(1.5);
+        }
+        @media (max-width:500px) {
+            .rating_box{
+                transform:scale(1);
+            }
+            width: 90%;
+        }
+    }
+}

@@ -12,11 +12,22 @@ import NavBar from './components/Nav/NavBar';
 import OrderList from './components/OrderList/OrderList';
 import { useStateValue } from './Reducer/StateProvider';
 import AboutUs from './components/AboutUs/AboutUs';
+import axios from './components/axios/axios'
 
 function App() {
 
   const [{language}] = useStateValue();
+  const [items, setItems] = useState([]);
   const [font, setFont] = useState();
+
+  useEffect(() => {
+    const fetchItems =async()=>{
+      await axios.get('/products')
+      .then(res=>setItems(res.data))
+    }
+
+    fetchItems();
+  }, [])
 
   useEffect(() => {
    if(language==="en") setFont("Times New Roman");
@@ -25,10 +36,10 @@ function App() {
   
   return (
       <div style={{fontFamily:`${font} !important`}}>
-        <NavBar/>
+        <NavBar items={items}/>
         <main>
           <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home items={items}/>}/>
             <Route path="/about" element={<AboutUs/>}/>
             <Route path="/product/discover" element={<ProductList/>}/>
             <Route path="/product/:productId" element={<Product/>}/>

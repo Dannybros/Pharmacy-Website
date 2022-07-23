@@ -87,12 +87,12 @@ function Home() {
         </Col>
       </Row>
 
-      <section className='popular__product'>
+      {/* <section className='popular__product'>
         <Container>
           <h1>Popular Products</h1>
           <CarouselBox CarouselItem={CarouselItem}/>
         </Container>
-      </section>
+      </section> */}
 
       <section>
         <Container className='promo_hero_section'>

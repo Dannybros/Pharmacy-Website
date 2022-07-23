@@ -17,6 +17,9 @@
 .review_bg{
     height: 60vh;
     @include shadyBG('../../img/about/aboutUs2.jpg', center top);
+    @media (max-width:500px) {
+       height: 90vh;
+    }
 }
 .intro_section{
     margin: 25px 0;
@@ -30,4 +33,13 @@
 }
 .review_box{
     width: 500px;
+    .rating_box{
+        transform:scale(1.5);
+    }
+    @media (max-width:500px) {
+        .rating_box{
+            transform:scale(1);
+        }
+        width: 90%;
+    }
 }

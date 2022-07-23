@@ -18,17 +18,18 @@ import { useLocalStorage } from '../../Reducer/useLocalStorage';
 import {useTranslation} from 'react-i18next'
 import ProfileMenu from './ProfileMenu';
 
-function NavBar() {
+function NavBar({items}) {
   const navigate = useNavigate();
 
   const {t} = useTranslation();
   
-  const [items] = useLocalStorage("Items");
   const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
-  const [{cart, currency, user, socket}, dispatch] = useStateValue();
+  const [{cart, currency, user, socket, lang}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchItemID, setSearchItemID] = useState('');
+
+  console.log(items);
 
   // useEffect(() => {
   //   const fetchExchangeAPI=async()=>{
@@ -57,12 +58,11 @@ function NavBar() {
   // }, [exchange])
 
   useEffect(() => {
+
+    if(!socket) return null;
+
     if(Object.keys(user).length!==0){
       socket.emit("User_Online", user._id);
-  
-      socket.on("Test", (data)=>{
-        // alert(data.message)
-      })
     }
 
     return()=>{
@@ -201,7 +201,7 @@ function NavBar() {
                 onChange={(e, value)=>{
                   setSearchItemID(value.id)
                 }}
-                options={items.map(item=>({id:item.id, label:item.title}))}
+                options={items.map(item=>({id:item._id, label:item.name[lang]}))}
                 renderInput={(params) => <TextField {...params} label="Medicines" />}
               />
             </Form.Group> 

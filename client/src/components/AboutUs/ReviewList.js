@@ -29,17 +29,17 @@ function stringAvatar(name) {
       },
       children: name.charAt(0),
     };
-  }
+}
 
-function Reviews() {
+function ReviewList({data}) {
   return (
     <Paper variant='outlined' sx={{p:2, mx:1, textAlign:'center', boxShadow:'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
         <Box sx={{display:'flex', justifyContent:'center', mt:1, mb:2}}>
-            <Avatar {...stringAvatar('ds')}/>
+            <Avatar {...stringAvatar(data.name)}/>
         </Box>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{mb:1}}>
-            <Typography sx={{color:"rgba(0,0,0,0.6)", fontSize:'16px'}}>Name</Typography>
-            <Rating name="no-value" value={3} readOnly  size="large"/>
+            <Typography sx={{color:"rgba(0,0,0,0.6)", fontSize:'16px'}}>{data.name}</Typography>
+            <Rating name="no-value" value={data.value} readOnly  size="large"/>
         </Stack>
         <Divider/>
 
@@ -49,6 +49,7 @@ function Reviews() {
             sx={{
                 mt:2, 
                 maxHeight:150,
+                minHeight:100,
                 textAlign:'justify', 
                 fontSize:'13px', 
                 textTransform:"capitalize", 
@@ -59,7 +60,7 @@ function Reviews() {
                 WebkitLineClamp: "7",
                 WebkitBoxOrient: "vertical",
                 }}>
-                hopes and dreams were dashed that day. It should have been expected, but it still came as a shock. The warning signs had been ignored in favor of the possibility, however remote, that it could actually happen. That possibility had grown from hope to an undeniable belief it must be destiny. That was until it wasn't and the hopes and dreams came crashing down. 
+                {data.des }
             </Typography>
           </Grid>
         </Grid>
@@ -67,4 +68,4 @@ function Reviews() {
   )
 }
 
-export default Reviews
+export default ReviewList

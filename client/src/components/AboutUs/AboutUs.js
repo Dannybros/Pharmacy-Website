@@ -1,13 +1,14 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './AboutUs.scss'
 import {Row, Col} from 'react-bootstrap'
-import {Box, Container, Typography, ImageList, ImageListItem, Paper, Stack, Rating} from '@mui/material'
+import {Box, Container, Typography, ImageList, ImageListItem, Paper, Stack} from '@mui/material'
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import CarouselBox from '../Home/Carousel';
-import Reviews from './Reviews';
+import ReviewList from './ReviewList';
 import Review from './Review';
+import axios from '../axios/axios'
 
 function srcset(image, size, rows = 1, cols = 1) {
     return {
@@ -57,6 +58,21 @@ function AboutUs() {
           cols: 3,
         }
     ];
+
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() => {
+      const fetchReview=async()=>{
+        await axios.post('/review/get/top5', {reviewTo:"shop"})
+        .then(res=>{
+          setReviews(res.data.data)
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+      }
+      fetchReview()
+  }, [])
 
   return (
     <div>
@@ -168,9 +184,8 @@ function AboutUs() {
             </Container>
         </Box>
 
-
         <Container>
-          <CarouselBox CarouselItem={Reviews}/>
+          <CarouselBox CarouselItem={ReviewList} data={reviews}/>
         </Container>
         
         <Box sx={{mt:3}} className='review_bg'>

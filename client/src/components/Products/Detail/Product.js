@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import './Product.scss';
 import '../../Home/Home.scss'
+import {Rating, Stack, Typography} from '@mui/material'
 import {Row, Col, Button, Modal} from 'react-bootstrap'
 import Magnifier from "react-magnifier";
 import { useLocalStorage } from '../../../Reducer/useLocalStorage';
 import {useParams, useNavigate} from 'react-router-dom'
 import { useStateValue } from '../../../Reducer/StateProvider';
 import axios from '../../axios/axios'
+import Review from './Review';
+import ReviewList from './ReviewList';
 
 function Product() {
 
@@ -16,7 +19,7 @@ function Product() {
   const [{cart, currency, lang}, dispatch] = useStateValue();
   const [exchangeRate] = useLocalStorage("ExchangeRate")
   const [data, setData] = useState(null);
-
+  const [rating, setRating] = useState(0);
   const [collapseText, setCollapseText] = useState('-webkit-box');
   const [collapseTextMsg, setCollapseTextMsg] = useState('Show More 🔼');
   const [toastMsg, setToastMsg] = useState(false);
@@ -32,7 +35,18 @@ function Product() {
     fetchItem();
   }, [productId])
 
-  console.log(data);
+  useEffect(() => {
+    const fetchRating =async()=>{
+      await axios.post('/review/overall-rating', {reviewTo:productId})
+      .then(res=>{
+        console.log(res.rating);
+        setRating(res.data.rating);
+      })
+    }
+
+    fetchRating();
+  }, [productId])
+
 
   const handleClose = () => {
     setToastMsg(false);
@@ -121,11 +135,10 @@ function Product() {
 
             <div className='product_rating_box'>
                 <label>Rating:</label>
-                <p>
-                {/* {Array(Math.round(4)).fill().map((_,i)=>(
-                    <span key={i}>⭐</span>
-                ))} */}
-                </p> 
+                <Stack direction="row" alignItems="center" sx={{mt:1}}>
+                  <Typography>{rating}</Typography> &nbsp;
+                  <Rating readOnly value={rating} precision={0.5} sx={{maxWidth:60}} size="large"/>
+                </Stack>
             </div>
             </Col>
 
@@ -135,6 +148,10 @@ function Product() {
             </Col>
         </Row>
       }
+
+      <Review id={productId}/>
+      
+      <ReviewList id="shop"/>
 
       <Modal show={toastMsg} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>

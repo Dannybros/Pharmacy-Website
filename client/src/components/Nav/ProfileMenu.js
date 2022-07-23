@@ -1,5 +1,5 @@
-import React from 'react'
-import { Tooltip, IconButton, Menu, Avatar, MenuItem, Box, ListItemIcon, Divider, Typography} from '@mui/material';
+import * as React from 'react';
+import { Tooltip, IconButton, Menu, Avatar, MenuItem, Box, ListItemIcon, MenuList, Divider, Typography} from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import Settings from '@mui/icons-material/Settings';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -104,29 +104,57 @@ function ProfileMenu({user, handleLogOut}) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-      {Object.keys(user).length !== 0?
+         {Object.keys(user).length !== 0?
+         <MenuList>
+          <MenuItem>
+                <Typography sx={{fontSize:15}}>ID : {user?._id}</Typography>
+            </MenuItem>
+            <MenuItem>
+            <Typography sx={{fontSize:15}}>Name : {user?.username}</Typography>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={()=>navigate('/user')}>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              Settings
+            </MenuItem>
+            <MenuItem onClick={handleLogOut}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem> 
+          </MenuList>:
+          <MenuItem onClick={()=>navigate('/user')} >
+            <ListItemIcon>
+              <PersonOutlineIcon fontSize="small" />
+            </ListItemIcon>
+            Sign Up
+        </MenuItem>}
+      {/* {Object.keys(user).length !== 0?
         
-        <>
-        <MenuItem>
-            <Typography sx={{fontSize:15}}>ID : {user?._id}</Typography>
-        </MenuItem>
-        <MenuItem>
-         <Typography sx={{fontSize:15}}>Name : {user?.username}</Typography>
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={()=>navigate('/user')}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleLogOut}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem> 
-        </>
+        <React.Fragment>
+          <MenuItem>
+              <Typography sx={{fontSize:15}}>ID : {user?._id}</Typography>
+          </MenuItem>
+          <MenuItem>
+          <Typography sx={{fontSize:15}}>Name : {user?.username}</Typography>
+          </MenuItem>
+          <Divider />
+          <MenuItem onClick={()=>navigate('/user')}>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+          <MenuItem onClick={handleLogOut}>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem> 
+        </React.Fragment>
         :
         <MenuItem onClick={()=>navigate('/user')} >
             <ListItemIcon>
@@ -134,7 +162,7 @@ function ProfileMenu({user, handleLogOut}) {
             </ListItemIcon>
             Sign Up
         </MenuItem>
-      }
+      } */}
       </Menu>
     </div>
     )
