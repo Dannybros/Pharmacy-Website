@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {List, ListItem , ListItemAvatar, ListItemText, Typography, Paper, TablePagination, Avatar, Divider, Rating} from '@mui/material'
 import axios from '../../axios/axios'
+import {useTranslation} from 'react-i18next'
 
 function stringToColor(string) {
     let hash = 0;
@@ -37,6 +38,7 @@ function ReviewList({id}) {
     const [data, setData] = useState([])
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const {t} = useTranslation();
     
     useEffect(() => {
         const fetchReview=async()=>{
@@ -63,7 +65,7 @@ function ReviewList({id}) {
   return (
     <Paper variant='outlined' sx={{mt:5, p:3}}>
         <Typography variant="h4" component="div">
-            Reviews
+            {t('ProductInfo.Reviews')}
         </Typography>
 
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -98,7 +100,7 @@ function ReviewList({id}) {
             rowsPerPageOptions={[5, 10, 25]}
             colSpan={3}
             count={data.length}
-            labelRowsPerPage={"Rows per Page"}
+            labelRowsPerPage={t('ProductInfo.tableRow')}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}

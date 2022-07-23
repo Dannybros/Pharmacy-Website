@@ -4,13 +4,14 @@ import {Row, Col, Button, Spinner, Toast, ToastContainer} from 'react-bootstrap'
 import axios from '../../axios/axios'
 import ForgotPw from './ForgotPw';
 import { useStateValue } from '../../../Reducer/StateProvider';
+import { useTranslation } from 'react-i18next';
 
 function SignIn() {
   
   const initials = {username:"", password:"", cPassword:"", bod:"", email:"", hint:"", firstName:"", lastName:""};
 
   const [{user}, dispatch]= useStateValue();
-
+  const {t} = useTranslation();
   const [signUpState, setSignUpState] = useState(false);
   const [showForgotPw, setShowForgotPw] = useState(false);
   const [formData, setFormData]=useState(initials);
@@ -141,17 +142,25 @@ function SignIn() {
               {
                 btnLoading?
                 <Spinner animation="border" variant="light" size="sm"/>:
-                signUpState? "Sign Up" : "Log In"
+                signUpState? t('User.signUp.btnSignUp') : t('User.signUp.btnLogin')
               }
             </Button>
-            <Button variant='danger' className='login_button w-50' type="reset" onClick={handleOnClear}>Cancel</Button>
+            <Button variant='danger' className='login_button w-50' type="reset" onClick={handleOnClear}>
+              {t('User.setting.btnCancel')} 
+            </Button>
           </div>
 
           {signUpState? 
-            <p onClick={changeFormState}>Go Back to Log In</p> : 
+            <p onClick={changeFormState}>
+              {t('User.signUp.redirectLogin')} 
+            </p> : 
             <div className="d-flex justify-content-around">
-              <p onClick={changeFormState}>Click to Sign Up</p>
-              <p onClick={()=>setShowForgotPw(true)}>Forgot Password</p>
+              <p onClick={changeFormState}>
+                {t('User.signUp.redirectSignUp')} 
+              </p>
+              <p onClick={()=>setShowForgotPw(true)}>
+                {t('User.signUp.forgotPw.title')} 
+              </p>
             </div>
           }
         </form>

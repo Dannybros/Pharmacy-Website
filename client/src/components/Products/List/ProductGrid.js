@@ -3,13 +3,15 @@ import {Col, Row, Button} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../../../Reducer/useLocalStorage';
 import { useStateValue } from '../../../Reducer/StateProvider';
+import { useTranslation } from 'react-i18next';
 
 function ProductGrid({data, setShowToast}) {
     const navigate = useNavigate();
+    const {t} = useTranslation();
 
     const [exchangeRate] = useLocalStorage("ExchangeRate")
     const [{cart, currency, lang}, dispatch] = useStateValue();
-
+    
     const AddToCart =(data)=>{
         if(checkItemInCart(data.id)){
           setShowToast(true)
@@ -47,16 +49,16 @@ function ProductGrid({data, setShowToast}) {
                       <h4>{item.name[lang]}</h4>
                       <p>
                         <span>{getExchangeRatePrice(item.price)} {currency.abbr}</span>
-                        <span>
-                          {/* {Array(Math.round(item?.rating.rate)).fill().map((_,i)=>(
-                              <b key={i}>⭐</b>
-                          ))} */}
+                        <span style={{fontSize:"14px"}}>
+                          <em>{item.type[lang]}</em>
                         </span>
                       </p>
                       <div className='d-flex justify-content-between'>
-                        <Button variant='primary' onClick={()=>navigate(`../product/${item._id}`)}> View </Button>
+                        <Button variant='primary' onClick={()=>navigate(`../product/${item._id}`)}>
+                          {t('Shop.btn1')}
+                        </Button>
                         <Button variant='success' onClick={()=>AddToCart(item)} disabled={item.quantity<5? true : checkItemInCart(item._id)}> 
-                          {item.quantity<5? "Out Of Stock" : "Add To Cart"}
+                          {item.quantity<5? t('Home.Shop.btn3') : t('Shop.btn2')}
                         </Button>
                       </div>
                     </div>

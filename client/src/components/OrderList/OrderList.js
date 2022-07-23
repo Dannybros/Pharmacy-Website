@@ -8,11 +8,13 @@ import moment from 'moment'
 import OrderTable from './orderCompo/OrderTable';
 import OrderDetail from './orderCompo/OrderDetail';
 import { useStateValue } from '../../Reducer/StateProvider';
+import { useTranslation } from 'react-i18next'
 
 function OrderList() {
 
   const navigate = useNavigate();
-  const [{user, socket}] = useStateValue();
+  const {t} = useTranslation();
+  const [{user, socket, lang}] = useStateValue();
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderFilter, setOrderFilter] = useState({search:"", date:"", status:"All"});
@@ -80,9 +82,11 @@ function OrderList() {
       {Object.keys(user).length !== 0?
         <div className='pb-4'>
           <section className='order_search_section'>
-            <h1>Order List</h1>
+            <h1>
+              {t('OrderList.heading')}
+            </h1>
             <div className='d-flex'>
-              <input type="text" className='form-control' placeholder='Search...' value={orderFilter.search} onChange={handleSearchChange}/>
+              <input type="text" className='form-control' placeholder={t('OrderList.search')} value={orderFilter.search} onChange={handleSearchChange}/>
               <input type="date" className='form-control' value={orderFilter.date} onChange={handleDateChange}/>
             </div>
           </section>
@@ -90,17 +94,17 @@ function OrderList() {
 
           <Box sx={{ width: '100%' }}>
             <Tabs
-              value={orderFilter.status.en}
+              value={orderFilter.status}
               onChange={handleChangeTab}
               textColor="secondary"
               indicatorColor="secondary"
               aria-label="secondary tabs example"
             >
-              <Tab label="All" value="All" />
-              <Tab label="Pending"  value="Pending"/>
-              <Tab label="Delivery" value="Delivery"/>
-              <Tab label="Completed" value="Completed"/>
-              <Tab label="Cancelled" value="Cancelled"/>
+              <Tab label={t('OrderList.tab.header1')} value="All" />
+              <Tab label={t('OrderList.tab.header2')}  value="Pending"/>
+              <Tab label={t('OrderList.tab.header3')} value="Delivery"/>
+              <Tab label={t('OrderList.tab.header4')} value="Completed"/>
+              <Tab label={t('OrderList.tab.header5')} value="Cancelled"/>
             </Tabs>
           </Box>
           <Divider/>

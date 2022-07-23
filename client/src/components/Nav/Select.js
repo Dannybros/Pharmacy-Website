@@ -22,7 +22,7 @@ function Selector() {
         ...provided,
         background: "transparent",
         border:0,
-        width: 124,
+        width: 132,
         "&:hover": {
           outline:0
         }

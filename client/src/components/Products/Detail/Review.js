@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react'
 import { useStateValue } from '../../../Reducer/StateProvider';
 import axios from '../../axios/axios'
 import Swal from 'sweetalert2'
+import {useTranslation} from 'react-i18next'
 import {Paper,Typography, Rating, Button, Box} from '@mui/material'
 
 function Review({id}) {
     const [review, setReview] = useState({update:false, value:null, des:""});
     const [{user}] = useStateValue();
+    const {t} = useTranslation();
     
     useEffect(() => {
         const fetchReview=async()=>{
@@ -51,7 +53,7 @@ function Review({id}) {
     <Box sx={{mt:3}} className='product_review_bg'>
         <Paper className="review_box" elevation={3} sx={{p:3, display:'flex', flexDirection:"column", alignItems:"center"}}>
             <Typography variant="h6" sx={{textAlign:'center'}}>
-                {!review.update? 'Please Give A Review About The Shop' : "You can update review if you want"}  
+                {!review.update? t('ProductInfo.review.heading1') : t('ProductInfo.review.heading2')}  
             </Typography>
             <Rating 
                 className='rating_box'
@@ -68,7 +70,7 @@ function Review({id}) {
             }}/>
         
             <Button variant="contained" sx={{mt:2}} onClick={handleSubmitReview}>
-                {review.update? "Update" : "Upload"}
+                {review.update? t('ProductInfo.review.btn1') : t('ProductInfo.review.btn2')}
             </Button>
         </Paper>
     </Box>

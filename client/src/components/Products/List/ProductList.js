@@ -6,6 +6,7 @@ import axios from '../../axios/axios';
 import CategoryDropDown from './ProductCategory';
 import ProductGrid from './ProductGrid';
 import { useStateValue } from '../../../Reducer/StateProvider';
+import {useTranslation} from 'react-i18next'
 
 function ProductList() {
   const [{socket}] = useStateValue();
@@ -14,6 +15,7 @@ function ProductList() {
   const [categoryTitle, setCategoryTitle] = useState({en:'All Products', la:"ທັງໝົດ"})
   const [openCatDD, setOpenCatDD] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const {t} = useTranslation();
 
   useEffect(() => {
     const fetchItems =async()=>{
@@ -52,21 +54,6 @@ function ProductList() {
       setItems((items)=>{return items.filter((obj)=>obj._id!==data.id)});
     })
   }, [socket])
-  
-  
-  // const getItemsUnderCategory=(arr, index) =>{
-
-  //   const unique = arr
-  //       .map(e => e[index])
-
-  //       // store the keys of the unique objects
-  //       .map((e, i, final) => final.indexOf(e) === i && i)
-
-  //       // eliminate the dead keys & store unique objects
-  //       .filter(e => arr[e]).map(e => arr[e]);      
-
-  //   return unique;
-  // }
 
   const filterItems=(products)=>{
       let temProducts = products;
@@ -77,6 +64,7 @@ function ProductList() {
           return products
       }
   }
+
   return (
     <section className='product_list_section'>
       <Container>
@@ -87,14 +75,14 @@ function ProductList() {
               className="rounded "
               alt=""
             />
-            <strong className="me-auto" style={{color:'#BB2D3B'}}>Alert</strong>
+            <strong className="me-auto" style={{color:'#BB2D3B'}}> {t('Shop.alert')} </strong>
           </Toast.Header>
-          <Toast.Body><b style={{color:"#BB2D3B", fontSize:"16px"}}>You already have this Item on the Cart!</b></Toast.Body>
+          <Toast.Body><b style={{color:"#BB2D3B", fontSize:"16px"}}> {t('Shop.alertDes')} </b></Toast.Body>
         </Toast>
 
         <Row>
           <div className='category_box'>
-            <h1 onClick={()=>setShowToast(true)}>Category</h1>
+            <h1 onClick={()=>setShowToast(true)}> {t('Shop.title')} </h1>
             <div className="DropDown">
                 <div className="category__dropdown__icon icon-button" onClick={()=>setOpenCatDD(!openCatDD)}>
                     {<DropIcon/>}

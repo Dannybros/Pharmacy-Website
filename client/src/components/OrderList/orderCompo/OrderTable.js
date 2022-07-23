@@ -5,6 +5,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import moment from 'moment'
 import { useStateValue } from '../../../Reducer/StateProvider';
+import { useTranslation } from 'react-i18next';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -18,6 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function OrderTable({data, openDetailModal}) {
 
+    const {t} = useTranslation();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
     const [{lang}] = useStateValue();
@@ -37,12 +39,12 @@ function OrderTable({data, openDetailModal}) {
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell align="center"><b>Order ID</b></StyledTableCell>
-                        <StyledTableCell align="center"><b>Order Time</b></StyledTableCell>
-                        <StyledTableCell align="center"><b>Payment Method</b></StyledTableCell>
-                        <StyledTableCell align="center"><b>Total</b></StyledTableCell>
-                        <StyledTableCell align="center"><b>Status</b></StyledTableCell>
-                        <StyledTableCell align="center"><b>Action</b></StyledTableCell>
+                        <StyledTableCell align="center"><b> {t('OrderList.table.header1')}</b></StyledTableCell>
+                        <StyledTableCell align="center"><b> {t('OrderList.table.header2')}</b></StyledTableCell>
+                        <StyledTableCell align="center"><b> {t('OrderList.table.header3')}</b></StyledTableCell>
+                        <StyledTableCell align="center"><b> {t('OrderList.table.header4')}</b></StyledTableCell>
+                        <StyledTableCell align="center"><b> {t('OrderList.table.header5')}</b></StyledTableCell>
+                        <StyledTableCell align="center"><b> {t('OrderList.table.header6')}</b></StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

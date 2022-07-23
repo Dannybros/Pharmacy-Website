@@ -39,7 +39,7 @@ function ReviewList({data}) {
         </Box>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{mb:1}}>
             <Typography sx={{color:"rgba(0,0,0,0.6)", fontSize:'16px'}}>{data.name}</Typography>
-            <Rating name="no-value" value={data.value} readOnly  size="large"/>
+            <Rating value={data.value} readOnly size="large"/>
         </Stack>
         <Divider/>
 

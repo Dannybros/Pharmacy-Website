@@ -1,10 +1,10 @@
 import React from 'react'
 import './Home.scss'
+import {useNavigate} from 'react-router-dom'
 import {Container, Row, Col} from 'react-bootstrap';
 import PunchClockIcon from '@mui/icons-material/PunchClock';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CarouselBox from './Carousel';
 import pharmacy from '../../img/pharmacy.jpg'
@@ -12,8 +12,13 @@ import tradition from '../../img/promo-img1.jpg'
 import modern from '../../img/modern.jpg'
 import traditional2 from '../../img/tradition.jpg'
 import ScrollTop from './ScrollTop';
+import { useTranslation } from 'react-i18next';
+import ReviewTop3 from './Review';
 
 function Home() {
+
+  const navigate = useNavigate();
+  const {t} = useTranslation();
 
   function CarouselItem(){
     return(
@@ -35,9 +40,9 @@ function Home() {
         <img src="" className='main__hero__img' alt=""/>
 
         <div className='msg__hero'>
-          <button>Shop Now</button>
-          <h5>Bringing the medicine at your door</h5>
-          <p>Dedicated to health and wellness. Healthier {'&'} happier!</p>
+          <button onClick={()=>navigate('/product/discover')}>{t('Home.Hero.button')}</button>
+          <h5>{t('Home.Hero.heading1')}</h5>
+          <p>{t('Home.Hero.heading2')}</p>
         </div>
       </section>
 
@@ -48,12 +53,12 @@ function Home() {
           <div className='msg__tag'>
             <div>
               <LocalPhoneIcon className="msg__tag_icon"/>
-              <h4>CONTACT NUMBER</h4>
+              <h4>{t('Home.Grid.item1.title')}</h4>
               <h5>020-54-115-403</h5>
-              <p>Please Contact This Number If You Have Any Question</p>
+              <p>{t('Home.Grid.item1.des')}</p>
             </div>
-            <button className='btn__msg_redirect'>
-              More About Us
+            <button className='btn__msg_redirect' onClick={()=>navigate('/about')}>
+              {t('Home.Grid.button')}
             </button>
           </div>
         </Col>
@@ -62,12 +67,12 @@ function Home() {
           <div className='msg__tag'>
             <div>
               <PunchClockIcon className='msg__tag_icon'/>
-              <h4>WORKING HOURS</h4>
+              <h4>{t('Home.Grid.item2.title')}</h4>
               <li>MON-FRI: 10:00 AM - 08:00 PM</li>
               <li>SAT-SUN: 03:00 PM - 08:00 PM</li>
             </div>
-            <button className='btn__msg_redirect'>
-              More About Us
+            <button className='btn__msg_redirect' onClick={()=>navigate('/about')}>
+              {t('Home.Grid.button')}
             </button>
           </div>
         </Col>
@@ -76,12 +81,11 @@ function Home() {
           <div className='msg__tag'>
             <div>
               <LocalOfferIcon className='msg__tag_icon'/>
-              <h4>BEST PRICE OFFERS</h4>
-              <p>Affordable services, lower price. Quality products at a lower price.
-                Custom website at affordable prices</p>
+              <h4>{t('Home.Grid.item3.title')}</h4>
+              <p>{t('Home.Grid.item3.des')}</p>
             </div>
-            <button className='btn__msg_redirect'>
-              Shop Now
+            <button className='btn__msg_redirect' onClick={()=>navigate('/product/discover')}>
+              {t('Home.Hero.button')}
             </button>
           </div>
         </Col>
@@ -99,13 +103,13 @@ function Home() {
           <img src={pharmacy} alt=""/>
           <div className='promo_description1'>
             <p>
-              Medicines are a core part of health-care services and their use has grown enormously during the last century with the advent of effective antibiotics, anesthetics, painkillers and many other medicines.
+              {t('Home.Intro.item1.p1')}
             </p>
             <p>
-              They can cure diseases, relieve symptoms and prevent future ill-health. Appropriate medicine use means providing the right medicine at the right dose, when it is needed, and avoiding medicines that are unnecessary or are unlikely to result in health benefits.  It means choosing the treatment with the best effectiveness and safety profile among available alternatives and the least costly of equivalent treatments.
+              {t('Home.Intro.item1.p2')}
             </p>
             <p>
-              These decisions require knowledge of a person’s health condition, life situation and preferences and access to unbiased, comparative information on the benefits and harmful effects of the range of available treatment options.
+              {t('Home.Intro.item1.p3')}
             </p>
 
           </div>
@@ -113,19 +117,15 @@ function Home() {
 
         <Container className='promo_hero_section'>
           <div className='promo_description1'>
-            <p>
-              Plant-based remedies, such as those most commonly used in Eastern Asia, are effective at treating a number of symptoms and ailments. While they may not cure diseases and heal all chronic conditions, herbal remedies can ease the symptoms of these ailments.
-            </p>
-            <p>
-              They can treat coughs, colds, flu, fevers and sore throats. Some remedies can support the entire immune system, making them ideal for supplementary medication.
-            </p>
+            <p>{t('Home.Intro.item2.p1')}</p>
+            <p>{t('Home.Intro.item2.p2')}</p>
 
-            Here are some of the other benefits of traditional medicines:
-            <li> more affordable than most conventional medicines</li>
-            <li> easy to obtain and don’t require prescriptions</li>
-            <li> strengthen the overall immune system</li>
-            <li> more affordable than most conventional medicines.</li>
-            <li> found in nature, so cost very little to harvest and produce</li>
+            {t('Home.Intro.item2.p3.title')}
+            <li> {t('Home.Intro.item2.p3.list1')}</li>
+            <li> {t('Home.Intro.item2.p3.list2')}</li>
+            <li> {t('Home.Intro.item2.p3.list3')}</li>
+            <li> {t('Home.Intro.item2.p3.list4')}</li>
+            <li> {t('Home.Intro.item2.p3.list5')}</li>
 
           </div>
           <img src={tradition} alt=""/>
@@ -147,8 +147,9 @@ function Home() {
       </section>
 
       <section className='reviewers_section'>
-        <h1>Reviews</h1>
-        <Container className='review_box_container'>
+        <h1> {t('ProductInfo.Reviews')}  </h1>
+        <ReviewTop3/>
+        {/* <Container className='review_box_container'>
           <div className="review_box">
             <div className='review_user_icon_box'>
               <PersonOutlineIcon className='review_user_icon'/>
@@ -187,7 +188,7 @@ function Home() {
             There was no ring on his finger. That was a good 
             </div>
           </div>
-        </Container>
+        </Container> */}
         <span className='skew'></span>
         <span className='skew_two'></span>
       </section>
@@ -196,40 +197,38 @@ function Home() {
         <Container style={{borderBottom:"1px solid grey"}}>
           <Row>
             <Col sm={12} md={6} className="px-4">
-              <h5>About</h5>
-              <p style={{textAlign:"justify"}}>
-                Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative  to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm.
-              </p>
+              <h5>{t('Home.Footer.About.title')}</h5>
+              <p style={{textAlign:"justify"}}>{t('Home.Footer.About.heading')}</p>
             </Col>
 
             <Col xs={6} md={3} className="px-4">
-              <h5>Info</h5>
+              <h5>{t('Home.Footer.contact.title')}</h5>
               <ul className='footer__address'>
                 <li>
-                  PHONE:  020 539 283 33
+                  {t('Home.Footer.contact.list1')}:  020 539 283 33
                 </li>
-                <li>Email: example@gmail.com </li>
-                <li>Address: Somewhere Rd. Vientiane </li>
+                <li>{t('Home.Footer.contact.list2')}: example@gmail.com </li>
+                <li>{t('Home.Footer.contact.list3')}: Somewhere Rd. Vientiane </li>
               </ul>
             </Col>
 
             <Col xs={6} md={3} className="px-4">
-              <h5>Quick Links</h5>
+              <h5>{t('Home.Footer.links.title')}</h5>
               <ul className='footer__links'>
                 <li><a href="/home">
-                    Home
+                  {t('Home.nav.list1')}
                 </a></li>
 
                 <li><a href="/product/discover">
-                    Shop
+                  {t('Home.Footer.links.list1')}
                 </a></li>
 
-                <li><a href="/about-us">
-                    Contact
+                <li><a href="/about">
+                  {t('Home.Footer.links.list2')}
                 </a></li>
 
                 <li><a href="/cart">
-                    Check Out
+                  {t('Home.Footer.links.list3')}
                 </a></li>
               </ul>
             </Col>

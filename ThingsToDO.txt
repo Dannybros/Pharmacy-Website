@@ -6,8 +6,6 @@ Admin website:
     ✖ Create revenue report
     
 Client website:
-    ✖ Change Language
     ✖ Create Invoice
     ✖ Credit Card Payment
-   (Today)    ✖ make Review of products and Shop
-   (Today)    ✖ Create About Us Page
+    ✖ new 4 products on home page

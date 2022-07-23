@@ -3,6 +3,7 @@ import {Button, Modal, Row, Col} from 'react-bootstrap'
 import { styled } from '@mui/material/styles';
 import {Divider, List, ListItem, ListItemText, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper} from '@mui/material'
 import { useStateValue } from '../../../Reducer/StateProvider';
+import { useTranslation } from 'react-i18next';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
@@ -11,25 +12,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function OrderDetail({viewDetail, setViewDetail, data}) {
 
     const [{lang}] = useStateValue();
-
-    console.log(data);
+    const {t} = useTranslation();
 
   return (
     <Modal
         show={viewDetail}
         onHide={() => setViewDetail(false)}
         size="lg"
-        //dialogClassName="modal_view"
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
-            Order Details Info
+            {t('OrderDetail.title')} 
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
             <Typography variant="h6" component="div">
-               <b>Details</b>
+               <b>{t('OrderDetail.part1.heading')}</b>
             </Typography>
             <List dense={true}>
                 <Row>
@@ -42,7 +41,9 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <ListItem> <ListItemText primary="Customer" secondary="Address"/> </ListItem>
+                        <ListItem> 
+                            <ListItemText primary={t('OrderDetail.part1.list2.p1')} secondary={t('OrderDetail.part1.list2.p2')}/> 
+                        </ListItem>
                     </Col>
                     <Col xs={6}>
                         <ListItem>
@@ -57,7 +58,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <ListItem> <ListItemText primary="Date_Time"/> </ListItem>
+                        <ListItem> <ListItemText primary={t('OrderDetail.part1.list3')}/> </ListItem>
                     </Col>
                     <Col xs={6}>
                         <ListItem> <ListItemText secondary={data?.createdAt}/> </ListItem>
@@ -65,7 +66,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <ListItem> <ListItemText primary="Payment Method"/> </ListItem>
+                        <ListItem> <ListItemText primary={t('OrderDetail.part1.list4')}/> </ListItem>
                     </Col>
                     <Col xs={6}>
                         <ListItem> <ListItemText secondary={data?.paymentMethod} /> </ListItem>
@@ -73,7 +74,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <ListItem> <ListItemText primary="Total Amount"/> </ListItem>
+                        <ListItem> <ListItemText primary={t('OrderDetail.part1.list5')}/> </ListItem>
                     </Col>
                     <Col xs={6}>
                         <ListItem> <ListItemText secondary={data?.orderTotal} /> </ListItem>
@@ -81,7 +82,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <ListItem> <ListItemText primary="Status"/> </ListItem>
+                        <ListItem> <ListItemText primary={t('OrderDetail.part1.list6')}/> </ListItem>
                     </Col>
                     <Col xs={6}>
                         <ListItem> <ListItemText secondary={data?.status[lang]} /> </ListItem>
@@ -90,17 +91,17 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
             </List>
             <Divider/>
             <Typography sx={{ mt: 2, mb:2}} variant="h6" component="div">
-               <b>Order Items</b>
+               <b>{t('OrderDetail.part2.heading')}</b>
             </Typography>
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <StyledTableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell align="center">Price</TableCell>
-                            <TableCell align="center">Amount</TableCell>
-                            <TableCell align="center">Total</TableCell>
+                            <TableCell>{t('OrderDetail.part2.list1')}</TableCell>
+                            <TableCell align="center">{t('OrderDetail.part2.list2')}</TableCell>
+                            <TableCell align="center">{t('OrderDetail.part2.list3')}</TableCell>
+                            <TableCell align="center">{t('OrderDetail.part2.list4')}</TableCell>
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
@@ -127,7 +128,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={() => setViewDetail(false)}>Close</Button>
+          <Button onClick={() => setViewDetail(false)}>{t('OrderDetail.btnClose')}</Button>
         </Modal.Footer>
 
       </Modal>

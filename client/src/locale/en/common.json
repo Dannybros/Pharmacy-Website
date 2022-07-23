@@ -8,6 +8,12 @@
             "phone":"Phone",
             "guest":"Guest"
         },
+        "Profile":{
+            "name":"Name",
+            "setting":"Setting",
+            "logout":"LogOut",
+            "signUp":"SignUp"
+        },
         "Hero":{
             "button":"Shop Now",
             "heading1":"BRINGING THE MEDICINE AT YOUR DOOR",
@@ -62,7 +68,6 @@
                 "title":"About",
                 "heading":"Scanfcode.com CODE WANTS TO BE SIMPLE is an initiative to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm."
             },
-            "companyHeading":"Korea Education Fund was established on January 26, 2005 for the purpose of facilitating public support, in addition to the state funding, for education in cooperation with organizations and individuals at home and abroad in keeping with the global trend of educational development.",
             "contact":{
                 "title":"INFO",
                 "list1":"PHONE",
@@ -80,35 +85,50 @@
     "Shop":{
         "title":"Category",
         "btn1":"View",
-        "btn2":"Add Cart"
+        "btn2":"Add Cart",
+        "btn3":"Out of Stock",
+        "alert":"Alert",
+        "alertDes":"You already have this Item on the Cart!"
     },
     "ProductInfo":{
+        "zoom":"Hover to zoom image",
+        "alert":"You can't add if item is already in the cart",
         "list1":"Price",
         "list2":"Category",
         "list3":"Weight",
         "list4":"Brand",
         "list5":"Description",
         "list6":"Rating",
-        "Rate":"Give This Product A Rating",
         "Reviews":"Reviews",
-        "Others":"Other Products"
+        "Others":"Other Products",
+        "review":{
+            "heading1":"Please Give A Review",
+            "heading2":"You can update review if you want",
+            "btn1":"Update",
+            "btn2":"Upload"
+        },
+        "tableRow":"Rows per page"
     },
     "Cart":{
         "title":"Cart",
         "btnClear":"Clear All",
+        "warning":"You need to log in to account to pay products",
+        "close":"Close",
+        "redirect":"Go To Login Page",
         "item":{
             "btnView":"View",
-            "btnDel":"Del"
+            "btnDel":"Delete"
         },
         "Receipt":{
-            "title":"Receipt",
+            "heading1":"Details",
+            "heading2":"Price",
             "header":{
-                "list1":"Item",
-                "list2":"Price",
-                "list3":"Amount",
-                "list4":"Total"
+                "list1":"Des",
+                "list2":"Qty.",
+                "list3":"Price",
+                "list4":"Sum"
             },
-            "Total":"Total",
+            "total":"Total",
             "btnCheck":"Check Out"
         }
     },
@@ -133,7 +153,7 @@
                     "input2":"Card Number",
                     "input3":"Card Expire"
                 },
-                "method2":"For Payment with {{method}}, Please do payment transaction delivery employee.",
+                "method2":"For Payment with <strong>{{method}}</strong>, Please do payment transaction delivery employee. For Detail Information, please go to <Link1>{{redirect}}</Link1> page.",
                 "btnAddr2":"Other Location"
             },
             "btnContinue":"Next",
@@ -175,12 +195,75 @@
             "list6":"Status"
         },
         "part2":{
-            "heading":"Detail",
+            "heading":"Order Item Details",
             "list1":"Name",
             "list2":"Price",
             "list3":"Amount",
             "list4":"Total"
         },
         "btnClose":"Close"
+    },
+    "Sidebar":{
+        "logIn":"Log In",
+        "list5":"Check Out"
+    },
+    "About":{
+        "intro1":{
+            "heading1":"PHARMACY WEBSITE DESIGN THAT ENGAGES YOUR AUDIENCE AND CONVERTS THEM. THAT’S WHAT IT SHOULD DO.",
+            "heading2":"We believe that traditional medicine has a long history. It is the sum total of the knowledge, skill, and practices based on the theories, beliefs, and experiences indigenous to different cultures, whether explicable or not, used in the maintenance of health as well as in the prevention, diagnosis, improvement or treatment of physical and mental illness.",
+            "heading3":"Traditional Korean medicine has a deep trust and high public satisfaction as a traditional medicine intervention and as a national characteristic of medicine in Korea.",
+            "heading4":" We bring you these traditional korean medicine to laos and sell them cheaply, also provide free delivery. Just a few clicks and these medicine are on their way to your home in no time.",
+            "heading5":"Putting our clients’ needs has been at the core of our team’s culture since day one. We began as a small web design agency and have spent over a decade growing exponentially into a comprehensive digital agency, which provides the best possible design, development, and marketing services for the pharmacy industry through our philosophy of ensuring delivery"
+        },
+        "intro2":{
+            "list1":"Contact Number",
+            "list2":"Contact Number",
+            "list3":"Address"
+        },
+        "intro3":{
+            "heading":"Payment Method Intro",
+            "part1":{
+                "title":"Credit Card",
+                "p1":"Credit cards allow customers to borrow funds from a bank and either pay the balance in full each month or pay the money back with interest. Debit cards make payments by deducting money directly from a customer‘s checking account, rather than using a line of credit.",
+                "p2":"We are using Stripe Payment gateway to validate your credit card and also keep your private info safe when purchasing our medicine. Stripe was founded in 2010 with the mission of making it easier to accept payments over the internet. At the time, taking credit cards meant working with a legacy processor or a middleman broker who would provide you with access to a processor."
+            },
+            "part2":{
+                "title":"Cash",
+                "p1":"Cash is legal tender—currency or coins—that can be used to exchange goods, debt, or services. Sometimes it also includes the value of assets that can be easily converted into cash immediately, as reported by a company.",
+                "p2":"Ultimately, individuals use a mix of both cash and credit cards for different kinds of purchases. While paying in cash will most likely help you save money and make fewer impulse purchases, paying in credit cards does offer an enviable convenience and allow you to afford larger items—given you monitor your spending carefully and make sure to pay off your balance each month.",
+                "p3":"With cash, your spending is straightforward and there is less risk of identity theft. Ultimately, it's up to each individual to make the best decisions based on their financial health, what they are purchasing, and the risks they are willing to incur.",
+                "p4":"BCEL ONE PAY is one of the most used and popular online money transfer app in Laos. Unfortunately, We still haven't registered for BCEL Bank Payment Gateway to verify whether you have paid or not. <strong> If you wish to pay with BCEL ONE PAY, then Please choose option 'Cash' when purchasing and do the transaction with Deliverymen. </strong>"
+            }
+        }
+    },
+    "User":{
+        "setting":{
+            "heading":"User Information",
+            "list1":"First Name",
+            "list2":"Last Name",
+            "list3":"Birthday",
+            "list4":"Email",
+            "list5":"Username",
+            "list6":"Hint",
+            "list7":"New Password",
+            "btnEdit": "Edit Info",
+            "btnSave": "Save",
+            "btnDefault": "Default",
+            "btnCancel": "Cancel"
+        },
+        "signUp":{
+            "btnLogin":"Login",
+            "btnSignUp":"Sign Up",
+            "btnSubmit":"Submit",
+            "redirectLogin":"Go Back to Log In",
+            "redirectSignUp":"Click to Sign Up",
+            "forgotPw":{
+                "title":"Forgot Password",
+                "label1":"Enter Email You Registered",
+                "label2":"Type Hint",
+                "label3":"Enter New Password",
+                "label4":"Confirm New Password"
+            }
+        }
     }
 }

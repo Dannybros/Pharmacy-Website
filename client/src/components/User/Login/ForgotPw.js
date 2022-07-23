@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {Row, Col, Button, Spinner} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next';
 import axios from '../../axios/axios'
 
 function ForgotPw({goToLog, openToast}) {
@@ -8,6 +9,7 @@ function ForgotPw({goToLog, openToast}) {
     const [changePw, setChangePw] = useState(false);
     const [formData, setFormData] = useState(initials);
     const [btnLoading, setBtnLoading] = useState(false);
+    const {t} = useTranslation();
 
     const handleOnChange =(e)=>{
         setFormData({...formData, [e.target.name]: e.target.value});
@@ -48,27 +50,29 @@ function ForgotPw({goToLog, openToast}) {
 
     return (
         <form className='px-4 py-3' onSubmit={handleSubmit}>
-            <h3 className='mb-3'> Forgot Password</h3>
+            <h3 className='mb-3'>
+                {t('User.signUp.forgotPw.title')}
+            </h3>
             <Row >
                 {
                     !changePw?
                     <>
                         <Col xs={12} className='my-3'>
-                            <label> Enter Email you registered</label>
+                            <label> {t('User.signUp.forgotPw.label1')} </label>
                             <input type="text" name='email' placeholder='Registered Email*' value={formData.email} autoComplete="off" onChange={handleOnChange}/>
                         </Col>
                         <Col xs={12} className='mt-2 mb-3'>
-                            <label> Type Hint</label>
+                            <label> {t('User.signUp.forgotPw.label2')} </label>
                             <input type="text" name='hint' placeholder='Hint*' value={formData.hint} autoComplete="off" onChange={handleOnChange}/>
                         </Col>
                     </>:
                     <>
                         <Col xs={12} className='my-3'>
-                            <label> Enter new password</label>
+                            <label> {t('User.signUp.forgotPw.label3')} </label>
                             <input type="password" name='password' placeholder='New Password*' value={formData.password} autoComplete="off" onChange={handleOnChange}/>
                         </Col>
                         <Col xs={12} className='mt-2 mb-3'>
-                            <label> Confirm new password</label>
+                            <label> {t('User.signUp.forgotPw.label4')} </label>
                             <input type="password" name='cPassword' placeholder='Confirm Password*' value={formData.cPassword} autoComplete="off" onChange={handleOnChange}/>
                         </Col>
                     </>
@@ -78,11 +82,11 @@ function ForgotPw({goToLog, openToast}) {
                     {
                         btnLoading?
                         <Spinner animation="border" variant="light" size="sm"/>:
-                        "Submit"
+                        t('User.signUp.btnSubmit')
                     }
                 </Button>
 
-                <p onClick={goToLog}>Go Back to Log In</p> 
+                <p onClick={goToLog}> {t('User.signUp.redirectLogin')} </p> 
             </Row>
         </form>
     )

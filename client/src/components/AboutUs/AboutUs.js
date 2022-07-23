@@ -9,6 +9,7 @@ import CarouselBox from '../Home/Carousel';
 import ReviewList from './ReviewList';
 import Review from './Review';
 import axios from '../axios/axios'
+import { useTranslation, Trans } from 'react-i18next';
 
 function srcset(image, size, rows = 1, cols = 1) {
     return {
@@ -21,7 +22,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 
 function AboutUs() {
 
-    const itemData = [
+  const itemData = [
         {
           img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
           title: 'Breakfast',
@@ -57,45 +58,47 @@ function AboutUs() {
           title: 'Basketball',
           cols: 3,
         }
-    ];
+  ];
 
-    const [reviews, setReviews] = useState([]);
+  const {t} = useTranslation();
 
-    useEffect(() => {
-      const fetchReview=async()=>{
-        await axios.post('/review/get/top5', {reviewTo:"shop"})
-        .then(res=>{
-          setReviews(res.data.data)
-        })
-        .catch(err=>{
-            console.log(err);
-        })
-      }
-      fetchReview()
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchReview=async()=>{
+      await axios.post('/review/get/top5', {reviewTo:"shop"})
+      .then(res=>{
+        setReviews(res.data.data)
+      })
+      .catch(err=>{
+          console.log(err);
+      })
+    }
+    fetchReview()
   }, [])
 
   return (
     <div>
         <Box className='aboutUs_hero' >
-           <Typography variant="h3" component="h3"><b>About Us</b> </Typography>
+           <Typography variant="h3" component="h3"><b>{t('Home.nav.list4')}</b> </Typography>
         </Box>
 
         <Box className='intro_section'>
             <Container className="intro_container" maxWidth="sm">
                 <Typography variant="h6" color="primary" sx={{fontFamily:"oswald", fontStyle:"italic", fontWeight:"bold", textAlign:'center'}}>
-                    “PHARMACY WEBSITE DESIGN THAT ENGAGES YOUR AUDIENCE AND CONVERTS THEM. THAT’S WHAT IT SHOULD DO.”
+                    "{t('About.intro1.heading1')}"
                 </Typography>
                 <Typography component="p" variant="h8" sx={{mt:5}}>
-                    We believe that traditional medicine has a long history. It is the sum total of the knowledge, skill, and practices based on the theories, beliefs, and experiences indigenous to different cultures, whether explicable or not, used in the maintenance of health as well as in the prevention, diagnosis, improvement or treatment of physical and mental illness.
+                  {t('About.intro1.heading2')}
                 </Typography>
                 <Typography component="p" variant="h8" sx={{mt:5}}>
-                    Traditional Korean medicine has a deep trust and high public satisfaction as a traditional medicine intervention and as a national characteristic of medicine in Korea 
+                  {t('About.intro1.heading3')}
                 </Typography>
                 <Typography component="p" variant="h8" sx={{mt:5}}>
-                   We bring you these traditional korean medicine to laos and sell them cheaply, also provide free delivery. Just a few clicks and these medicine are on their way to your home in no time.
+                  {t('About.intro1.heading4')}
                 </Typography>
                 <Typography component="p" variant="h8" sx={{mt:5}}>
-                    Putting our clients’ needs has been at the core of our team’s culture since day one. We began as a small web design agency and have spent over a decade growing exponentially into a comprehensive digital agency, which provides the best possible design, development, and marketing services for the pharmacy industry through our philosophy of ensuring delivery
+                  {t('About.intro1.heading5')}
                 </Typography>
             </Container>
         </Box>
@@ -122,7 +125,9 @@ function AboutUs() {
             <Col item xs={12} md={6}>
               <Stack spacing={4} direction="column" justifyContent="space-around" sx={{height:'100%'}}>
                 <Paper sx={{display:'flex', alignItems:"center", p:2}} variant="outlined">
-                  <Typography variant="h6" component="h6" sx={{minWidth:150}}> Contact Number: </Typography> 
+                  <Typography variant="h6" component="h6" sx={{minWidth:150}}>
+                    {t('About.intro2.list1')} : 
+                  </Typography> 
                   <Typography variant="subtitle1" component="div">
                     <LocalPhoneIcon sx={{mx:2}}/>
                     + 020 554 7844
@@ -130,7 +135,9 @@ function AboutUs() {
                 </Paper>
 
                 <Paper sx={{display:'flex', alignItems:"center", p:2}} variant="outlined">
-                  <Typography variant="h6" component="h6" sx={{minWidth:150}}> Contact Email: </Typography> 
+                  <Typography variant="h6" component="h6" sx={{minWidth:150}}>
+                    {t('About.intro2.list2')} :
+                  </Typography> 
                   <Typography variant="subtitle1" component="div">
                     <EmailIcon sx={{mx:2}}/>
                     + 020 554 7844
@@ -138,7 +145,9 @@ function AboutUs() {
                 </Paper>
 
                 <Paper sx={{display:'flex', alignItems:"center", p:2}} variant="outlined">
-                  <Typography variant="h6" component="h6" sx={{minWidth:150}}> Address: </Typography> 
+                  <Typography variant="h6" component="h6" sx={{minWidth:150}}>
+                    {t('About.intro2.list3')} :
+                  </Typography> 
                     <AddLocationIcon sx={{mx:2}}/>
                   <Typography variant="subtitle1" component="div">
                    this is they sslske ssk <br/>
@@ -154,31 +163,31 @@ function AboutUs() {
         <Box className='intro_section'>
             <Container className="intro_container">
                 <Typography variant="h5" sx={{fontFamily:"oswald", fontStyle:"italic", fontWeight:"bold"}}>
-                    "Payment Method Intro"
+                    "{t('About.intro3.heading')}"
                 </Typography>
                 <Box sx={{ml:3, mt:4}}>
                   <Typography variant="h6"  color="error" sx={{fontFamily:"oswald", fontStyle:"italic", fontWeight:"bold"}}>
-                      "Credit Card"
+                      "{t('About.intro3.part1.title')}"
                   </Typography>
                   <Typography component="p" variant="h8" sx={{ml:2}}>
-                    Credit cards allow customers to borrow funds from a bank and either pay the balance in full each month or pay the money back with interest. Debit cards make payments by deducting money directly from a customer‘s checking account, rather than using a line of credit. <br/><br/>
-
-                    We are using Stripe Payment gateway to validate your credit card and also keep your private info safe when purchasing our medicine. Stripe was founded in 2010 with the mission of making it easier to accept payments over the internet. At the time, taking credit cards meant working with a legacy processor or a middleman broker who would provide you with access to a processor. 
+                    {t('About.intro3.part1.p1')}
+                    <br/><br/>
+                    {t('About.intro3.part1.p2')} 
                   </Typography>
                 </Box>
 
                 <Box sx={{ml:3, mt:4}}>
                   <Typography variant="h6"  color="error" sx={{fontFamily:"oswald", fontStyle:"italic", fontWeight:"bold"}}>
-                    "Cash"
+                    "{t('About.intro3.part2.title')}"
                   </Typography>
                   <Typography component="p" variant="h8" sx={{ml:2}}>
-                    Cash is legal tender—currency or coins—that can be used to exchange goods, debt, or services. Sometimes it also includes the value of assets that can be easily converted into cash immediately, as reported by a company.
+                    {t('About.intro3.part2.p1')}
                     <br/> <br/>
-                    Ultimately, individuals use a mix of both cash and credit cards for different kinds of purchases. While paying in cash will most likely help you save money and make fewer impulse purchases, paying in credit cards does offer an enviable convenience and allow you to afford larger items—given you monitor your spending carefully and make sure to pay off your balance each month.
+                    {t('About.intro3.part2.p2')}
                     <br/> <br/>
-                    With cash, your spending is straightforward and there is less risk of identity theft. Ultimately, it's up to each individual to make the best decisions based on their financial health, what they are purchasing, and the risks they are willing to incur.
+                    {t('About.intro3.part2.p3')}
                     <br/> <br/>
-                    BCEL ONE PAY is one of the most used and popular online money transfer app in Laos. Unfortunately, We still haven't registered for BCEL Bank Payment Gateway to verify whether you have paid or not. <b>If you wish to pay with BCEL ONE PAY, then Please choose option "Cash" when purchasing and do the transaction with Deliverymen. </b>
+                    <Trans i18nKey="About.intro3.part2.p4" />
                   </Typography>
                 </Box>
             </Container>

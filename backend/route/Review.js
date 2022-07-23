@@ -28,6 +28,16 @@ router.post('/get/one', async(req, res)=>{
     res.status(201).json({message:"successfully retrieved a review", data:existingUserReview});
 })
 
+router.get('/shop/top3', async(req, res)=>{
+    const reviewCollection = await ReviewCollection.findOne({reviewTo:"shop"})
+
+    if(!reviewCollection) return res.status(404).json({message:"NO Reviews Yet"})
+
+    const top_reviews = reviewCollection.reviews.sort((a,b)=>b.value-a.value).slice(0,3);
+
+    res.status(200).json({data:top_reviews})
+})
+
 router.post('/overall-rating', async(req, res)=>{
     const {reviewTo} = req.body;
 

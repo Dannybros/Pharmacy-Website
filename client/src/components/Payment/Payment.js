@@ -7,11 +7,13 @@ import Address from './Address';
 import PaymentMethod from './PaymentMethod';
 import CC from './CC';
 import { useStateValue } from '../../Reducer/StateProvider';
+import { useTranslation} from 'react-i18next';
 
 function Payment() {
   
   const {total} = useParams();
-  const [{user}] = useStateValue();
+  const [{user, currency}] = useStateValue();
+  const {t} = useTranslation();
 
   const initialOrder={userID:user._id,name:"", phone:"", address:{addr:"", coords:{lat:"", lng:""}}, method:"", total:total}
 
@@ -28,27 +30,27 @@ function Payment() {
 
   return (
     <section className='payment_page'>
-      <h2>Payment Details</h2>
+      <h2> {t('Payment.heading')}  </h2>
 
       <div className='payment_container'>
         <Box  className="payment_stepper">
           <Stepper activeStep={activeStep} orientation="vertical">
             <Step>
-              <StepLabel> Customer Address</StepLabel>
+              <StepLabel> {t('Payment.stepper.step1.title')} </StepLabel>
               <StepContent>
                 <Address handleNext={handleNext} setOrderInfo={setOrderInfo} orderInfo={orderInfo}/>
               </StepContent>
             </Step>
             
             <Step>
-              <StepLabel> Payment Method</StepLabel>
+              <StepLabel> {t('Payment.stepper.step2.title')}</StepLabel>
               <StepContent>
                 <PaymentMethod handleBack={handleBack} handleNext={handleNext} setOrderInfo={setOrderInfo} orderInfo={orderInfo}/>
               </StepContent>
             </Step>
 
             <Step>
-              <StepLabel> Customer Address</StepLabel>
+              <StepLabel> {t('Payment.stepper.step3.title')} </StepLabel>
               <StepContent>
                 <CC handleBack={handleBack} orderInfo={orderInfo}/>
               </StepContent>
@@ -58,7 +60,7 @@ function Payment() {
         
         <Box className='price_teller'>
           <div className='payment__total'>
-            Total: {total}
+            {t('Cart.Receipt.Total')}: {total} {currency.abbr}
           </div>
         </Box>
       </div>

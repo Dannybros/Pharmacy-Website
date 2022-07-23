@@ -5,9 +5,11 @@ import {NavLink, useNavigate} from 'react-router-dom'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {Button} from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 function SideBar(props) {
     
+    const {t} = useTranslation();
     const navigate = useNavigate();
 
     return (
@@ -18,11 +20,11 @@ function SideBar(props) {
                 <div className='user_info_box'>
                     <PersonOutlineIcon className='user__icon'/>
                     <div className='user__info'>
-                        <span className='user__info__name'><b>Guest</b></span>
+                        <span className='user__info__name'><b>{t('Home.nav.guest')} </b></span>
                         <div className='user__info__email'><b>Email : None</b></div>
                     </div>
                     <Button className='mx-4 py-1 px-3 btn_log_in' onClick={()=>navigate('../user')}>
-                        Log In
+                        {t('Sidebar.login')}
                     </Button>
                     <Button className='mx-4 py-1 px-3 btn_sign_out' variant="danger">
                         <LogoutIcon/>
@@ -30,23 +32,23 @@ function SideBar(props) {
                 </div>
                 <div className='d-flex links_box'>
                     <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } onClick={props.click} to="/">
-                        <li> Home </li>
+                        <li> {t('Home.nav.list1')}  </li>
                     </NavLink>
 
                     <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } onClick={props.click} to="/product/discover">
-                        <li> Shop </li>
+                        <li> {t('Home.nav.list2')}  </li>
                     </NavLink>
                     
                     <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } onClick={props.click} to="/cart">
-                        <li> Check Out </li>
+                        <li> {t('Sidebar.list5')}  </li>
                     </NavLink>
 
                     <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } onClick={props.click} to="/about">
-                        <li> About Us </li>
+                        <li> {t('Home.nav.list4')}  </li>
                     </NavLink>
 
                     <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } onClick={props.click} to="/order_list">
-                        <li> Order List </li>
+                        <li> {t('Home.nav.list3')}  </li>
                     </NavLink>
                     
                 </div>
