@@ -53,17 +53,18 @@ function ProfileMenu({user, handleLogOut}) {
     const userName = Object.keys(user).length !== 0? user.username : "Guest"
 
     return (
-    <div className='user_box'>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:"center", textAlign: 'center' }}>
+    <div className='user_box' style={{ display: 'flex', flexDirection:"column", alignItems: 'center', justifyContent:"center", textAlign: 'center' }}>
+        <Box >
             <Tooltip title="Account settings">
                 <IconButton
+                  sx={{p:0}}
                     onClick={handleClick}
                     size="small"
                     aria-controls={open ? 'account-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                <Avatar {...stringAvatar(userName)}/>
+                <Avatar className="pfp_icon" {...stringAvatar(userName)}/>
             </IconButton>
             </Tooltip>
       </Box>
@@ -103,7 +104,7 @@ function ProfileMenu({user, handleLogOut}) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {Object.keys(user).length !== 0?
+      {Object.keys(user).length !== 0?
         
         <>
         <MenuItem>
@@ -129,11 +130,11 @@ function ProfileMenu({user, handleLogOut}) {
         :
         <MenuItem onClick={()=>navigate('/user')} >
             <ListItemIcon>
-            <PersonOutlineIcon fontSize="small" />
+              <PersonOutlineIcon fontSize="small" />
             </ListItemIcon>
             Sign Up
         </MenuItem>
-        }
+      }
       </Menu>
     </div>
     )

@@ -69,7 +69,7 @@ const reducer = (state, action)=>{
             };
 
         case 'DELETE_FROM_BASKET':
-            const index = state.cart.findIndex(item=>item.id ===action.id);
+            const index = state.cart.findIndex(item=>item._id ===action.id);
             if(index>=0){
                 updatedCart.splice(index, 1);
             };

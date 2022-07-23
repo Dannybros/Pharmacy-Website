@@ -2,7 +2,7 @@ import React, {useState, useEffect}  from 'react'
 import axios from '../../axios'
 import {Button, Row, Col, Modal, Form} from 'react-bootstrap'
 
-function ProductForm({showModal, handleClose, handleOnChange, handleBtnSubmit, productInfo}) {
+function ProductForm({showModal, handleClose,handleObjectChange, handleOnChange, handleBtnSubmit, productInfo}) {
 
   const [categories, setCategories] = useState([]);
 
@@ -26,16 +26,21 @@ function ProductForm({showModal, handleClose, handleOnChange, handleBtnSubmit, p
         <Modal.Body>
           <Row>
             <Col sm={6} className="mb-3">
-              <label className='mb-1'>Product Name:</label>
-              <input type="text" className='form-control' name='name' value={productInfo.name} onChange={handleOnChange}/>
+              <label className='mb-1'>Product Name (EN):</label>
+              <input type="text" className='form-control' name='name.en' value={productInfo.name.en} onChange={handleObjectChange}/>
+            </Col>
+            <Col sm={6} className="mb-3">
+              <label className='mb-1'>Product Name (LAO):</label>
+              <input type="text" className='form-control' name='name.la' value={productInfo.name.la} onChange={handleObjectChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Type:</label> <br/>
-              <Form.Select name="type" value={productInfo.type} onChange={handleOnChange}>
+              <Form.Select name="type" onChange={handleObjectChange} defaultValue={"default"}>
+                <option disabled value={"default"}> -- select an option -- </option>
                 {categories.length>0&&
                   categories.map((item, i)=>{
                     return(
-                      <option value={item.Name} key={i}>{item.Name}</option>
+                      <option value={item.Name.en + "_" + item.Name.la} key={i}>{item.Name.en}</option>
                     )
                   })
                 }
@@ -72,8 +77,12 @@ function ProductForm({showModal, handleClose, handleOnChange, handleBtnSubmit, p
               <input type="date" className='form-control'  name='expireDate' value={productInfo.expireDate} onChange={handleOnChange}/>
             </Col>
             <Col sm={12} className="mb-3">
-              <label className='mb-1'>Product Description:</label>
-              <textarea className='form-control' style={{height:'100px'}} name='description' value={productInfo.description} onChange={handleOnChange}/>
+              <label className='mb-1'>Product Description (EN):</label>
+              <textarea className='form-control' style={{height:'100px'}} name='description.en' value={productInfo.description.en} onChange={handleObjectChange}/>
+            </Col>
+            <Col sm={12} className="mb-3">
+              <label className='mb-1'>Product Description (LAO):</label>
+              <textarea className='form-control' style={{height:'100px'}} name='description.la' value={productInfo.description.la} onChange={handleObjectChange}/>
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Image</label>

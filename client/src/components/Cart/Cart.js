@@ -8,7 +8,7 @@ import { useLocalStorage } from '../../Reducer/useLocalStorage';
 
 function Cart() {
 
-  const [{cart, currency, user}, dispatch] =useStateValue();
+  const [{cart, currency, user, lang}, dispatch] =useStateValue();
   const [exchangeRate] = useLocalStorage('ExchangeRate');
   const [showErrorModal, setShowErrorModal] = useState(false);
 
@@ -102,16 +102,16 @@ function Cart() {
               {
                 cart.map((item)=>{
                   return(
-                    <li className='d-flex' key={item.id}>
-                    <img src={item.image} alt=""/>
+                    <li className='d-flex' key={item._id}>
+                    <img src={item.img} alt=""/>
                     <div className='cart_item_info'>
                       <div className='cart_item_name'>
-                        <h3>{item.title}</h3>
+                        <h3>{item.name[lang]}</h3>
                         <div className='d-flex w-100 justify-content-around'>
-                          <Button onClick={()=>navigate(`../product/${item.id}`)}>
+                          <Button onClick={()=>navigate(`../product/${item._id}`)}>
                             View
                           </Button>
-                          <Button variant='danger' onClick={()=>handleCartItemDel(item.id)}>
+                          <Button variant='danger' onClick={()=>handleCartItemDel(item._id)}>
                             Del
                           </Button>
                           
@@ -119,7 +119,7 @@ function Cart() {
                       </div>
 
                       <div className='cart_item_price'>
-                        <h3>{getExchangeRatePrice(item.price * 12342 * item.quantity)} {currency.abbr}</h3>
+                        <h3>{getExchangeRatePrice(item.price * item.quantity)} {currency.abbr}</h3>
                         <div className=' cart_item_counter'>
                           <PlayArrowIcon className='item_counter_icon' style={{transform:"rotate(180deg)"}} onClick={()=>DecreaseItemAmount(item.id, item.quantity)}/> 
                             {item.quantity}
@@ -147,7 +147,7 @@ function Cart() {
                 {cart?.map((item, i)=>{
                   return(
                     <li key={i}>
-                      <span> {item.title} </span>
+                      <span> {item.name[lang]} </span>
                       <span> {getExchangeRatePrice(item.price * 12342)} {currency.abbr} </span>
                       <span> {item.quantity} </span>
                       <span> {getExchangeRatePrice(item.price * 12342 * item.quantity)} {currency.abbr} </span>
@@ -156,7 +156,7 @@ function Cart() {
                 })}
               </ul>
               <div className='total_checkout_btn'>
-                <h5>Total : <span>{getExchangeRatePrice(totalCart* 12342)} {currency.abbr}</span></h5>
+                <h5>Total : <span>{getExchangeRatePrice(totalCart)} {currency.abbr}</span></h5>
                 <Button className='py-1 px-2' onClick={goPayment}>
                   Check Out
                 </Button>

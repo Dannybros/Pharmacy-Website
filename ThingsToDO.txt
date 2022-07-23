@@ -1,18 +1,13 @@
 Admin website:
-    ✖ Change Language
     ✖ Home Dashboard
     ✖ Import Page
-  (Tonight)    ✖ Add Product Back when order is Cancelled 
     ✖ Customer Detail Modal -> list of orders they ordered in pasty
     ✖ Add Product Report
     ✖ Create revenue report
     
 Client website:
     ✖ Change Language
-  (Tonight)    ✖ Replace all products 
     ✖ Create Invoice
-  (Tonight)    ✖ Disabled add cart button if amount is close to 0
-  (Tonight)    ✖ Subtract amount of Product when Order is taken
     ✖ Credit Card Payment
-    ✖ make Review of products and Shop
-    ✖ Create About Us Page
+   (Today)    ✖ make Review of products and Shop
+   (Today)    ✖ Create About Us Page

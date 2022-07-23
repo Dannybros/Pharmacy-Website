@@ -28,7 +28,7 @@ router.post('/delete', (req,res)=>{
 router.post('/update', (req,res)=>{
     const {_id, Name} = req.body;
 
-    if(Name==""){
+    if(Name.en==="" || Name.la===""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });
@@ -47,7 +47,7 @@ router.post('/update', (req,res)=>{
 router.post('/', (req, res)=>{
     const {Name} = req.body;
     
-    if(Name==""){
+    if(Name.en==="" || Name.la===""){
         res.status(400).json({
             message:"Please fill in all the fields"
         });

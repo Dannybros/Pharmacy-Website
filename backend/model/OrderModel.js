@@ -16,8 +16,8 @@ const orderSchema = new mongoose.Schema({
     orderTotal:Number,
     paymentMethod:String,
     status:{
-        type: String,
-        default: "Pending"
+        en:String,
+        la:String
     },
     checked:{
         type: Boolean,

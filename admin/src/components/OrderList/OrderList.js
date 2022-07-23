@@ -41,7 +41,7 @@ function OrderList() {
 
   useEffect(() => {
     
-    socket.on("checked_order", (data)=>{
+    socket.on("update_order", (data)=>{
       const updatedItem = data.data;
       setOrders(oldItems=>{
         return oldItems.map(order => {
@@ -55,7 +55,7 @@ function OrderList() {
 
        await setShowDetail(false);
 
-       setOrders((items)=>{items.filter((item)=>item._id!==updatedItem._id)});
+       setOrders((items)=>{return items.filter((item)=>item._id!==updatedItem._id)});
 
        setShowAlert({state:true, msg:data.message})
     })
@@ -84,6 +84,17 @@ function OrderList() {
 
   const handleSubmit=(id, customerID, name)=>{
     status==="pending"? startDelivery(id, customerID, name) : completeOrder(id, customerID)
+  }
+
+  const handleCancel = (data)=>{
+    axios.post('/order/cancelled', {order:data})
+    .catch((error)=>{
+      Swal.fire({
+        title: 'error',
+        text: error.response.data.message,
+        icon: 'warning',
+      })
+    })
   }
 
   const startDelivery=(id, customerID, name)=>{
@@ -142,7 +153,7 @@ function OrderList() {
 
       <OrderTable data={orders} search={search} handleShowDetails={handleShowDetails}/>
 
-      <OrderDetail data={selectedOrder} showDetail={showDetail} handleCloseDetails={handleCloseDetails} handleSubmit={handleSubmit}/>
+      <OrderDetail data={selectedOrder} showDetail={showDetail} handleCancel={handleCancel} handleCloseDetails={handleCloseDetails} handleSubmit={handleSubmit}/>
     </section>
   )
 }

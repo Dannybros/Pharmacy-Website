@@ -41,6 +41,10 @@ function SideBar(props) {
                         <li> Check Out </li>
                     </NavLink>
 
+                    <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } onClick={props.click} to="/about">
+                        <li> About Us </li>
+                    </NavLink>
+
                     <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } onClick={props.click} to="/order_list">
                         <li> Order List </li>
                     </NavLink>

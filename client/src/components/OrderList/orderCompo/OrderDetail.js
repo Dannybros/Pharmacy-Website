@@ -1,13 +1,18 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import {Button, Modal, Row, Col} from 'react-bootstrap'
 import { styled } from '@mui/material/styles';
 import {Divider, List, ListItem, ListItemText, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper} from '@mui/material'
+import { useStateValue } from '../../../Reducer/StateProvider';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
 }));
 
 function OrderDetail({viewDetail, setViewDetail, data}) {
+
+    const [{lang}] = useStateValue();
+
+    console.log(data);
 
   return (
     <Modal
@@ -43,7 +48,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem>
                             <ListItemText 
                                 primary={
-                                    <Fragment> <Typography component="span" color="#757ce8"> {data?.customerName} </Typography> </Fragment>
+                                    <Typography component="span" color="#757ce8"> {data?.customerName} </Typography>
                                 } 
                                 secondary="adds"
                             />
@@ -79,7 +84,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         <ListItem> <ListItemText primary="Status"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary={data?.status} /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.status[lang]} /> </ListItem>
                     </Col>
                 </Row>
             </List>
@@ -102,12 +107,12 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                         {data!==null&&
                         data.orderItems.map((item)=>{
                             return(
-                                <TableRow key={item.title} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableRow key={item._id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row" style={{display:"flex"}}>
-                                        <img className="order_detail_img" src={item.image} alt=""/>
+                                        <img className="order_detail_img" src={item.img} alt=""/>
                                         <ListItemText
-                                            primary={item.title}
-                                            secondary={item.id}
+                                            primary={item.name[lang]}
+                                            secondary={item._id}
                                         />
                                     </TableCell>
                                     <TableCell align="center"> ${item.price}</TableCell>

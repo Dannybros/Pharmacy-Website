@@ -55,11 +55,10 @@ function OrderTable({data, search, handleShowDetails}) {
         </TableHead>
         <TableBody>
           {data?.length>0 &&
-            filterOrder(data, search).map((row, i) => {
+            filterOrder(data, search).map((row) => {
               const date = moment(row.createdAt).format("MM/DD/YYYY____hh:mm A");
-
               return(
-                <StyledTableRow key={i}>
+                <StyledTableRow key={row._id}>
                   <StyledTableCell align="center" style={{position:"relative"}}>
                     {!row.checked&& <span className='alert_new_order'>new</span>}
                     {row._id}
@@ -68,7 +67,7 @@ function OrderTable({data, search, handleShowDetails}) {
                     <StyledTableCell align="center">{row.paymentMethod}</StyledTableCell>
                     <StyledTableCell align="center">{row.orderTotal} KIP</StyledTableCell>
                     <StyledTableCell align="center">
-                      <Chip label={row.status} color={row.status==="Pending"? "warning" : row.status==="On Delivery"? "secondary" :"primary"} />
+                      <Chip label={row.status.en} color={row.status.en==="Pending"? "warning" : row.status.en==="On Delivery"? "secondary" :"primary"} />
                     </StyledTableCell>
                     <StyledTableCell align="center">
                         <Tooltip title="View" arrow>

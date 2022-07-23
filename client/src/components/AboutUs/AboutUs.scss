@@ -1,0 +1,33 @@
+@mixin shadyBG ($url, $position) {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05)), url($url) no-repeat $position;
+    background-size: cover;
+}
+.aboutUs_hero{
+    height: 40vh;
+    @include shadyBG('../../img/about/aboutus.jpg', no-repeat left bottom);
+    color: white;
+    h3{
+        padding: 20px;
+        border: 10px solid white;
+    }
+}
+.review_bg{
+    height: 60vh;
+    @include shadyBG('../../img/about/aboutUs2.jpg', center top);
+}
+.intro_section{
+    margin: 25px 0;
+    padding: 60px 0;
+    background: #F2F2F2;
+    display: grid;
+    place-items: center;
+    .intro_container{
+        text-align: justify;
+    }
+}
+.review_box{
+    width: 500px;
+}

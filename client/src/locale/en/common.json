@@ -82,6 +82,17 @@
         "btn1":"View",
         "btn2":"Add Cart"
     },
+    "ProductInfo":{
+        "list1":"Price",
+        "list2":"Category",
+        "list3":"Weight",
+        "list4":"Brand",
+        "list5":"Description",
+        "list6":"Rating",
+        "Rate":"Give This Product A Rating",
+        "Reviews":"Reviews",
+        "Others":"Other Products"
+    },
     "Cart":{
         "title":"Cart",
         "btnClear":"Clear All",

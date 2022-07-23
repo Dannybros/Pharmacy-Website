@@ -305,7 +305,19 @@ $phone:500px;
                 position: relative;
                 padding: 0 10px;
                 border-left: 1px solid black;
-                min-width: 100px;                
+                min-width: 100px;        
+                height: 100%;   
+                .pfp_icon{
+                    margin:10px 0px 0px;
+                } 
+                @media (max-width:$tablet) {
+                    .pfp_icon{
+                        margin: 5px 0 0;
+                        width: 25px;
+                        height: 25px;
+                        font-size: 14px;
+                    }
+                }    
                 p{
                     margin: 0;
                     color: grey;

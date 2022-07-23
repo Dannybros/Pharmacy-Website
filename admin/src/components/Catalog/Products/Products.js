@@ -12,7 +12,7 @@ import { storage } from '../../firebaseConfig';
 import {ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage'
 import ProductList from './ProductList';
 
-const initialProductInfo = {name:"", type:"", price:"", brand:"", weight:"", quantity:"", description:"", expireDate:"", imgFile:null, img:""};
+const initialProductInfo = {name:{en:"", la:""}, type:{en:"", la:""}, price:"", brand:"", weight:"", quantity:"", description:{en:"", la:""}, expireDate:"", imgFile:null, img:""};
 
 function Products() {
 
@@ -46,6 +46,10 @@ function Products() {
   
   useEffect(() => {
     if (socket==null) return
+
+    socket.on("update-several-product", (data)=>{
+      setProducts(data.data)
+    })
     
     socket.on("new-products", (data)=>{
       setProducts(oldArray => [...oldArray, data.data]);
@@ -55,11 +59,11 @@ function Products() {
       alert(data.message);
     })
 
-    socket.on("delete-products", (data)=>{
-      setProducts(data.data)
+    socket.on("delete-product", (data)=>{
+      setProducts((items)=>{return items.filter((item)=>item._id!==data.id)});
     })
     
-    socket.on("update-products", (data)=>{
+    socket.on("update-product", (data)=>{
       const updatedItem = data.data;
       setProducts(oldItems=>{
         return oldItems.map(item => {
@@ -94,6 +98,28 @@ function Products() {
     setProductInfo(newObj)
   }
 
+  const handleObjectChange=(e)=>{
+    if(e.target.name==="type"){
+      const cat_En = e.target.value.split('_')[0]
+      const cat_La = e.target.value.split('_')[1]
+      setProductInfo({
+        ...productInfo, 
+        type:{en:cat_En, la:cat_La}
+      })
+    }else{
+      const objectName = e.target.name.split('.')[0]
+      const objectKey = e.target.name.split('.')[1]
+      const object = productInfo[objectName]
+      setProductInfo({
+          ...productInfo, 
+          [objectName]:{
+            ...object, 
+            [objectKey]:e.target.value
+          }
+      })
+    }
+  }
+
   const uploadInfoToBackend=(data)=>{
     const apiURL = selectedItem? '/products/update' : '/products'
 
@@ -107,6 +133,7 @@ function Products() {
       })
     })
     .catch((error)=>{
+      // deleteObject(ref(storage, data.imgUrl))
       Swal.fire({
         title: 'error',
         text: error.response.data.message,
@@ -197,7 +224,7 @@ function Products() {
         <ProductList handleShow={handleShow} handleDelete={handleDelete} data={products} search={search}/>
       </Card>
 
-      <ProductForm showModal={showModal} handleClose={handleClose} handleOnChange={handleOnChange} handleBtnSubmit={handleBtnSubmit} productInfo={productInfo}/>
+      <ProductForm showModal={showModal} handleClose={handleClose} handleObjectChange={handleObjectChange} handleOnChange={handleOnChange} handleBtnSubmit={handleBtnSubmit} productInfo={productInfo}/>
     </div>
   )
 }

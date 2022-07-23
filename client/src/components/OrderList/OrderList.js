@@ -64,7 +64,7 @@ function OrderList() {
     const searchStatus = status==="All"? "" : status.toLowerCase()
     
     const filterData = data.filter((item)=>{
-      return item.status.toLowerCase().includes(searchStatus) && item._id.includes(searchTerm) && item.createdAt.includes(searchDate)
+      return item.status.en.toLowerCase().includes(searchStatus) && item._id.includes(searchTerm) && item.createdAt.includes(searchDate)
     })
 
     return filterData
@@ -90,7 +90,7 @@ function OrderList() {
 
           <Box sx={{ width: '100%' }}>
             <Tabs
-              value={orderFilter.status}
+              value={orderFilter.status.en}
               onChange={handleChangeTab}
               textColor="secondary"
               indicatorColor="secondary"

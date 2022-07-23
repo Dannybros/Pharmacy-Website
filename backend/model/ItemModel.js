@@ -2,13 +2,22 @@
 import mongoose from 'mongoose'
 
 const itemSchema = new mongoose.Schema({
-    name:String,
-    type:String,
-    quantity:String,
+    name:{
+        en:String,
+        la:String
+    },
+    type:{
+        en:String,
+        la:String
+    },
+    quantity:Number,
     price:Number,
     weight:String,
     brand:String,
-    description:String,
+    description:{
+        en:String,
+        la:String
+    },
     expireDate:String,
     img:String
 })

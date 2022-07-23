@@ -4,6 +4,7 @@ import {Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, 
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import moment from 'moment'
+import { useStateValue } from '../../../Reducer/StateProvider';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -19,6 +20,7 @@ function OrderTable({data, openDetailModal}) {
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
+    const [{lang}] = useStateValue();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -45,9 +47,7 @@ function OrderTable({data, openDetailModal}) {
                 </TableHead>
                 <TableBody>
                     {data?.length>0 &&
-                     data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                     .map((row, i) => {
-
+                     data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => {
                         const date = moment(row.createdAt).format("MM/DD/YYYY__hh:mm");
 
                         return(
@@ -59,7 +59,7 @@ function OrderTable({data, openDetailModal}) {
                             <StyledTableCell align="center">{row.paymentMethod}</StyledTableCell>
                             <StyledTableCell align="center">{row.orderTotal}</StyledTableCell>
                             <StyledTableCell align="center">
-                                <Chip label={row.status} color={row.status==="Pending"? "warning" : row.status==="On Delivery"? "secondary" :"primary"}/>
+                                <Chip label={row.status[lang]} color={row.status.en==="Pending"? "warning" : row.status.en==="On Delivery"? "secondary" : row.status.en==="Cancelled"? "error" :"primary"}/>
                             </StyledTableCell>
                             <StyledTableCell align="center">
                                 <Tooltip title="View" arrow>

@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import axios from '../../axios'
 import Swal from 'sweetalert2'
 
-const initialData = {Name:""}
+const initialData = {Name:{en:"", la:""}}
 
 function Categories() {
   const [showModal, setShowModal] = useState(false);
@@ -48,7 +48,16 @@ function Categories() {
   };
 
   const handleOnChange =(e)=>{
-    setCategoryData({...categoryData, Name: e.target.value});
+    const objectName = e.target.name.split('.')[0]
+    const objectKey = e.target.name.split('.')[1]
+    const object = categoryData[objectName]
+    
+    setCategoryData({
+      [objectName]:{
+          ...object, 
+          [objectKey]:e.target.value
+      }
+    })
   }
 
   const updateState=(newItem)=>{
@@ -126,7 +135,7 @@ function Categories() {
             category.map((item, i)=>{
               return(
                 <Row key={i}>
-                  <Col xs={7} className="card-table-cell"> {item.Name} </Col>
+                  <Col xs={7} className="card-table-cell"> {item.Name.en} </Col>
                   <Col xs={5} className="card-table-cell"> 
                     <Button className='card_table_icon' variant='primary' name="update" onClick={()=>handleShow(item)}><CreateIcon/></Button>
                     &nbsp; &nbsp;
@@ -144,7 +153,14 @@ function Categories() {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input type="text" className='form-control' value={categoryData.Name} onChange={handleOnChange} placeholder='Category Name...'/>
+          <Col className='mb-5'>
+            <label className='mb-1'>Category Name (EN):</label>
+            <input type="text" name="Name.en" className='form-control' value={categoryData.Name.en} onChange={handleOnChange} placeholder='Category Name...'/>
+          </Col>
+          <Col>
+            <label className='mb-1'>Category Name (LAO):</label>
+            <input type="text" name="Name.la" className='form-control' value={categoryData.Name.la} onChange={handleOnChange} placeholder='Category Name...'/>
+          </Col>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

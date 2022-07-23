@@ -1,6 +1,6 @@
 import express from 'express'
 import OrderCollection from '../model/OrderModel.js';
-import mongoose from 'mongoose'
+import ItemCollection from '../model/ItemModel.js';
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/pending', (req, res)=>{
-    OrderCollection.find({status:"Pending"}, (err, data)=>{
+    OrderCollection.find({'status.en':"Pending"}, (err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
@@ -25,7 +25,7 @@ router.get('/pending', (req, res)=>{
 })
 
 router.get('/delivery', (req, res)=>{
-    OrderCollection.find({status:"On Delivery"}, (err, data)=>{
+    OrderCollection.find({'status.en':"On Delivery"}, (err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
@@ -36,7 +36,7 @@ router.get('/delivery', (req, res)=>{
 
 router.post('/user', (req, res)=>{
     const {_id} = req.body;
-    OrderCollection.find({customerID:_id}, (err, data)=>{
+    OrderCollection.find({customerID:_id}).sort({createdAt:-1}).exec((err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
@@ -54,7 +54,7 @@ router.post('/checked', (req, res)=>{
                 error:err
             });
         }else{
-            req.io.emit("checked_order", {data:data});
+            req.io.emit("update_order", {data:data});
         }
     })
 })
@@ -62,7 +62,7 @@ router.post('/checked', (req, res)=>{
 router.post('/start_delivery', (req, res)=>{
     const {_id, customerID, empName} = req.body;
 
-    OrderCollection.findByIdAndUpdate(_id, {employeeName:empName, status:"On Delivery"}, ({new:true}), (err, data)=>{
+    OrderCollection.findByIdAndUpdate(_id, {employeeName:empName, status:{en:"On Delivery", la:"ກໍາລັງຈັດສົ່ງ"}}, ({new:true}), (err, data)=>{
         if(err){
             res.status(500).json({
                 error:err
@@ -78,7 +78,7 @@ router.post('/start_delivery', (req, res)=>{
 router.post('/complete_order', (req, res)=>{
     const {_id, customerID} = req.body;
 
-    OrderCollection.findByIdAndUpdate(_id, {status:"Completed"}, ({new:true}), (err, data)=>{
+    OrderCollection.findByIdAndUpdate(_id, {status:{en:"Completed", la:"ສໍາເລັດການສັ່ງ"}}, ({new:true}), (err, data)=>{
         if(err){
             res.status(500).json({
                 error:err
@@ -91,10 +91,50 @@ router.post('/complete_order', (req, res)=>{
     })
 })
 
+router.post('/cancelled', async(req, res)=>{
+    const {order} = req.body;
+
+    await order.orderItems.map((item)=>{
+        try {
+            ItemCollection.findByIdAndUpdate({_id:item._id}, {$inc:{quantity: item.quantity}}, (err, data)=>{
+                if(err){
+                    res.status(400).send(error.message)
+                }
+            })
+        } catch (error) {
+            res.status(400).send(error.message);
+        }
+    })
+
+    OrderCollection.findByIdAndUpdate({_id:order._id}, {status:{en:"Cancelled", la:"ການສັ່ງຍົກເລີກ"}}, ({new:true}), (err, data)=>{
+        if(err){
+            res.status(500).json({
+                error:err
+            });
+        }else{
+            req.io.emit("order_start_end", {data:data, message:`Order Cancelled`});
+            const clientSocket = onlineUsers.get(order.customerID);
+            req.io.to(clientSocket).emit("order_update", {data:data})
+        }
+    })
+})
+
 router.post('/', async(req, res)=>{
     const {userID, name, address, phone, method, total, cart} = req.body;
 
-    const order = new OrderCollection({
+    await cart.map((item)=>{
+        try {
+            ItemCollection.findByIdAndUpdate({_id:item._id}, {$inc:{quantity: -item.quantity}}, (err, data)=>{
+                if(err){
+                    res.status(400).send(error.message)
+                }
+            })
+        } catch (error) {
+            res.status(400).send(error.message);
+        }
+    })
+
+    new OrderCollection({
         customerID:userID,
         customerName:name,
         customerPhone:Number(phone),
@@ -108,15 +148,14 @@ router.post('/', async(req, res)=>{
         orderItems:cart,
         orderTotal:Number(total),
         paymentMethod:method,
-    })
-
-    order.save()
+        status:{en:"Pending", la:"ລໍຖ້າຢູ່"}
+    }).save()
     .then(result=>{
         res.status(201).json({
             message:"New Order registered successfully"
         })
         
-        req.io.emit("new-products",{data:result});
+        req.io.emit("new-order",{data:result});
     })
     .catch(err=>{
         res.status(500).json({

@@ -5,6 +5,7 @@ import PunchClockIcon from '@mui/icons-material/PunchClock';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import CarouselBox from './Carousel';
 import pharmacy from '../../img/pharmacy.jpg'
 import tradition from '../../img/promo-img1.jpg'
@@ -13,6 +14,20 @@ import traditional2 from '../../img/tradition.jpg'
 import ScrollTop from './ScrollTop';
 
 function Home() {
+
+  function CarouselItem(){
+    return(
+      <div className="carousel__item">
+            <div className="item_img_box" style={{background:"url('https://picsum.photos/200/300')"}}>
+                <button className="btn_view_item"><VisibilityIcon className="eye_icon"/> View Item</button>
+            </div>
+            <div className="item_info_box">
+                <span>Title Title TitleTitle Title Title TitleTitle</span>
+                <span>(20$)</span>
+            </div>
+        </div>
+    )
+  }
   
   return (
     <div style={{position:"relative"}}>
@@ -75,10 +90,8 @@ function Home() {
       <section className='popular__product'>
         <Container>
           <h1>Popular Products</h1>
-          <CarouselBox/>
+          <CarouselBox CarouselItem={CarouselItem}/>
         </Container>
-
-      
       </section>
 
       <section>

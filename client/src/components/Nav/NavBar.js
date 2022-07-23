@@ -30,38 +30,38 @@ function NavBar() {
   const [modalShow, setModalShow] = useState(false);
   const [searchItemID, setSearchItemID] = useState('');
 
-  useEffect(() => {
-    const fetchExchangeAPI=async()=>{
+  // useEffect(() => {
+  //   const fetchExchangeAPI=async()=>{
 
-      const date = new Date().toLocaleDateString('en-CA');
+  //     const date = new Date().toLocaleDateString('en-CA');
 
-      if(date !== exchange.date){
+  //     if(date !== exchange.date){
 
-        var myHeaders = new Headers();
-        myHeaders.append("apikey", "sHAFPNOqSW1MuCezoLSu5YVTs9G9a19L");
+  //       var myHeaders = new Headers();
+  //       myHeaders.append("apikey", "sHAFPNOqSW1MuCezoLSu5YVTs9G9a19L");
         
-        var requestOptions = {
-          method: 'GET',
-          redirect: 'follow',
-          headers: myHeaders
-        };
+  //       var requestOptions = {
+  //         method: 'GET',
+  //         redirect: 'follow',
+  //         headers: myHeaders
+  //       };
         
-        fetch("https://api.apilayer.com/exchangerates_data/latest?symbols=LAK&base=USD", requestOptions)
-        .then(response => response.json())
-          .then(result => setExchange(result))
-          .catch(error => console.log('error', error));
-      }
-    }
+  //       fetch("https://api.apilayer.com/exchangerates_data/latest?symbols=LAK&base=USD", requestOptions)
+  //       .then(response => response.json())
+  //         .then(result => setExchange(result))
+  //         .catch(error => console.log('error', error));
+  //     }
+  //   }
 
-    fetchExchangeAPI();
-  }, [setExchange, exchange])
+  //   fetchExchangeAPI();
+  // }, [exchange])
 
   useEffect(() => {
     if(Object.keys(user).length!==0){
       socket.emit("User_Online", user._id);
   
       socket.on("Test", (data)=>{
-        alert(data.message)
+        // alert(data.message)
       })
     }
 
@@ -162,6 +162,10 @@ function NavBar() {
 
             <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/order_list">
               <li>{t('Home.nav.list3')} <AddIcon className='plus_icon'/></li>
+            </NavLink>
+
+            <NavLink className={(navData)=>navData.isActive? 'nav_link active' : 'nav_link' } to="/about">
+              <li>{t('Home.nav.list4')} <AddIcon className='plus_icon'/></li>
             </NavLink>
           </ul>
 

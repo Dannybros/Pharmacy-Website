@@ -4,7 +4,7 @@ import {Select, MenuItem, InputLabel, FormControl, Box, Button} from '@mui/mater
 
 function PaymentMethod({handleNext, handleBack, setOrderInfo, orderInfo}) {
   
-  const options = ['Credit Card', 'Cash', 'BCEL ONE PAY'];
+  const options = ['Credit Card', 'Cash'];
 
   const handleOnChange=(e)=>{
     setOrderInfo({...orderInfo, [e.target.name]: e.target.value});

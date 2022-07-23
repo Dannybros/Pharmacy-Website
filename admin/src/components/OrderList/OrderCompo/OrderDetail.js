@@ -10,7 +10,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
 }));
 
-function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report}) {
+function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report, handleCancel}) {
 
     const [employee, setEmployee] = useState([]);
     const [{user}] = useStateValue();
@@ -27,7 +27,6 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
     
         fetchEmployee();
     }, [])
-      
 
     const handleChange = (event) => {
         setSelectedEmployee(event.target.value);
@@ -102,7 +101,7 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                         <ListItem> <ListItemText primary="Status"/> </ListItem>
                     </Col>
                     <Col xs={6}>
-                        <ListItem> <ListItemText secondary={data?.status} /> </ListItem>
+                        <ListItem> <ListItemText secondary={data?.status.en} /> </ListItem>
                     </Col>
                 </Row>
             </List>
@@ -126,12 +125,12 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                         {data!==null &&
                          data.orderItems.map((item)=>{
                             return(
-                                <TableRow key={item.title} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableRow key={item._id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row" style={{display:"flex"}}>
-                                        <img className="order_detail_img" src={item.image} alt=""/>
+                                        <img className="order_detail_img" src={item.img} alt=""/>
                                         <ListItemText
-                                            primary={item.title}
-                                            secondary={item.id}
+                                            primary={item?.name.en}
+                                            secondary={item._id}
                                         />
                                     </TableCell>
                                     <TableCell align="center"> ${item.price}</TableCell>
@@ -147,9 +146,8 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
             <Row className='mb-4'>
                 <Col xs={6} md={4} className="d-flex align-items-center"> <b className='w-100 text-center'>Employee For Order : </b></Col>
                 <Col xs={6} md={8}>
-                    {data?.status==="Pending"?
-                    <FormControl>
-                        sx={{width:"100%"}}
+                    {data?.status.en==="Pending"?
+                    <FormControl sx={{width:"100%"}}>
                         <InputLabel id="demo-simple-select-label">Employee Name</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
@@ -158,7 +156,7 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                         label="Employee Name"
                         onChange={handleChange}
                         >
-                        {employee.map((emp)=>(
+                        {employee?.map((emp)=>(
                             <MenuItem value={emp.EmployeeName} key={emp._id}>{emp.EmployeeName}</MenuItem>
                         ))}
                         </Select>
@@ -186,17 +184,16 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                 <Button 
                 color='error' 
                 variant='contained' sx={{mx:2}}
+                onClick={()=>handleCancel(data)}
                 disabled={data?.status==="On Delivery" && jwt_decode(user)?.name !==selectedEmployee && true}> 
                     Cancel Order 
                 </Button>
-                <Tooltip title="Add" placement="top-end">
-                    <Button 
-                        variant='contained' 
-                        onClick={()=>handleSubmit(data._id, data.customerID, selectedEmployee)}
-                        disabled={data?.status==="On Delivery" && jwt_decode(user)?.name !==selectedEmployee && true}>
-                        {data?.status==="Pending"? "Start Delivery" : "Complete Order"}
-                    </Button>
-                </Tooltip>
+                <Button 
+                    variant='contained' 
+                    onClick={()=>handleSubmit(data._id, data.customerID, selectedEmployee)}
+                    disabled={data?.status.en==="On Delivery" && jwt_decode(user)?.name ===selectedEmployee && true}>
+                    {data?.status.en==="Pending"? "Start Delivery" : "Complete Order"}
+                </Button>
             </Modal.Footer>
         }
 
