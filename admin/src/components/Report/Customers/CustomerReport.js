@@ -8,7 +8,7 @@ import axios from '../../axios'
 function CustomerReport() {
   const [addModal, setAddModal] = useState(false);
   const [customers, setCustomers] = useState([]);
-  const [selectedCustomer, setSelectedCustomer]=useState(null);
+  const [selectedCustomer, setSelectedCustomer]=useState({});
   const [search, setSearch] = useState(null);
   
   useEffect(() => {
@@ -23,14 +23,14 @@ function CustomerReport() {
     fetchCustomers();
   }, [])
 
-  const handleModalShow = (item) => {
+  const handleModalShow = async(item) => {
+    await setSelectedCustomer(item);
     setAddModal(true);
-    setSelectedCustomer(item);
   };
 
   const handleModalClose = () => {
     setAddModal(false);
-    setSelectedCustomer(null)
+    setSelectedCustomer({})
   };
 
   const handleOnSearch=(e)=>{

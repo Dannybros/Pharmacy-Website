@@ -1,6 +1,7 @@
 Admin website:
-    ✖ Home Dashboard
+    ✖ Home Dashboard (Reviews of Shop)
     ✖ Import Page
+    ✖ Review of products
     ✖ Customer Detail Modal -> list of orders they ordered in pasty
     ✖ Add Product Report
     ✖ Create revenue report

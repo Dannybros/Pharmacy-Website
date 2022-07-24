@@ -22,8 +22,7 @@ import Supplier from './components/Catalog/Supplier/Supplier'
 //
 import ProductReport from './components/Report/Products/ProductReport'
 import CustomerReport from './components/Report/Customers/CustomerReport'
-//
-import Setting from './components/Setting/Setting'
+
 
 function App() {
 
@@ -42,7 +41,6 @@ function App() {
             <Route path="/report/products" element={<ProtectedRoute Compo={<ProductReport/>}/>}/>
             <Route path="/report/customers" element={<ProtectedRoute Compo={<CustomerReport/>}/>}/>
             <Route path="/report/orders" element={<ProtectedRoute Compo={<OrderReport/>}/>}/>
-            <Route path="/setting" element={<ProtectedRoute Compo={<Setting/>}/>}/>
             <Route path="/sign-in" element={<SignIn />}/>
           </Routes>
         </div>

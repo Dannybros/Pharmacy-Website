@@ -3,7 +3,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import SettingsIcon from '@mui/icons-material/Settings';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 
 export const MenuData = [
@@ -83,10 +82,5 @@ export const MenuData = [
              path:'/report/imports'
             },
          ]
-    },
-    {
-        title:"Setting",
-        icon: <SettingsIcon/>,
-        path:'/setting'
     },
 ]

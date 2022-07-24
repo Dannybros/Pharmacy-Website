@@ -44,8 +44,8 @@ function OrderReport() {
         setOrderFilter({...orderFilter, status:newValue});
     };
 
-    const handleShowDetails=(item)=>{
-        setSelectedOrder(item);
+    const handleShowDetails=async(item)=>{
+        await setSelectedOrder(item);
         setShowDetail(true);
     }
 
@@ -69,12 +69,6 @@ function OrderReport() {
 
         return filterData
     }
-
-    const openDetailModal=async(item)=>{
-        await setSelectedOrder(item)
-        setShowDetail(true)
-    }
-    
 
     return (
         <div className='orderList'>

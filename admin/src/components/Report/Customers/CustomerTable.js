@@ -31,7 +31,7 @@ function CustomerTable({data, search, handleModalShow}) {
   }
 
   return (
-  <TableContainer component={Paper} className="mb-2">
+  <TableContainer component={Paper} sx={{ maxHeight: 590 }} className="mb-2">
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
         <TableRow>

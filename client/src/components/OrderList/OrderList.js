@@ -101,7 +101,7 @@ function OrderList() {
               aria-label="secondary tabs example"
             >
               <Tab label={t('OrderList.tab.header1')} value="All" />
-              <Tab label={t('OrderList.tab.header2')}  value="Pending"/>
+              <Tab label={t('OrderList.tab.header2')} value="Pending"/>
               <Tab label={t('OrderList.tab.header3')} value="Delivery"/>
               <Tab label={t('OrderList.tab.header4')} value="Completed"/>
               <Tab label={t('OrderList.tab.header5')} value="Cancelled"/>

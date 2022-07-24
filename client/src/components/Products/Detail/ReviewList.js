@@ -106,7 +106,6 @@ function ReviewList({id}) {
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
         />
-       
     </Paper>
   )
 }
