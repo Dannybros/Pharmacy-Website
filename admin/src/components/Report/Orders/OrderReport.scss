@@ -2,11 +2,8 @@ $phone:500px;
 $tablet:768px;
 
 .order_report{
-    width: calc(100% - 260px);
     height: 100%;
-    @media (max-width:$tablet) {
-        width: 100%;
-    }
+    width: 100%;
     .search_order{
         padding:20px;
         background: white;

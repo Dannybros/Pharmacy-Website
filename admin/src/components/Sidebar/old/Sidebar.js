@@ -3,7 +3,7 @@ import './Sidebar.scss'
 import SidebarMenu from './SidebarMenu'
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuData} from './MenuData'
-import { useLocalStorage } from '../../useLocalStorage';
+import { useLocalStorage } from '../../context/useLocalStorage';
 
 function Sidebar({setCanvasShow}) {
 

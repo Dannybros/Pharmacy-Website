@@ -137,7 +137,7 @@ function OrderList() {
       </Snackbar>
 
       <Paper variant='outlined'>
-        <Typography sx={{mt:3, p:3}} style={{ fontWeight: 600 }} variant="h4" component="h4"> {status==="delivery"? "Deliveries" : "New Orders"} </Typography>
+        <Typography sx={{mt:1, p:3}} style={{ fontWeight: 600 }} variant="h4" component="h4"> {status==="delivery"? "Deliveries" : "New Orders"} </Typography>
       </Paper>
 
       <Paper className='search_order' variant='outlined'>

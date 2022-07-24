@@ -8,11 +8,11 @@ import reducer, { initialState } from './context/reducer';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <StateProvider initialState={initialState} reducer={reducer}>
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <BrowserRouter>
         <App />
-      </StateProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </StateProvider>
   </React.StrictMode>
 );
 

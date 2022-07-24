@@ -2,12 +2,8 @@ $phone:500px;
 $tablet:768px;
 
 .orderList{
-    width: calc(100% - 260px);
     height: 100%;
-    padding: 30px;
-    @media (max-width:$tablet) {
-        width: 100%;
-    }
+    width: 100%;
     .search_order{
         padding:20px;
         background: white;

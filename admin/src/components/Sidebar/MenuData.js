@@ -42,8 +42,8 @@ export const MenuData = [
                 path:'/imports'
             },
             {
-                title:"Orders",
-                path:'/imports/orders'
+                title:"Order Import",
+                path:'/import/orders'
             },
         ]
     },

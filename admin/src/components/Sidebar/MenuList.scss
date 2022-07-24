@@ -1,0 +1,23 @@
+.menu{
+    &:hover{
+        background: #1b2127d0 !important;
+    }
+    svg{
+        color: #b3cbdd;
+    }
+}
+.menu.active{
+    background-color: #1b2027;
+    color: #1591CD;
+}
+.subMenu{
+    background-color:#293141;
+    color: #b3cbdd;
+    .submenu_list:hover{
+        background: #303a46;
+    }
+}
+.subMenu.active{
+    color: #1591CD !important;
+    background-color: #20272f;
+}

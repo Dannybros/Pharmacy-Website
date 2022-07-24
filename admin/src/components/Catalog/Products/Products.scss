@@ -3,12 +3,8 @@ $tablet:768px;
 $phone:500px;
 
 .product{
-    width: calc(100% - 260px);
+    width: 100%;
     padding: 15px;
-    border: 1px solid ;
-    @media (max-width:$tablet) {
-        width: 100%;
-    }
     @media (max-width:$phone) {
        padding: 0px;
        .card-body{

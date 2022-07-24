@@ -73,13 +73,13 @@ function OrderReport() {
     return (
         <div className='orderList'>
             <div className='pb-4'>
-                <section className='search_order'>
-                    <h1>Order List</h1>
+                <Paper variant='outlined' className='search_order'>
+                    <h2><b>Order Report</b></h2>
                     <div className='d-flex'>
                         <input type="text" className='form-control' placeholder='Search...' value={orderFilter.search} onChange={handleSearchChange}/>
                         <input type="date" className='form-control' value={orderFilter.date} onChange={handleDateChange}/>
                     </div>
-                </section>
+                </Paper>
                 <Divider/>
     
                 <Paper variant='outlined' sx={{ width: '100%', bgcolor:"white", py:1 }}>
