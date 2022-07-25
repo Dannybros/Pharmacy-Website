@@ -17,8 +17,7 @@ function Product() {
   const {productId} = useParams();
   const navigate = useNavigate();
 
-  const [{cart, currency, lang}, dispatch] = useStateValue();
-  const [exchangeRate] = useLocalStorage("ExchangeRate")
+  const [{cart, lang}, dispatch] = useStateValue();
   const [data, setData] = useState(null);
   const [rating, setRating] = useState(0);
   const [collapseText, setCollapseText] = useState('-webkit-box');
@@ -81,15 +80,6 @@ function Product() {
     if(index <0) return false
     return true
   }
-
-  const getExchangeRatePrice = (price)=>{
-    if(currency.abbr==="USD"){
-      const newPrice = price / exchangeRate.rates.LAK;
-      return Math.round(newPrice).toLocaleString();
-    }
-
-    return (price).toLocaleString();
-  }
  
   return (
     <div className='product_detail_page'>
@@ -110,7 +100,7 @@ function Product() {
                 <label>
                   {t('ProductInfo.list1')}:
                 </label>  
-                <div className='space_indent'><span className="price_tag">{getExchangeRatePrice(data?.price)} {currency.abbr}</span></div>
+                <div className='space_indent'><span className="price_tag">{data?.price} KIP</span></div>
             </div>
 
             <div className='product_list_box'>

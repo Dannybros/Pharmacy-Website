@@ -1,43 +1,32 @@
 import React from 'react'
 import {Col, Row, Button} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
-import { useLocalStorage } from '../../../Reducer/useLocalStorage';
 import { useStateValue } from '../../../Reducer/StateProvider';
 import { useTranslation } from 'react-i18next';
 
 function ProductGrid({data, setShowToast}) {
-    const navigate = useNavigate();
-    const {t} = useTranslation();
+  const navigate = useNavigate();
+  const {t} = useTranslation();
 
-    const [exchangeRate] = useLocalStorage("ExchangeRate")
-    const [{cart, currency, lang}, dispatch] = useStateValue();
-    
-    const AddToCart =(data)=>{
-        if(checkItemInCart(data.id)){
-          setShowToast(true)
-        }else{
-          dispatch({
-            type:"ADD_TO_BASKET",
-            item: data,
-          });
-        }
-    }
-    
-    function checkItemInCart(id){
-        const index = cart.findIndex(prod => prod._id === id);
-        if(index <0) return false
-        return true
-    }
-
-    const getExchangeRatePrice = (price)=>{
-        if(currency.abbr==="USD"){
-          const newPrice = price / exchangeRate.rates.LAK;
-          return Math.round(newPrice).toLocaleString();
-        }
-    
-        return price.toLocaleString();
-    }
-
+  const [{cart, lang}, dispatch] = useStateValue();
+  
+  const AddToCart =(data)=>{
+      if(checkItemInCart(data.id)){
+        setShowToast(true)
+      }else{
+        dispatch({
+          type:"ADD_TO_BASKET",
+          item: data,
+        });
+      }
+  }
+  
+  function checkItemInCart(id){
+      const index = cart.findIndex(prod => prod._id === id);
+      if(index <0) return false
+      return true
+  }
+  
   return (
     <Row>
         {data.map((item, i)=>{
@@ -48,7 +37,7 @@ function ProductGrid({data, setShowToast}) {
                     <div className='product_info_box'>
                       <h4>{item.name[lang]}</h4>
                       <p>
-                        <span>{getExchangeRatePrice(item.price)} {currency.abbr}</span>
+                        <span>{item.price} KIP</span>
                         <span style={{fontSize:"14px"}}>
                           <em>{item.type[lang]}</em>
                         </span>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,19 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useTranslation } from 'react-i18next';
 
-function CartTable({cart, currency, exchangeRate, lang}) {
+function CartTable({cart, lang, goPayment}) {
 
     const {t} = useTranslation();
-
-    const getExchangeRatePrice = (price)=>{
-        if(currency.abbr==="USD"){
-          const newPrice = price / exchangeRate.rates.LAK;
-          return Math.round(newPrice).toLocaleString();
-        }
-    
-        return (Math.round(price/1000)*1000).toLocaleString();
-    }
-
     
     const cartTotal = cart.reduce((total, currentItem)=>{
         total += currentItem.price * currentItem.quantity;
@@ -52,8 +42,8 @@ function CartTable({cart, currency, exchangeRate, lang}) {
             <TableRow key={row._id}>
               <TableCell>{row.name[lang]}</TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-              <TableCell align="right">{getExchangeRatePrice(row.price * row.quantity)}</TableCell>
+              <TableCell align="right">{row.price} KIP</TableCell>
+              <TableCell align="right">{row.price * row.quantity} KIP</TableCell>
             </TableRow>
           ))}
           <TableRow>
@@ -62,12 +52,12 @@ function CartTable({cart, currency, exchangeRate, lang}) {
                 <b>{t('Cart.Receipt.total')}</b>
             </TableCell>
             <TableCell align="right" colSpan={2}>
-                <b>{cartTotal.toLocaleString()} {currency.abbr}</b>
+                <b>{cartTotal.toLocaleString()} KIP</b>
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell align="right" colSpan={3}> 
-                <Button variant='contained'>
+                <Button variant='contained' onClick={goPayment}>
                     {t('Cart.Receipt.btnCheck')}    
                 </Button> 
             </TableCell>

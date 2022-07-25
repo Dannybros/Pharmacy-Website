@@ -22,38 +22,10 @@ function NavBar({items}) {
   const navigate = useNavigate();
 
   const {t} = useTranslation();
-  
-  const [exchange, setExchange] = useLocalStorage("ExchangeRate", {});
   const [{cart, currency, user, socket, lang}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchItemID, setSearchItemID] = useState('');
-
-  // useEffect(() => {
-  //   const fetchExchangeAPI=async()=>{
-
-  //     const date = new Date().toLocaleDateString('en-CA');
-
-  //     if(date !== exchange.date){
-
-  //       var myHeaders = new Headers();
-  //       myHeaders.append("apikey", "sHAFPNOqSW1MuCezoLSu5YVTs9G9a19L");
-        
-  //       var requestOptions = {
-  //         method: 'GET',
-  //         redirect: 'follow',
-  //         headers: myHeaders
-  //       };
-        
-  //       fetch("https://api.apilayer.com/exchangerates_data/latest?symbols=LAK&base=USD", requestOptions)
-  //       .then(response => response.json())
-  //         .then(result => setExchange(result))
-  //         .catch(error => console.log('error', error));
-  //     }
-  //   }
-
-  //   fetchExchangeAPI();
-  // }, [exchange])
 
   useEffect(() => {
 
@@ -122,10 +94,10 @@ function NavBar({items}) {
           <Selector/>
 
           {/* currency box only for phone size */}
-          <select className='currency_tablet_selector' value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
+          {/* <select className='currency_tablet_selector' value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
             <option value="Dollar_USD">USD</option>
             <option value="LAOKIP_LAK">KIP</option>
-          </select>
+          </select> */}
           
           <div className='cart_box' onClick={goToCart}>
             <ShoppingCartIcon className='cart_icon'/>
@@ -167,12 +139,12 @@ function NavBar({items}) {
             </NavLink>
           </ul>
 
-          <div className='currency_selector'>
+          {/* <div className='currency_selector'>
             <select id="" value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
               <option value="Dollar_USD">USD</option>
               <option value="LAOKIP_LAK">KIP</option>
             </select>
-          </div>
+          </div> */}
 
           <Button variant='primary mx-4 py-1 px-2 ' className='main_search_btn' onClick={handleModalShow}>
             <SearchIcon/>
