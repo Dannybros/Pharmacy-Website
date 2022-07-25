@@ -26,9 +26,9 @@ function Nav({handleDrawerToggle}) {
         position="fixed"
         sx={{
         background:"white",
-        width: { sm: `calc(100% - 240px)` },
-        ml: { sm: `240px` },
-        zIndex:20
+        width: { md: `calc(100% - 240px)` },
+        ml: { md: `240px` },
+        zIndex:300
         }}
     >
         <Toolbar
@@ -43,7 +43,7 @@ function Nav({handleDrawerToggle}) {
                 aria-label="open drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' }, color:"black"}}
+                sx={{ mr: 2, display: { md: 'none' }, color:"black"}}
             >
                 <MenuIcon />
             </IconButton>

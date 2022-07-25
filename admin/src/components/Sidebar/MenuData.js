@@ -9,26 +9,32 @@ export const MenuData = [
     {
         title:"Dashboard",
         icon: <HomeIcon />,
+        menuValue:0,
         path:'/'
     },
     {
         title:"Catalog",
         icon: <LocalOfferIcon/>,
+        menuValue:1,
         submenu:[
            {
             title:"Categories",
-            path:'/catalog/categories'
+            path:'/catalog/categories',
+            subValue:0,
            },
            {
             title:"Products",
+            subValue:1,
             path:'/catalog/products'
            },
            {
             title:"Employees",
+            subValue:2,
             path:'/catalog/employees'
            },
            {
             title:"Suppliers",
+            subValue:3,
             path:'/catalog/suppliers'
            },
         ]
@@ -36,27 +42,33 @@ export const MenuData = [
     {
         title:"Imports",
         icon: <ImportExportIcon/>,
+        menuValue:2,
         submenu:[
             {
                 title:"import",
-                path:'/imports'
+                subValue:0,
+                path:'/imports/pending'
             },
             {
                 title:"Order Import",
-                path:'/import/orders'
+                subValue:1,
+                path:'/import/order'
             },
         ]
     },
     {
         title:"Order",
         icon: <ShoppingCartIcon/>,
+        menuValue:3,
         submenu:[
             {
                 title:"New orders",
+                subValue:0,
                 path:'/order/pending'
             },
             {
                 title:"On delivery",
+                subValue:1,
                 path:'/order/delivery'
             },
         ]
@@ -64,21 +76,26 @@ export const MenuData = [
     {
         title:"Report",
         icon: <AssessmentIcon/>,
+        menuValue:4,
         submenu:[
             {
              title:"Products",
+             subValue:0,
              path:'/report/products'
             },
             {
              title:"Customers",
+             subValue:1,
              path:'/report/customers'
             },
             {
              title:"Orders",
+             subValue:2,
              path:'/report/orders'
             },
             {
              title:"Imports",
+             subValue:3,
              path:'/report/imports'
             },
          ]

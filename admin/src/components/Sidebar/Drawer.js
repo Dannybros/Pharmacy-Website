@@ -9,7 +9,7 @@ function SideBar({container, mobileOpen, handleDrawerToggle}) {
   return (
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ width: { md: drawerWidth }, flexShrink: { msFlexDirection: 0 }, zIndex:200 }}
         aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -22,7 +22,7 @@ function SideBar({container, mobileOpen, handleDrawerToggle}) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none'},
+            display: { sm: 'block', md: 'none'},
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth},
           }}
         >
@@ -31,7 +31,7 @@ function SideBar({container, mobileOpen, handleDrawerToggle}) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'none', md: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
           open

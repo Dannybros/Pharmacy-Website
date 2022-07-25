@@ -1,0 +1,9 @@
+.import_item_title{
+    margin-right: 10px !important;
+    display: -webkit-box;
+    text-align: justify;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

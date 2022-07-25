@@ -67,7 +67,7 @@ function OrderTable({data, search, handleShowDetails}) {
                     <StyledTableCell align="center">{row.paymentMethod}</StyledTableCell>
                     <StyledTableCell align="center">{row.orderTotal} KIP</StyledTableCell>
                     <StyledTableCell align="center">
-                      <Chip label={row.status.en} color={row.status.en==="Pending"? "warning" : row.status.en==="On Delivery"? "secondary" :"primary"} />
+                      <Chip label={row.status.en} color={row.status.en==="Pending"? "warning" : row.status.en==="On Delivery"? "secondary" : row.status.en==="Cancelled"? "error" :"primary"}/>
                     </StyledTableCell>
                     <StyledTableCell align="center">
                         <Tooltip title="View" arrow>

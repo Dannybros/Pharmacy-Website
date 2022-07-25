@@ -26,6 +26,7 @@ import ProductReport from './components/Report/Products/ProductReport'
 import CustomerReport from './components/Report/Customers/CustomerReport'
 import ImportList from './components/Imports/ImportList/ImportList';
 import SideBar from './components/Sidebar/Drawer';
+import Import from './components/Imports/Import/Import';
 
 const drawerWidth = 240;
 
@@ -59,7 +60,8 @@ function App(props) {
           <Route path="/catalog/employees" element={<ProtectedRoute Compo={<Employee/>}/>}/>
           <Route path="/catalog/suppliers" element={<ProtectedRoute Compo={<Supplier/>}/>}/>
           <Route path="/order/:status" element={<ProtectedRoute Compo={<OrderList/>}/>}/>
-          <Route path="/imports" element={<ProtectedRoute Compo={<ImportList/>}/>}/>
+          <Route path="/imports/pending" element={<ProtectedRoute Compo={<ImportList/>}/>}/>
+          <Route path="/import/order" element={<ProtectedRoute Compo={<Import/>}/>}/>
           <Route path="/report/products" element={<ProtectedRoute Compo={<ProductReport/>}/>}/>
           <Route path="/report/customers" element={<ProtectedRoute Compo={<CustomerReport/>}/>}/>
           <Route path="/report/orders" element={<ProtectedRoute Compo={<OrderReport/>}/>}/>
@@ -71,16 +73,3 @@ function App(props) {
 }
 
 export default App;
-
-
-// {/* <Route path="/" element={<ProtectedRoute Compo={<Home/>}/>}/>
-//             <Route path="/catalog/categories" element={<ProtectedRoute Compo={<Categories/>}/>}/>
-//             <Route path="/catalog/products" element={<ProtectedRoute Compo={<Products/>}/>}/>
-//             <Route path="/catalog/employees" element={<ProtectedRoute Compo={<Employee/>}/>}/>
-//             <Route path="/catalog/suppliers" element={<ProtectedRoute Compo={<Supplier/>}/>}/>
-//             <Route path="/order/:status" element={<ProtectedRoute Compo={<OrderList/>}/>}/>
-//             <Route path="/imports" element={<ProtectedRoute Compo={<ImportList/>}/>}/>
-//             <Route path="/report/products" element={<ProtectedRoute Compo={<ProductReport/>}/>}/>
-//             <Route path="/report/customers" element={<ProtectedRoute Compo={<CustomerReport/>}/>}/>
-//             <Route path="/report/orders" element={<ProtectedRoute Compo={<OrderReport/>}/>}/>
-//             <Route path="/sign-in" element={<SignIn />}/> */}

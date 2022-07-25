@@ -64,7 +64,7 @@ function OrderReport() {
         const searchStatus = status==="All"? "" : status.toLowerCase()
         
         const filterData = data.filter((item)=>{
-            return item.status.toLowerCase().includes(searchStatus) && item._id.includes(searchTerm) && item.createdAt.includes(searchDate)
+            return item.status.en.toLowerCase().includes(searchStatus) && item._id.includes(searchTerm) && item.createdAt.includes(searchDate)
         })
 
         return filterData

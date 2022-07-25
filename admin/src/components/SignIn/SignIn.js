@@ -25,7 +25,7 @@ const mystyle = {
     alignItems:'center',
     zIndex:500,
     background:"grey"
-  };
+};
 
 export default function SignIn() {
 
