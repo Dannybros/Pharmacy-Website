@@ -101,7 +101,7 @@ function OrderReport() {
                 
                 <OrderTable data={filterData(orders, orderFilter.status)} handleShowDetails={handleShowDetails}/>
     
-                <OrderDetail showDetail={showDetail} handleCloseDetails={handleCloseDetails}  data={selectedOrder} report={true}/>
+                <OrderDetail showDetail={showDetail} handleCloseDetails={handleCloseDetails} data={selectedOrder} report={true}/>
             </div>
         </div>
     )

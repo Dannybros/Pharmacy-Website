@@ -185,13 +185,13 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                 color='error' 
                 variant='contained' sx={{mx:2}}
                 onClick={()=>handleCancel(data)}
-                disabled={data?.status==="On Delivery" && jwt_decode(user)?.name !==selectedEmployee && true}> 
+                disabled={data?.status.en==="On Delivery" && jwt_decode(user)?.name !==selectedEmployee }> 
                     Cancel Order 
                 </Button>
                 <Button 
                     variant='contained' 
                     onClick={()=>handleSubmit(data._id, data.customerID, selectedEmployee)}
-                    disabled={data?.status.en==="On Delivery" && jwt_decode(user)?.name ===selectedEmployee && true}>
+                    disabled={data?.status.en==="On Delivery" && jwt_decode(user)?.name !==selectedEmployee}>
                     {data?.status.en==="Pending"? "Start Delivery" : "Complete Order"}
                 </Button>
             </Modal.Footer>

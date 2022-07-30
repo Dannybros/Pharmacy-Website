@@ -2,8 +2,9 @@
 import mongoose from 'mongoose'
 
 const adminsSchema = new mongoose.Schema({
-    adminName:String,
-    adminPassword:String,
+    username:String,
+    password:String,
+    // adminType:String,
     adminID:String
 })
 

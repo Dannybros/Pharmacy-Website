@@ -57,6 +57,7 @@ function ProductForm({showModal, handleClose, handleObjectChange, handleOnChange
 
   useEffect(() => {
     const fetchReview=async()=>{
+      if(!productInfo._id) return null
       await axios.post('/review/get/all-review', {reviewTo:productInfo._id})
       .then(res=>{
         setReviews(res.data.data)
@@ -155,7 +156,7 @@ function ProductForm({showModal, handleClose, handleObjectChange, handleOnChange
           </Row>
 
           <Paper variant='outlined' sx={{mt:5, p:3}}>
-            <Stack direction="rows" alignItems="center" justifyContent="space-between" onClick={()=>setOpenReview(!openReview)}>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" onClick={()=>setOpenReview(!openReview)}>
               <Typography variant="h4" component="div">
                 Reviews 
               </Typography>

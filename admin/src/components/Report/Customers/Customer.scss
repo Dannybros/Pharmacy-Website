@@ -1,10 +1,9 @@
 .customer_page{
-    width: calc(100% - 256px);
     height: 100%;
-    padding: 20px 40px;
+    padding: 20px;
+    width: 100%;
     @media (max-width:768px) {
         padding: 10px 20px;
-        width: 100%;
     }
 }
 .MuiTablePagination-toolbar{

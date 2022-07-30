@@ -11,7 +11,7 @@ function ProductList({handleShow, handleDelete, data, search}) {
         const searchTerm = searchQuery.toLowerCase()
   
         const filterData = data.filter((item)=>{
-            const name = item.name.toLowerCase();
+            const name = item.name.en.toLowerCase();
             return name.includes(searchTerm)
         })
         

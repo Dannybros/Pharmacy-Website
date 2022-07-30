@@ -51,7 +51,7 @@ function Address({handleNext, setOrderInfo, orderInfo}) {
     }
 
     const goNextStep=()=>{
-        if(orderInfo.name!=="" & orderInfo.phone!=="" & orderInfo.address.addr!=="" || orderInfo.address.coords.lat!=="" || orderInfo.address.coords.lng!==""){
+        if(orderInfo.phone!=="" & orderInfo.address.addr!=="" || orderInfo.address.coords.lat!=="" || orderInfo.address.coords.lng!==""){
             handleNext();
         }else{
             alert("Please Fill In All the Form")
@@ -61,12 +61,6 @@ function Address({handleNext, setOrderInfo, orderInfo}) {
     return (
         <div>
             <Row className='mb-3'>
-                <Col sm={6} xs={12} className="mb-2">
-                    <label className='my-2'>
-                        {t('Payment.stepper.step1.input1')}:
-                    </label>
-                    <input type="text" className='form-control' name="name" placeholder='Name...' onChange={handleOnChange} value={orderInfo.name}/>
-                </Col>
                 <Col sm={6} xs={12} className="mb-2">
                     <label className='my-2'>
                         {t('Payment.stepper.step1.input2')}:

@@ -8,6 +8,7 @@ import employee from './route/Employee.js'
 import category from './route/Category.js'
 import supplier from './route/Supplier.js'
 import order from './route/Order.js'
+import imports from './route/Import.js'
 import review from './route/Review.js'
 import {Server} from 'socket.io'
 
@@ -42,6 +43,7 @@ app.use('/category', category)
 app.use('/supplier', supplier)
 app.use('/order', order)
 app.use('/review', review)
+app.use('/imports', imports)
 
 app.get('/', (req, res)=> {
     res.status(200).send("Hello World");

@@ -80,16 +80,12 @@ function UserPage() {
             <Row>
                 <Col xs={6}>
                     <label>ID</label>
-                    <input type="text" name='firstName' value={userInfo._id} className='form-control' placeholder='First Name*' autoComplete="on" onChange={handleOnChange} disabled/>
+                    <input type="text" name='id' value={userInfo._id} className='form-control' placeholder='First Name*' autoComplete="on" onChange={handleOnChange} disabled/>
                 </Col>
                 <div/>
                 <Col xs={6}>
                     <label>{t('User.setting.list1')}</label>
-                    <input type="text" name='firstName' value={userInfo.firstName} className='form-control' placeholder='First Name*' autoComplete="on" onChange={handleOnChange} disabled={!editState&& true}/>
-                </Col>
-                <Col xs={6}>
-                    <label>{t('User.setting.list2')}</label>
-                    <input type="text" name='lastName' value={userInfo.lastName} className='form-control' placeholder='Last Name*' autoComplete="on" onChange={handleOnChange} disabled={!editState&& true}/>
+                    <input type="text" name='name' value={userInfo.name} className='form-control' placeholder='First Name*' autoComplete="on" onChange={handleOnChange} disabled={!editState&& true}/>
                 </Col>
                 <Col xs={6}>
                     <label>{t('User.setting.list3')}</label>

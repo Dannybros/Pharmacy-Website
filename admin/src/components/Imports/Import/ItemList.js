@@ -39,7 +39,7 @@ function ItemList({items, setCart, cart}) {
 
     const handleAddBasket=(item)=>{
         if(details.price!=="" || details.amount!==""){
-            const newItem = {_id:item._id, name:item.name.en, price:parseInt(details.price) , amount:parseInt(details.amount) }
+            const newItem = {_id:item._id, name:item.name.en, buyingPrice:parseInt(details.price) , importAmount:parseInt(details.amount) }
             setCart((cart)=>[...cart, newItem]);
             handleCloseModal();
         }else{

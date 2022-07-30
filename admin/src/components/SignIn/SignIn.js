@@ -12,6 +12,7 @@ import {Toast, ToastContainer} from 'react-bootstrap'
 import axios from '../axios'
 import {useNavigate} from 'react-router-dom'
 import { useStateValue } from '../../context/StateProvider';
+import { useLocalStorage } from '../../context/useLocalStorage';
 
 const theme = createTheme();
 
@@ -29,6 +30,9 @@ const mystyle = {
 
 export default function SignIn() {
 
+    const [activeMainMenu, setActiveMainMenu] = useLocalStorage("MainMenu")
+    const [activeSubMenu, setActiveSubMenu] = useLocalStorage("SubMenu");
+
     const [{user}, dispatch] = useStateValue();
     
     const navigate = useNavigate();
@@ -44,6 +48,8 @@ export default function SignIn() {
                 type:"ADD_USER",
                 token:res.data.token
             })
+            setActiveMainMenu(0)
+            setActiveSubMenu(null)
             navigate('../', { replace: true });
         })
         .catch((error)=>{
@@ -66,7 +72,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-        <div style={mystyle}>
+        <div style={mystyle} value={activeMainMenu + "" + activeSubMenu}>
         <ToastContainer position="top-center" className="p-3">
             <ThrowToast/>
         </ToastContainer>

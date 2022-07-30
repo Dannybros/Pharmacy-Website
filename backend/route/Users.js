@@ -12,22 +12,22 @@ dotenv.config();
 router.post('/admin/login', async(req, res)=>{
     const {username, password} = req.body;
 
-    const existingUser = await AdminsCollection.findOne({adminName: username});
+    const existingUser = await AdminsCollection.findOne({username: username});
 
     if(!existingUser) return res.status(403).json({status:"error", message:"Username or Password is incorrect"})
     
-    const isPasswordCorrect = await bcrypt.compare(password, existingUser.adminPassword); 
+    const isPasswordCorrect = await bcrypt.compare(password, existingUser.password); 
 
     if(!isPasswordCorrect) return res.status(403).json({status:"error", message:"Username or Password is incorrect"})
 
-    //require('crypto').randomBytes(64).toString('hex') from git bash -> type "node" first
+    // //require('crypto').randomBytes(64).toString('hex') from git bash -> type "node" first
     const secret_key = process.env.JWTAUTHKEY
 
-    const user = {name:username, id:existingUser.adminID}
+    const user = {name:username, id:existingUser.adminID, type:existingUser.adminType}
 
     const token = jwt.sign(user, secret_key, {expiresIn: '5h' });
 
-    await res.json({status:"success", token:token})
+     await res.json({status:"success", token:token})
 })
 
 router.get('/get-all', (req, res)=>{
@@ -65,9 +65,9 @@ router.post('/login', async (req, res)=>{
 
 router.post('/signup', async (req, res)=>{
 
-    const { email, bod, username, password, firstName, lastName, cPassword, hint } = req.body;
+    const { email, bod, username, password, name, cPassword, hint } = req.body;
 
-    if(email=='' || bod=='' || username=='' || password=='' || firstName=='' || lastName=='' || cPassword=='' || hint==''){
+    if(email=='' || bod=='' || username=='' || password=='' || name=='' || cPassword=='' || hint==''){
         return res.status(400).json({message: "Please fil in all the fields"});
     }
 
@@ -89,7 +89,7 @@ router.post('/signup', async (req, res)=>{
 
     const hashPw= await bcrypt.hash(password, 10);
 
-    await UserCollection.create({email, birthday:bod, username, hint, password:hashPw, firstName, lastName});
+    await UserCollection.create({email, birthday:bod, username, hint, password:hashPw, name});
 
     res.status(201).json({message:"You have sign up successfully!"});
 
@@ -138,10 +138,10 @@ router.post('/change-pw', async (req, res)=>{
 })
 
 router.post('/update/info', async (req, res)=>{
-    const {_id, email, birthday, username, pw, firstName, lastName,  hint } = req.body;
+    const {_id, email, birthday, username, pw, name, hint } = req.body;
 
     //check if there is empty fields
-    if(email=='' || birthday=='' || username=='' || pw=='' || firstName=='' || lastName=='' || hint==''){
+    if(email=='' || birthday=='' || username=='' || pw=='' || name=='' || hint==''){
         return res.status(400).json({message: "Please fil in all the fields"});
     }
 
@@ -179,8 +179,7 @@ router.post('/update/info', async (req, res)=>{
         birthday,
         hint,
         username,
-        firstName,
-        lastName,
+        name,
         password:newPw,
     }, ({new:true}), (err, data)=>{
         if(err){

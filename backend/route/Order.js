@@ -5,7 +5,7 @@ import ItemCollection from '../model/ItemModel.js';
 const router = express.Router();
 
 router.get('/', (req, res)=>{
-    OrderCollection.find({}, (err, data)=>{
+    OrderCollection.find({}).sort({createdAt:-1}).exec((err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
@@ -142,7 +142,7 @@ router.post('/', async(req, res)=>{
             addr:address.addr,
             coords:{
                 lat:address.coords.lat,
-                lng:address.coords.lat
+                lng:address.coords.lng
             }
         },
         orderItems:cart,
@@ -162,7 +162,6 @@ router.post('/', async(req, res)=>{
             error:err
         });
     });
-    
 })
 
 export default router;

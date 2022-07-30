@@ -98,6 +98,11 @@ export const MenuData = [
              subValue:3,
              path:'/report/imports'
             },
+            {
+                title:"Revenue",
+                subValue:4,
+                path:'/report/imports'
+            },
          ]
     },
 ]

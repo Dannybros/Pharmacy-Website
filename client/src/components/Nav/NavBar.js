@@ -14,7 +14,6 @@ import MenuOpenSharpIcon from '@mui/icons-material/MenuOpenSharp';
 import logoImg from '../../img/MedLogo.png';
 import Selector from './Select';
 import {useStateValue } from '../../Reducer/StateProvider';
-import { useLocalStorage } from '../../Reducer/useLocalStorage';
 import {useTranslation} from 'react-i18next'
 import ProfileMenu from './ProfileMenu';
 
@@ -22,7 +21,7 @@ function NavBar({items}) {
   const navigate = useNavigate();
 
   const {t} = useTranslation();
-  const [{cart, currency, user, socket, lang}, dispatch] = useStateValue();
+  const [{cart, user, socket, lang}, dispatch] = useStateValue();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchItemID, setSearchItemID] = useState('');
@@ -45,18 +44,6 @@ function NavBar({items}) {
   const handleModalClose = () => {
     setModalShow(false);
     setSearchItemID('');
-  }
-  
-  const handleCurrencyChange = (e)=>{
-    const newCurrency = e.target.value;
-    const currencyLabel = newCurrency.split("_")[0];
-    const currencyAbbr = newCurrency.split("_")[1];
-
-    dispatch({
-      type:"CHANGE_CURRENCY",
-      label:currencyLabel,
-      abbr:currencyAbbr
-    })
   }
 
   const handleSwitch=()=> setOpenSidebar(true);
@@ -93,12 +80,6 @@ function NavBar({items}) {
 
           <Selector/>
 
-          {/* currency box only for phone size */}
-          {/* <select className='currency_tablet_selector' value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
-            <option value="Dollar_USD">USD</option>
-            <option value="LAOKIP_LAK">KIP</option>
-          </select> */}
-          
           <div className='cart_box' onClick={goToCart}>
             <ShoppingCartIcon className='cart_icon'/>
             <span className='cart_number'>
@@ -138,13 +119,6 @@ function NavBar({items}) {
               <li>{t('Home.nav.list4')} <AddIcon className='plus_icon'/></li>
             </NavLink>
           </ul>
-
-          {/* <div className='currency_selector'>
-            <select id="" value={currency.label + "_" + currency.abbr} onChange={handleCurrencyChange}>
-              <option value="Dollar_USD">USD</option>
-              <option value="LAOKIP_LAK">KIP</option>
-            </select>
-          </div> */}
 
           <Button variant='primary mx-4 py-1 px-2 ' className='main_search_btn' onClick={handleModalShow}>
             <SearchIcon/>

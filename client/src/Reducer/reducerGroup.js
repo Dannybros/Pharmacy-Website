@@ -28,6 +28,7 @@ const reducer = (state, action)=>{
             return{
                 ...state,
                 user: {},
+                cart: [],
             };
         
         case 'SWITCH_LANG':

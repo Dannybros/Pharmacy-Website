@@ -7,7 +7,6 @@ const employeeSchema = new mongoose.Schema({
     Phone:Number,
     Joining_Date:String,
     Salary:Number,
-    Password:String
 })
 
 const EmployeeCollection = mongoose.model('employee', employeeSchema);

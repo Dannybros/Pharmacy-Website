@@ -23,13 +23,13 @@ function EmployeeTable({data, search, handleModalShow, handleDeleteEmployee}) {
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell align="center"><b>Employee Name</b></TableCell>
-          <TableCell align="right"><b>Gender</b></TableCell>
-          <TableCell align="right"><b>BirthDay</b></TableCell>
-          <TableCell align="right"><b>Phone</b></TableCell>
-          <TableCell align="right"><b>Joining_Date</b></TableCell>
-          <TableCell align="right"><b>Salary</b></TableCell>
-          <TableCell align="center"><b>Action</b></TableCell>
+          <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Employee Name</b></TableCell>
+          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Gender</b></TableCell>
+          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>BirthDay</b></TableCell>
+          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Phone</b></TableCell>
+          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Joining_Date</b></TableCell>
+          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Salary</b></TableCell>
+          <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Action</b></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

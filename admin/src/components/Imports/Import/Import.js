@@ -63,8 +63,6 @@ function Import() {
     setFilter({...filter, search: event.target.value});
   }
 
-  console.log(filter);
-
   const handleOpenCart = ()=>{
     if(cart.length>0){
       setOpenCart(true);
@@ -75,13 +73,6 @@ function Import() {
   
   const handleCloseCart=()=>{
     setOpenCart(false)
-  }
-
-  const handleDeleteCart =(id)=>{
-    setCart((items)=>{return items.filter((item)=>item._id!==id)});
-    if(cart.length<=1){
-      handleCloseCart();
-    }
   }
 
   const filterImport=(data)=>{
@@ -152,7 +143,7 @@ function Import() {
 
       <ItemList items={filterImport(products)} cart={cart} setCart={setCart}/>
       
-      <CartModal openCart={openCart} cart={cart} handleCloseCart={handleCloseCart} handleDeleteCart={handleDeleteCart}/>
+      <CartModal openCart={openCart} cart={cart} handleCloseCart={handleCloseCart} setCart={setCart}/>
     </Box>
   )
 }

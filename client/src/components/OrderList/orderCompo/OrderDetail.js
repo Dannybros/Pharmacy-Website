@@ -51,7 +51,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                                 primary={
                                     <Typography component="span" color="#757ce8"> {data?.customerName} </Typography>
                                 } 
-                                secondary="adds"
+                                secondary={data?.customerAddress.addr? data?.customerAddress.addr : data?.customerAddress.coords.lat + " " + data?.customerAddress.coords.lng}
                             />
                         </ListItem>
                     </Col>
@@ -112,7 +112,7 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
                                     <TableCell component="th" scope="row" style={{display:"flex"}}>
                                         <img className="order_detail_img" src={item.img} alt=""/>
                                         <ListItemText
-                                            primary={item.name[lang]}
+                                            primary={item?.name[lang]}
                                             secondary={item._id}
                                         />
                                     </TableCell>

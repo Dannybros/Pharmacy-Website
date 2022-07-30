@@ -1,9 +1,10 @@
 import React from 'react'
 import { styled } from '@mui/material/styles';
-import {Drawer, IconButton, Divider, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material'
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import {Drawer, IconButton, Divider, List, ListItem, ListItemText, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
+import moment from 'moment'
+import axios from '../../axios'
+import Swal from 'sweetalert2'
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -11,12 +12,30 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent:"space-between",
     padding: theme.spacing(0, 1),
-    
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
 
 function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
+
+    const updateImportStatus=(status)=>{
+        axios.post(`/imports/${status}`, {imports:selectedImport})
+        .then(res=>{
+            Swal.fire({
+                title: 'success',
+                text: res.data.message,
+                icon: 'success',
+            })
+            handleDrawerClose();
+        })
+        .catch(err=>{
+            Swal.fire({
+              title: 'error',
+              text: err.response.data.message,
+              icon: 'warning',
+            })
+        })
+    }
+
   return (
     <>
     <Drawer
@@ -46,40 +65,36 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
                     Action
                 </Typography>
                 <ButtonGroup>
-                    <Button variant='contained' color="secondary" sx={{mx:1}}> Check </Button>
-                    <Button variant='contained' color="error"> Reject </Button>
+                    <Button variant='contained' color="secondary" sx={{mx:1}} onClick={()=>updateImportStatus('check')}>
+                        Check 
+                    </Button>
+                    <Button variant='contained' color="error" onClick={()=>updateImportStatus('cancel')}> 
+                        Reject 
+                    </Button>
                 </ButtonGroup>
             </Box>
 
             <List>
                 <Typography variant="h6" sx={{mt:2}}><b>Details</b></Typography>
                 <ListItem sx={{py:1}}>
-                    <ListItemText primary="ID" />
-                    <ListItemText secondary="ID" />
+                    <ListItemText primary="ID"/>
+                    <ListItemText secondary={selectedImport._id} />
                 </ListItem>
                 <ListItem sx={{py:1}}>
-                    <ListItemText primary="Supplier" />
-                    <ListItemText secondary="Supplier" />
+                    <ListItemText primary="Supplier" sx={{maxWidth:120}}/>
+                    <ListItemText secondary={selectedImport.supplierName}/>
                 </ListItem>
                 <ListItem sx={{py:1}}>
-                    <ListItemText primary="Order Date" />
-                    <ListItemText secondary="Order Date" />
+                    <ListItemText primary="Order Date" sx={{maxWidth:120}}/>
+                    <ListItemText secondary={moment(selectedImport.ImportDate).format("dddd, MMMM Do YYYY, h:mm A")} />
                 </ListItem>
                 <ListItem sx={{py:1}}>
-                    <ListItemText primary="Expected Arrival" />
-                    <ListItemText secondary="Expected Arrival" />
+                    <ListItemText primary="Total" sx={{maxWidth:120}}/>
+                    <ListItemText secondary={selectedImport.subtotal} />
                 </ListItem>
                 <ListItem sx={{py:1}}>
-                    <ListItemText primary="Total" />
-                    <ListItemText secondary="Total" />
-                </ListItem>
-                <ListItem sx={{py:1}}>
-                    <ListItemText primary="Total" />
-                    <ListItemText secondary="Total" />
-                </ListItem>
-                <ListItem sx={{py:1}}>
-                    <ListItemText primary="Status" />
-                    <ListItemText secondary="Total" />
+                    <ListItemText primary="Status" sx={{maxWidth:120}}/>
+                    <ListItemText secondary={selectedImport.status}/>
                 </ListItem>
             </List>
 
@@ -97,17 +112,18 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {['All mail', 'Trash', 'Spam'].map((row) => (
+                    {selectedImport.importItems &&
+                     selectedImport.importItems.map((row) => (
                         <TableRow
-                        key={row}
+                        key={row._id}
                         sx={{'&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {row}
+                                {row._id}
                             </TableCell>
-                            <TableCell align="right"></TableCell>
-                            <TableCell align="right"></TableCell>
-                            <TableCell align="right"></TableCell>
+                            <TableCell align="right">{row.buyingPrice.toLocaleString()} KIP</TableCell>
+                            <TableCell align="right">{row.importAmount}</TableCell>
+                            <TableCell align="right">{(row.buyingPrice * row.importAmount).toLocaleString()} KIP</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>

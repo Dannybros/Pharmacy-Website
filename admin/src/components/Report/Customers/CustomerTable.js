@@ -22,9 +22,8 @@ function CustomerTable({data, search, handleModalShow}) {
       const searchTerm = searchQuery.toLowerCase()
 
       const filterData = data.filter((item)=>{
-          const fname = item.firstName.toLowerCase();
-          const lname = item.lastName.toLowerCase();
-          return fname.includes(searchTerm) || lname.includes(searchTerm)
+          const name = item.name.toLowerCase();
+          return name.includes(searchTerm)
       })
       
       return filterData
@@ -35,9 +34,8 @@ function CustomerTable({data, search, handleModalShow}) {
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <StyledTableCell align="center"><b>First Name</b></StyledTableCell>
           <StyledTableCell align="center"><b>NO.</b></StyledTableCell>
-          <StyledTableCell align="center"><b>Second Name</b></StyledTableCell>
+          <StyledTableCell align="center"><b>Name</b></StyledTableCell>
           <StyledTableCell align="center"><b>BirthDay</b></StyledTableCell>
           <StyledTableCell align="center"><b>Email</b></StyledTableCell>
           <StyledTableCell align="center"><b>Username</b></StyledTableCell>
@@ -54,8 +52,7 @@ function CustomerTable({data, search, handleModalShow}) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row" align="center"><b>{i+1}</b></TableCell>
-              <TableCell style={{textTransform:"capitalize"}} align="center">{row.firstName}</TableCell>
-              <TableCell style={{textTransform:"capitalize"}} align="center">{row.lastName}</TableCell>
+              <TableCell style={{textTransform:"capitalize"}} align="center">{row.name}</TableCell>
               <TableCell align="center">{row.birthday}</TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">{row.username}</TableCell>

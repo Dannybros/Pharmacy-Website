@@ -12,10 +12,10 @@ import { useTranslation} from 'react-i18next';
 function Payment() {
   
   const {total} = useParams();
-  const [{user, currency}] = useStateValue();
+  const [{user}] = useStateValue();
   const {t} = useTranslation();
 
-  const initialOrder={userID:user._id,name:"", phone:"", address:{addr:"", coords:{lat:"", lng:""}}, method:"", total:total}
+  const initialOrder={userID:user._id, name:user.name, phone:"", address:{addr:"", coords:{lat:"", lng:""}}, method:"", total:total}
 
   const [orderInfo, setOrderInfo] = useState(initialOrder);
   const [activeStep, setActiveStep] = useState(0);
@@ -60,7 +60,7 @@ function Payment() {
         
         <Box className='price_teller'>
           <div className='payment__total'>
-            {t('Cart.Receipt.Total')}: {total} {currency.abbr}
+            <b>{t('Cart.Receipt.total')}: {total.toLocaleString()} KIP</b>
           </div>
         </Box>
       </div>

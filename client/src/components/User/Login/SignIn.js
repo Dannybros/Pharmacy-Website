@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 function SignIn() {
   
-  const initials = {username:"", password:"", cPassword:"", bod:"", email:"", hint:"", firstName:"", lastName:""};
+  const initials = {username:"", password:"", cPassword:"", bod:"", email:"", hint:"", name:""};
 
   const [{user}, dispatch]= useStateValue();
   const {t} = useTranslation();
@@ -102,10 +102,7 @@ function SignIn() {
             {signUpState ?
               <>
                 <Col xs={6}>
-                  <input type="text" name='firstName' placeholder='First Name...' value={formData.firstName} autoComplete="on" onChange={handleOnChange}/>
-                </Col>
-                <Col xs={6}>
-                  <input type="text" name='lastName' placeholder='Last Name...' value={formData.lastName}  autoComplete="on" onChange={handleOnChange}/>
+                  <input type="text" name='name' placeholder='First Name...' value={formData.name} autoComplete="on" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
                   <input type="date" name='bod' placeholder='Birthday...' value={formData.bod} onChange={handleOnChange}/>

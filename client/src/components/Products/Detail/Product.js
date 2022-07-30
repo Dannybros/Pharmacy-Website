@@ -4,7 +4,6 @@ import '../../Home/Home.scss'
 import {Rating, Stack, Typography} from '@mui/material'
 import {Row, Col, Button, Modal} from 'react-bootstrap'
 import Magnifier from "react-magnifier";
-import { useLocalStorage } from '../../../Reducer/useLocalStorage';
 import {useParams, useNavigate} from 'react-router-dom'
 import { useStateValue } from '../../../Reducer/StateProvider';
 import axios from '../../axios/axios'

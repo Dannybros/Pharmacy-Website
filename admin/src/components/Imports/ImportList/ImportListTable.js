@@ -1,25 +1,22 @@
 import React from 'react'
-import {Table,TableContainer, Paper, TableRow, TableCell, TableBody, Chip, Box, Typography, ListItemText} from '@mui/material'
+import {Table,TableContainer, Paper, TableRow, TableCell, TableBody, Chip, Box, Typography} from '@mui/material'
+import moment from 'moment'
 
+function ImportListTable({data, handleDrawerOpen}) {
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+  const getMonth=(date)=>{
+    return moment(date).format('MMM');
+  }
 
+  const getDate=(date)=>{
+    return moment(date).format('DD');
+  }
 
-function ImportListTable({imports, handleDrawerOpen}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableBody>
-          {rows.map((row) => (
+          {data.map((row) => (
             <TableRow
               hover
               key={row.name}
@@ -34,19 +31,19 @@ function ImportListTable({imports, handleDrawerOpen}) {
                     background:'rgb(229, 231, 235)',
                     borderRadius:16
                 }}>
-                    <Typography component='subtitle2' gutterBottom> JUL </Typography>
-                    <Typography component='h6'><b>26</b> </Typography>
+                    <Typography component='subtitle2' gutterBottom>{getMonth(row.importDate)}</Typography>
+                    <Typography component='h6'><b>{getDate(row.importDate)}</b> </Typography>
                 </Box>
 
                 <Box sx={{display:"flex", flexDirection:"column", justifyContent:"center"}}>
                     <Typography variant='subtitle2' gutterBottom> 
-                        ID: asldkfjasdfjalsdjfadjfaldskj
+                        ID: {row._id}
                     </Typography>
-                    <Typography variant="body2" sx={{color:"rgb(101, 116, 139)"}}> Total: 26 </Typography>
+                    <Typography variant="body2" sx={{color:"rgb(101, 116, 139)"}}> Total: {row.subtotal.toLocaleString()}</Typography>
                 </Box>
               </TableCell>
               <TableCell align="right">
-                <Chip label={row.name} color="warning"/>
+                <Chip label="Pending" color="warning"/>
               </TableCell>
             </TableRow>
           ))}

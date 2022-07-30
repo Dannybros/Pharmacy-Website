@@ -43,8 +43,8 @@ router.post('/update', async(req,res)=>{
     }
 
     await AdminsCollection.findOneAndUpdate({adminID:_id}, {
-        adminName:EmployeeName,
-        adminPassword: await bcrypt.hash(EmployeeName, 10),
+        username:EmployeeName,
+        password: await bcrypt.hash(EmployeeName, 10),
     })
 
     EmployeeCollection.findByIdAndUpdate(_id, {
@@ -76,8 +76,8 @@ router.post('/', async(req, res)=>{
     const newEmpID = mongoose.Types.ObjectId();
 
     await new AdminsCollection({
-        adminName:EmployeeName,
-        adminPassword: await bcrypt.hash(EmployeeName, 10),
+        username:EmployeeName,
+        password: await bcrypt.hash(EmployeeName, 10),
         adminID:newEmpID
     }).save()
 

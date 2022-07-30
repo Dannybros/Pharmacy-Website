@@ -27,6 +27,7 @@ import CustomerReport from './components/Report/Customers/CustomerReport'
 import ImportList from './components/Imports/ImportList/ImportList';
 import SideBar from './components/Sidebar/Drawer';
 import Import from './components/Imports/Import/Import';
+import ImportReport from './components/Report/Imports/ImportReport';
 
 const drawerWidth = 240;
 
@@ -63,6 +64,7 @@ function App(props) {
           <Route path="/imports/pending" element={<ProtectedRoute Compo={<ImportList/>}/>}/>
           <Route path="/import/order" element={<ProtectedRoute Compo={<Import/>}/>}/>
           <Route path="/report/products" element={<ProtectedRoute Compo={<ProductReport/>}/>}/>
+          <Route path="/report/imports" element={<ProtectedRoute Compo={<ImportReport/>}/>}/>
           <Route path="/report/customers" element={<ProtectedRoute Compo={<CustomerReport/>}/>}/>
           <Route path="/report/orders" element={<ProtectedRoute Compo={<OrderReport/>}/>}/>
           <Route path="/sign-in" element={<SignIn />}/>

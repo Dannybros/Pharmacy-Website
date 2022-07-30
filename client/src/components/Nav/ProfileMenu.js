@@ -52,7 +52,7 @@ function ProfileMenu({user, handleLogOut}) {
       setAnchorEl(null);
     };
 
-    const userName = Object.keys(user).length !== 0? user.username : "Guest"
+    const userName = Object.keys(user).length !== 0? user.username : t('Home.nav.guest')
 
     return (
     <div className='user_box' style={{ display: 'flex', flexDirection:"column", alignItems: 'center', justifyContent:"center", textAlign: 'center' }}>
@@ -132,7 +132,7 @@ function ProfileMenu({user, handleLogOut}) {
             <ListItemIcon>
               <PersonOutlineIcon fontSize="small" />
             </ListItemIcon>
-            {t('Home.Profile.singUp')} 
+            {t('Home.Profile.signUp')} 
         </MenuItem>}
       </Menu>
     </div>

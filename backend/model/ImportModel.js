@@ -2,12 +2,11 @@
 import mongoose from 'mongoose'
 
 const importSchema = new mongoose.Schema({
-    ImportTotal:Number,
-    ImportDate:String,
-    SupplierID:String,
-    Status:String,
-    ImportOrders:{ type : Array , "default" : [] },
-})
+    subtotal:Number,
+    importItems:{ type : Array , default : [] },
+    supplierName:String,
+    status:{type:String, default:"Pending"},
+}, { timestamps: { createdAt: 'importDate' } })
 
 const ImportCollection = mongoose.model('imports', importSchema);
 
