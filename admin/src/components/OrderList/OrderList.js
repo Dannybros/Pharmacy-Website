@@ -22,7 +22,7 @@ function OrderList() {
   const [showAlert, setShowAlert] = useState({state:false, msg:""});
 
   useEffect(() => {
-    const fetchProducts= async()=>{
+    const fetchOrders= async()=>{
       await axios.get(`/order/${status}`)
       .then(res=>{
         setOrders(res.data)
@@ -36,7 +36,7 @@ function OrderList() {
       })
     }
 
-    fetchProducts();
+    fetchOrders();
   }, [status])
 
   useEffect(() => {

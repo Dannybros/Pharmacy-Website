@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material/styles';
-import {Drawer, IconButton, Divider, List, ListItem, ListItemText, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody, TextField} from '@mui/material'
+import {Drawer, IconButton, Divider, List, ListItem, ListItemText, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment'
 import axios from '../../axios'
@@ -35,8 +35,6 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
             })
         })
     }
-
-    const supp = selectedImport.supplierName;
 
   return (
     <>

@@ -73,8 +73,6 @@ function ImportReport() {
   };
   
   const filterImport=(data, filter)=>{
-    if(filter.search!=="" && !filter.data) return data;
-  
     const searchTerm = filter.search.toLowerCase();
     const searchStatus = filter.status==="All"? '' : filter.status.toLowerCase();
     const searchDate = filter.date===null? '' : moment(filter.date).format("YYYY-MM-DD");
@@ -87,8 +85,7 @@ function ImportReport() {
   }
 
   return (
-    
-    <Box sx={{p:3}}>
+    <Box sx={{p:{ xs: 0, md: 3}}}>
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
         <Link underline="hover" color="inherit" href="/">
           Home

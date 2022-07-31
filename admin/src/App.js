@@ -15,7 +15,6 @@ import Nav from './components/Nav/Nav'
 import Home from './components/Home/Home';
 //
 import OrderList from './components/OrderList/OrderList'
-import OrderReport from './components/OrderList/OrderReport'
 //
 import Categories from './components/Catalog/Categories/Categories'
 import Products from './components/Catalog/Products/Products'
@@ -28,6 +27,8 @@ import ImportList from './components/Imports/ImportList/ImportList';
 import SideBar from './components/Sidebar/Drawer';
 import Import from './components/Imports/Import/Import';
 import ImportReport from './components/Report/Imports/ImportReport';
+import OrderReport from './components/Report/Orders/OrderReport';
+import Revenue from './components/Report/Revenue/Revenue';
 
 const drawerWidth = 240;
 
@@ -51,7 +52,7 @@ function App(props) {
       
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, p:{ xs: 2, md: 3}, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar/>
         <Routes>
@@ -67,6 +68,7 @@ function App(props) {
           <Route path="/report/imports" element={<ProtectedRoute Compo={<ImportReport/>}/>}/>
           <Route path="/report/customers" element={<ProtectedRoute Compo={<CustomerReport/>}/>}/>
           <Route path="/report/orders" element={<ProtectedRoute Compo={<OrderReport/>}/>}/>
+          <Route path="/report/revenue" element={<ProtectedRoute Compo={<Revenue/>}/>}/>
           <Route path="/sign-in" element={<SignIn />}/>
         </Routes>
       </Box>

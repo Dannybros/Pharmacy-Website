@@ -48,7 +48,7 @@ export default function SignIn() {
                 type:"ADD_USER",
                 token:res.data.token
             })
-            setActiveMainMenu(0)
+            await setActiveMainMenu(0)
             setActiveSubMenu(null)
             navigate('../', { replace: true });
         })

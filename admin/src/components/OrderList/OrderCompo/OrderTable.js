@@ -41,7 +41,7 @@ function OrderTable({data, search, handleShowDetails}) {
 }
 
   return (
-    <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+    <TableContainer component={Paper} sx={{ maxHeight: 500 }}>
       <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

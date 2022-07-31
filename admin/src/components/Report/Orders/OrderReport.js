@@ -1,70 +1,110 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './OrderReport.scss'
-import {Accordion, Button} from 'react-bootstrap'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import SearchIcon from '@mui/icons-material/Search';
-import CheckIcon from '@mui/icons-material/Check';
+import {Tabs, Tab, Paper, Divider} from '@mui/material'
+import moment from 'moment'
+import Swal from 'sweetalert2'
+import OrderTable from '../../OrderList/OrderCompo/OrderTable'
+import OrderDetail from '../../OrderList/OrderCompo/OrderDetail'
+import axios from '../../axios'
 
 function OrderReport() {
 
-  const test = [{name:"d", date:"2022/06/23"}, {name:"g", date:"2022/06/23"}, {name:"f", date:"2022/06/24"}];
-  
-  const groupByCategory = test.reduce((group, product) => {
-    const { date } = product;
-    group[date] = group[date] ?? [];
-    group[date].push(product);
-    return group;
-  }, {});
+    const [orders, setOrders] = useState([]);
+    const [showDetail, setShowDetail] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [orderFilter, setOrderFilter] = useState({search:"", date:"", status:"All"});
 
-  return (
-    <div className='order_report'>
-       <div className='search_order'>
-        <main>
-          <input type="text" placeholder='Search...' className='form-control'/>
-          <SearchIcon className='search_icon'/>
-        </main>
-      </div>
-      <li className='table_header'>
-        <div>Order ID</div>
-        <div>Customer</div>
-        <div>Order Time</div>
-        <div>Paid</div>
-        <div>Delivery</div>
-        <div>Action</div>
-      </li>
-      {Object.keys(groupByCategory).map((item, i)=>{
-          return(
-            <Accordion key={i} defaultActiveKey={i}>
-              <Accordion.Item eventKey={i}>
-                <Accordion.Header>{item}</Accordion.Header>
-                <Accordion.Body>
-                {groupByCategory[item].map((order, i)=>{
-                  return(
-                    <li className='order_table_list' key={i}>
-                      <main className='order__info'>
-                        <div>Order ID</div>
-                        <div>Order {order.name}</div>
-                        <div>Order Time</div>
-                        <div>
-                          <Button variant='primary' disabled> <CheckIcon/> </Button>
-                        </div>
-                        <div>
-                          <Button variant='primary' disabled> <CheckIcon/> </Button>
-                        </div>
-                        <div>
-                          <Button variant='success'> <RemoveRedEyeIcon/> </Button>
-                        </div>
-                      </main>
-                    </li>
-                  )
-                })}
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-          )
-        })}
-    </div>
-  )
+    useEffect(() => {
+        const fetchProducts= async()=>{
+          await axios.get(`/order`)
+          .then(res=>{
+            setOrders(res.data)
+          })
+          .catch((error)=>{
+            Swal.fire({
+              title: 'error',
+              text: error.response.data.message,
+              icon: 'warning',
+            })
+          })
+        }
+    
+        fetchProducts();
+    }, [])
+
+    const handleSearchChange=(e)=>{
+        setOrderFilter({...orderFilter, search:e.target.value});
+    }
+    
+    const handleDateChange=(e)=>{
+        setOrderFilter({...orderFilter, date:e.target.value});
+    }
+    
+    const handleChangeTab = (event, newValue) => {
+        setOrderFilter({...orderFilter, status:newValue});
+    };
+
+    const handleShowDetails=async(item)=>{
+        await setSelectedOrder(item);
+        setShowDetail(true);
+    }
+
+    const handleCloseDetails=()=>{
+        setShowDetail(false);
+        setSelectedOrder(null);
+      }
+
+    const filterData=(data, status)=>{
+        if(!orderFilter.search && !orderFilter.date && status==="All") return data;
+
+        const searchTerm = orderFilter.search.toLowerCase();
+
+        const searchDate = orderFilter.date===""? "" : moment(orderFilter.date).format("YYYY-MM-DD")
+
+        const searchStatus = status==="All"? "" : status.toLowerCase()
+        
+        const filterData = data.filter((item)=>{
+            return item.status.en.toLowerCase().includes(searchStatus) && item._id.includes(searchTerm) && item.createdAt.includes(searchDate)
+        })
+
+        return filterData
+    }
+
+    return (
+        <div className='order_report'>
+            <div className='pb-4'>
+                <Paper variant='outlined' className='search_order'>
+                    <h2><b>Order Report</b></h2>
+                    <div className='d-flex'>
+                        <input type="text" className='form-control' placeholder='Search...' value={orderFilter.search} onChange={handleSearchChange}/>
+                        <input type="date" className='form-control' value={orderFilter.date} onChange={handleDateChange}/>
+                    </div>
+                </Paper>
+                <Divider/>
+    
+                <Paper variant='outlined' sx={{ width: '100%', bgcolor:"white", py:1 }}>
+                    <Tabs
+                        value={orderFilter.status}
+                        onChange={handleChangeTab}
+                        textColor="secondary"
+                        indicatorColor="secondary"
+                        aria-label="secondary tabs example"
+                    >
+                        <Tab label="All" value="All" />
+                        <Tab label="Pending"  value="Pending"/>
+                        <Tab label="Delivery" value="Delivery"/>
+                        <Tab label="Completed" value="Completed"/>
+                        <Tab label="Cancelled" value="Cancelled"/>
+                    </Tabs>
+                </Paper>
+                <Divider/>
+                
+                <OrderTable data={filterData(orders, orderFilter.status)} handleShowDetails={handleShowDetails}/>
+    
+                <OrderDetail showDetail={showDetail} handleCloseDetails={handleCloseDetails} data={selectedOrder} report={true}/>
+            </div>
+        </div>
+    )
 }
 
 export default OrderReport

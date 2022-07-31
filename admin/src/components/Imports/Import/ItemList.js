@@ -31,6 +31,14 @@ function ItemList({items, setCart, cart}) {
         setDetails({...details, [e.target.name]:e.target.value})
     }
 
+    const onlyNumber = (event) => {
+        const keyCode = event.keyCode || event.which;
+        const keyValue = String.fromCharCode(keyCode);
+        if (!(new RegExp("[0-9]").test(keyValue)))
+          event.preventDefault();
+        return;
+      }
+
     function checkItemInCart(id){
         const index = cart.findIndex(prod => prod._id === id);
         if(index <0) return false
@@ -95,10 +103,10 @@ function ItemList({items, setCart, cart}) {
             <Modal.Body>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Grid item xs={6}>
-                        <input type="text" name="price" className='form-control' value={details.price} onChange={handleOnChange} placeholder='Price'/>
+                        <input type="text" name="price" className='form-control' value={details.price} onChange={handleOnChange} placeholder='Price' onKeyDown={onlyNumber}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <input type="text" name="amount" className='form-control' value={details.amount} onChange={handleOnChange} placeholder='Amount'/>
+                        <input type="text" name="amount" className='form-control' value={details.amount} onChange={handleOnChange} placeholder='Amount' onKeyDown={onlyNumber}/>
                     </Grid>
                 </Grid>
             </Modal.Body>

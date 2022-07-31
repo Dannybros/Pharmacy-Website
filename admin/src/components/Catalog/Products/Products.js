@@ -6,17 +6,18 @@ import {Card, Button, Col} from 'react-bootstrap'
 import AddIcon from '@mui/icons-material/Add';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import Swal from 'sweetalert2'
-import io from 'socket.io-client';
 import axios from '../../axios'
 import { storage } from '../../firebaseConfig';
 import {ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage'
 import ProductList from './ProductList';
+import {useStateValue} from '../../../context/StateProvider'
 
 const initialProductInfo = {name:{en:"", la:""}, type:{en:"", la:""}, price:"", brand:"", weight:"", quantity:"", description:{en:"", la:""}, expireDate:"", imgFile:null, img:""};
 
 function Products() {
 
-  const [socket, setSocket] = useState();
+  // const [socket, setSocket] = useState();
+  const [{socket}] = useStateValue();
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -36,21 +37,8 @@ function Products() {
   }, [])
   
   useEffect(() => {
-    const s = io.connect("http://localhost:5000");
-    setSocket(s);
-  
-    return () => {
-      s.disconnect();
-    }
-  }, [])
-  
-  useEffect(() => {
     if (socket==null) return
 
-    socket.on("update-several-product", (data)=>{
-      setProducts(data.data)
-    })
-    
     socket.on("new-products", (data)=>{
       setProducts(oldArray => [...oldArray, data.data]);
     })
