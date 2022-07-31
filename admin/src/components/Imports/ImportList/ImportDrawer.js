@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material/styles';
-import {Drawer, IconButton, Divider, List, ListItem, ListItemText, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material'
+import {Drawer, IconButton, Divider, List, ListItem, ListItemText, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody, TextField} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment'
 import axios from '../../axios'
@@ -36,6 +36,8 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
         })
     }
 
+    const supp = selectedImport.supplierName;
+
   return (
     <>
     <Drawer
@@ -59,23 +61,25 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
         </DrawerHeader>
         <Divider />
 
-        <Box sx={{p:4}}>
-            <Box sx={{p:2, background:"rgb(243, 244, 246)", borderRadius:5, display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                <Typography variant='span' className='drawer_action_text'>
-                    Action
-                </Typography>
-                <ButtonGroup>
-                    <Button variant='contained' color="secondary" sx={{mx:1}} onClick={()=>updateImportStatus('check')}>
-                        Check 
-                    </Button>
-                    <Button variant='contained' color="error" onClick={()=>updateImportStatus('cancel')}> 
-                        Reject 
-                    </Button>
-                </ButtonGroup>
-            </Box>
+        <Box sx={{px:4, py:2}}>
+            {selectedImport.status==="Pending"&&
+                <Box sx={{p:2, mb:2, background:"rgb(243, 244, 246)", borderRadius:5, display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                    <Typography variant='span' className='drawer_action_text'>
+                        Action
+                    </Typography>
+                    <ButtonGroup>
+                        <Button variant='contained' color="secondary" sx={{mx:1}} onClick={()=>updateImportStatus('check')}>
+                            Check 
+                        </Button>
+                        <Button variant='contained' color="error" onClick={()=>updateImportStatus('cancel')}> 
+                            Reject 
+                        </Button>
+                    </ButtonGroup>
+                </Box>
+            }
 
             <List>
-                <Typography variant="h6" sx={{mt:2}}><b>Details</b></Typography>
+                <Typography variant="h6"><b>Details</b></Typography>
                 <ListItem sx={{py:1}}>
                     <ListItemText primary="ID"/>
                     <ListItemText secondary={selectedImport._id} />

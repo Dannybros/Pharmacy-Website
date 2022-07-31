@@ -13,6 +13,7 @@ function ImportList() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [imports, setImports] = useState([]);
   const [selectedImport, setSelectedImport] = useState({});
+  const [search, setSearch] = useState("");
   const [{socket}] = useStateValue();
 
   useEffect(() => {
@@ -43,7 +44,6 @@ function ImportList() {
 
   }, [socket])
   
-
   const handleDrawerOpen  = async(item)=>{
     await setSelectedImport(item);
     setOpenDrawer(true);
@@ -54,6 +54,22 @@ function ImportList() {
     setSelectedImport({});
   };
 
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const filterSearch=(data, searchQuery)=>{
+    if(!searchQuery) return data;
+  
+    const searchTerm = searchQuery.toLowerCase()
+
+    const filterData = data.filter((item)=>{
+        return item._id.toLowerCase().includes(searchTerm)
+    })
+    
+    return filterData
+  }
+
   return (
     <Box sx={{p:3}}>
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
@@ -63,13 +79,15 @@ function ImportList() {
         <Link underline="hover" color="inherit" href="">
           Import 
         </Link>
-        <Typography color="text.primary">Import List</Typography>
+        <Typography color="text.primary">New Import List</Typography>
       </Breadcrumbs>
 
       <TextField
        sx={{width:"100%"}}
         label="Search"
         placeholder="Search..."
+        value={search}
+        onChange={handleSearchChange}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -78,7 +96,8 @@ function ImportList() {
           ),
         }}
       />
-      <ImportListTable handleDrawerOpen={handleDrawerOpen} data={imports}/>
+
+      <ImportListTable handleDrawerOpen={handleDrawerOpen} data={filterSearch(imports, search)}/>
 
       <ImportDrawer openDrawer={openDrawer} handleDrawerClose={handleDrawerClose} selectedImport={selectedImport}/>
     </Box>

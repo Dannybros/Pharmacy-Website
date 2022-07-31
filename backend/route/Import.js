@@ -54,7 +54,7 @@ router.post('/check', async(req, res)=>{
 router.post('/cancel', (req, res)=>{
     const {imports} = req.body
 
-    ImportCollection.findByIdAndUpdate({_id:imports._id}, {status:"Cancel"}, ({new:true}), (err, data)=>{
+    ImportCollection.findByIdAndUpdate({_id:imports._id}, {status:"Cancelled"}, ({new:true}), (err, data)=>{
         if(err){
             res.status(500).json({error:err});
         }else{

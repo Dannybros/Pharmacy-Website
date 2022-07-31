@@ -45,7 +45,7 @@ export const MenuData = [
         menuValue:2,
         submenu:[
             {
-                title:"import",
+                title:"Check Import",
                 subValue:0,
                 path:'/imports/pending'
             },

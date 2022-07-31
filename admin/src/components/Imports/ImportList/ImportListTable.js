@@ -19,7 +19,7 @@ function ImportListTable({data, handleDrawerOpen}) {
           {data.map((row) => (
             <TableRow
               hover
-              key={row.name}
+              key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               onClick={()=>handleDrawerOpen(row)}
             >
@@ -31,7 +31,7 @@ function ImportListTable({data, handleDrawerOpen}) {
                     background:'rgb(229, 231, 235)',
                     borderRadius:16
                 }}>
-                    <Typography component='subtitle2' gutterBottom>{getMonth(row.importDate)}</Typography>
+                    <Typography variant='subtitle2' gutterBottom>{getMonth(row.importDate)}</Typography>
                     <Typography component='h6'><b>{getDate(row.importDate)}</b> </Typography>
                 </Box>
 
@@ -43,7 +43,7 @@ function ImportListTable({data, handleDrawerOpen}) {
                 </Box>
               </TableCell>
               <TableCell align="right">
-                <Chip label="Pending" color="warning"/>
+                <Chip label={row.status} color={row.status==="Pending"? "warning" : row.status==="Cancelled"? "error" :"primary"}/>
               </TableCell>
             </TableRow>
           ))}
