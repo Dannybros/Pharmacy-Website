@@ -52,7 +52,7 @@ function App(props) {
       
       <Box
         component="main"
-        sx={{ flexGrow: 1, p:{ xs: 2, md: 3}, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ py:{ xs: 2, md: 3}, width: { sm: `calc(100vw - ${drawerWidth}px)` } }}
       >
         <Toolbar/>
         <Routes>

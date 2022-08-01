@@ -15,3 +15,16 @@
     }
   }
 }
+
+.modal.show{
+  @media (max-width:600px) {
+    width: 100vw !important;
+  }
+}
+.modal-dialog{
+  @media (max-width:600px) {
+    width: 95vw !important;
+    word-wrap: break-word;
+    margin: auto;
+  }
+}

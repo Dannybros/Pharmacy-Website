@@ -8,6 +8,8 @@ import axios from '../../axios'
 import RangedStats from './RangedStats';
 import moment from 'moment'
 import RevenueTable from './RevenueTable';
+import RevenueChart from './RevenueChart';
+import RevenueProfit from './RevenueProfit';
 
 const getWeekAgo = (dateOnly = false) => {
     let d = new Date();
@@ -74,7 +76,7 @@ function Revenue() {
     }
 
     return (
-        <Box sx={{p:{ xs: 0, md: 3}}}>
+        <Box className="revenueReport">
             <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
                 <Link underline="hover" color="inherit" href="/">
                 Home
@@ -95,7 +97,7 @@ function Revenue() {
                         onChange={(newValue) => {
                         setValue({...value, start:newValue});
                         }}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField {...params} sx={{width:"45%"}}/>}
                     />
                 </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -107,7 +109,7 @@ function Revenue() {
                         onChange={(newValue) => {
                         setValue({...value, end:newValue});
                         }}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField {...params} sx={{width:"45%"}}/>}
                     />
                 </LocalizationProvider>
             </Box>
@@ -118,10 +120,10 @@ function Revenue() {
 
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{mt:2}}>
                     <Grid item xs={12} lg={8}>
-                        <Paper>5</Paper>
+                        <RevenueChart orders={filterDate(orders)} imports={filterDate(imports)} dateRange={value}/>
                     </Grid>
                     <Grid item xs={12} lg={4}>
-                        <Paper>5</Paper>
+                        <RevenueProfit orders={filterDate(orders)} imports={filterDate(imports)}/>
                     </Grid>
                     <Grid item xs={12} lg={6}>
                         <RevenueTable data={filterDate(orders)} type="ORDER"/>

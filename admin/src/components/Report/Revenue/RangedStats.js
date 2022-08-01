@@ -7,7 +7,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const StyledOrderPaper = styled(Paper)(({ theme }) => ({
     '&': {
-      backgroundColor: theme.palette.success.light,
+      backgroundColor: theme.palette.success.main,
       color:theme.palette.common.white
     },
 }));

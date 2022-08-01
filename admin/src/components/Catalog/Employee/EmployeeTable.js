@@ -19,17 +19,17 @@ function EmployeeTable({data, search, handleModalShow, handleDeleteEmployee}) {
   }
 
   return (
-  <TableContainer component={Paper} className="my-4">
-    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+  <TableContainer component={Paper} >
+    <Table  sx={{ minWidth: 650 }} aria-label="a dense table">
       <TableHead>
         <TableRow>
-          <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Employee Name</b></TableCell>
-          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Gender</b></TableCell>
-          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>BirthDay</b></TableCell>
-          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Phone</b></TableCell>
-          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Joining_Date</b></TableCell>
-          <TableCell sx={{background:"#B8B8B8"}} align="right"><b>Salary</b></TableCell>
-          <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Action</b></TableCell>
+          <TableCell sx={{background:"#ff9800", color:"white"}} align="center"><b>Name</b></TableCell>
+          <TableCell sx={{background:"#ff9800", color:"white"}} align="right"><b>Gender</b></TableCell>
+          <TableCell sx={{background:"#ff9800", color:"white"}} align="right"><b>BirthDay</b></TableCell>
+          <TableCell sx={{background:"#ff9800", color:"white"}} align="right"><b>Phone</b></TableCell>
+          <TableCell sx={{background:"#ff9800", color:"white"}} align="right"><b>Joining_Date</b></TableCell>
+          <TableCell sx={{background:"#ff9800", color:"white"}} align="right"><b>Salary</b></TableCell>
+          <TableCell sx={{background:"#ff9800", color:"white"}} align="center"><b>Action</b></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

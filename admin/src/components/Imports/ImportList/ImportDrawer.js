@@ -1,10 +1,22 @@
 import React from 'react'
 import { styled } from '@mui/material/styles';
-import {Drawer, IconButton, Divider, List, ListItem, ListItemText, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material'
+import {Drawer, IconButton, Divider, List, ListItem, ListItemText, Box, Typography, ButtonGroup, Button, Table, TableHead, TableRow, TableCell, TableBody,TableContainer , Paper} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment'
 import axios from '../../axios'
 import Swal from 'sweetalert2'
+
+function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+  
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ];
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -36,15 +48,17 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
         })
     }
 
+    console.log(selectedImport);
+
   return (
     <>
     <Drawer
         sx={{
-          width: 500,
+          width: { xs: "90%", md: 500},
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: 500,
-            marginTop:'65px'
+            width: { xs: "90%", md: 500},
+            marginTop:{ xs: 0, md: '65px'}
           },
         }}
         variant="persistent"
@@ -79,7 +93,7 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
             <List>
                 <Typography variant="h6"><b>Details</b></Typography>
                 <ListItem sx={{py:1}}>
-                    <ListItemText primary="ID"/>
+                    <ListItemText primary="ID" sx={{maxWidth:120}}/>
                     <ListItemText secondary={selectedImport._id} />
                 </ListItem>
                 <ListItem sx={{py:1}}>
@@ -102,34 +116,35 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
 
             <Divider />
 
-            <List>
+            <List >
                 <Typography variant="h6" sx={{my:2}}><b>Import Orders</b></Typography>
-                <Table aria-label="simple table" size="small">
-                    <TableHead sx={{background:"#F3F4F6"}}>
+                <TableContainer component={Paper} variant="outlined">
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
                         <TableRow>
                             <TableCell> Description</TableCell>
                             <TableCell align="right">Price</TableCell>
                             <TableCell align="right">Amount</TableCell>
                             <TableCell align="right">Total</TableCell>
                         </TableRow>
-                    </TableHead>
-                    <TableBody>
-                    {selectedImport.importItems &&
-                     selectedImport.importItems.map((row) => (
-                        <TableRow
-                        key={row._id}
-                        sx={{'&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {row._id}
-                            </TableCell>
-                            <TableCell align="right">{row.buyingPrice.toLocaleString()} KIP</TableCell>
-                            <TableCell align="right">{row.importAmount}</TableCell>
-                            <TableCell align="right">{(row.buyingPrice * row.importAmount).toLocaleString()} KIP</TableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                        {selectedImport.importItems?.map((row) => (
+                            <TableRow
+                                key={row._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {row._id}
+                                </TableCell>
+                                <TableCell align="right">{(row.buyingPrice).toLocaleString()} KIP</TableCell>
+                                <TableCell align="right">{row.importAmount}</TableCell>
+                                <TableCell align="right">{(row.buyingPrice * row.importAmount).toLocaleString()} KIP</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </List>
         </Box>
     </Drawer>

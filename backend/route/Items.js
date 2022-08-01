@@ -88,7 +88,7 @@ router.post('/', async(req, res)=>{
         }).save()
         .then(result=>{
             res.status(201).json({
-                message:"Employee registered successfully"
+                message:"New Medicine registered successfully"
             })
     
             req.io.emit("new-products",{data:result});

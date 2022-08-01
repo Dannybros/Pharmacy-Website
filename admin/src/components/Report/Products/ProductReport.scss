@@ -1,0 +1,9 @@
+.productReport{
+    height: 100%;
+    padding: 10px 40px;
+    width: calc(100vw - 280px);
+    @media (max-width:890px) {
+        padding: 10px;
+        width: 100vw;
+    }
+}

@@ -87,7 +87,7 @@ function ProductReport() {
   }
 
   return (
-    <Box sx={{p:{ xs: 0, md: 3}}}>
+    <Box className="productReport">
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:{ xs: 2, md: 4}}}>
         <Link underline="hover" color="inherit" href="/">
           Home
@@ -95,7 +95,7 @@ function ProductReport() {
         <Link underline="hover" color="inherit" href="">
           Report 
         </Link>
-        <Typography color="text.primary">Imports</Typography>
+        <Typography color="text.primary">Products</Typography>
       </Breadcrumbs>
 
       <Box component={Paper} variant="outlined" sx={{

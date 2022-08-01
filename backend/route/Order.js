@@ -24,6 +24,21 @@ router.get('/pending', (req, res)=>{
     })
 })
 
+router.get('/revenue/complete', async(req, res)=>{
+    const completedOrders = await OrderCollection.find({'status.en':"Completed"});
+
+    if(!completedOrders) return res.status(400).json({message: "No Orders has been completed yet"});
+
+    const filterOrders = await completedOrders.map((imp)=>{
+     return {id:imp._id, total:imp.orderTotal, date:imp.updatedAt}
+    })
+ 
+    if(!filterOrders) return res.status(400).json({message: "Something Went Wrong"});
+ 
+    res.status(201).send(filterOrders)
+})
+
+
 router.get('/delivery', (req, res)=>{
     OrderCollection.find({'status.en':"On Delivery"}, (err, data)=>{
         if(err){

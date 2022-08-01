@@ -13,7 +13,7 @@ function Home() {
   }
 
   return (
-    <div>
+    <div className='homepage'>
       <Container className='home_page'>
         Home
         <Button onClick={getLocation}>Location</Button>

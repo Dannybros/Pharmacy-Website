@@ -24,10 +24,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
 function RevenueTable({data, type}) {
   return (
-    <TableContainer component={Paper} sx={{mt:2}} variant="outlined">
-      <Table aria-label="customized table">
+    <TableContainer component={Paper} sx={{mt:{ xs: "60px", md: 2}}} variant="outlined">
+      <Table  sx={{ minWidth: 650 }} aria-label="customized table">
         <TableHead>
             <TableRow>
                 <TableCell align="left">
@@ -44,7 +56,7 @@ function RevenueTable({data, type}) {
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.id}
               </StyledTableCell>

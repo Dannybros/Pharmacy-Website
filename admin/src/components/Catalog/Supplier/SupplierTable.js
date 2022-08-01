@@ -23,11 +23,11 @@ function SupplierTable({data, search, handleModalShow, handleDeleteSupplier}) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
             <TableRow>
-            <TableCell sx={{background:"#B8B8B8"}} align="center"><b>No.</b></TableCell>
-            <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Supplier Name</b></TableCell>
-            <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Phone</b></TableCell>
-            <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Email</b></TableCell>
-            <TableCell sx={{background:"#B8B8B8"}} align="center"><b>Action</b></TableCell>
+            <TableCell sx={{background:"#2e7d32", color:"white"}} align="center"><b>No.</b></TableCell>
+            <TableCell sx={{background:"#2e7d32", color:"white"}} align="center"><b>Supplier Name</b></TableCell>
+            <TableCell sx={{background:"#2e7d32", color:"white"}} align="center"><b>Phone</b></TableCell>
+            <TableCell sx={{background:"#2e7d32", color:"white"}} align="center"><b>Email</b></TableCell>
+            <TableCell sx={{background:"#2e7d32", color:"white"}} align="center"><b>Action</b></TableCell>
             </TableRow>
         </TableHead>
         <TableBody>

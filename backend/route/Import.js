@@ -24,6 +24,19 @@ router.get('/pending', (req, res)=>{
     })
 })
 
+router.get('/revenue/checked', async(req, res)=>{
+   const checkedImports= await ImportCollection.find({status:"Checked"});
+
+   if(!checkedImports) return res.status(400).json({message: "No Import has been checked"});
+
+   const filterImport = await checkedImports.map((imp)=>{
+    return {id:imp._id, total:imp.subtotal, date:imp.updatedAt}
+   })
+
+   if(!filterImport) return res.status(400).json({message: "Something Went Wrong"});
+
+   res.status(201).send(filterImport)
+})
 
 router.post('/check', async(req, res)=>{
     const {imports} = req.body
@@ -46,6 +59,7 @@ router.post('/check', async(req, res)=>{
         }else{
             res.status(200).json({message:"import checked successfully"});
             req.io.emit("import-update",{data:data});
+            req.io.emit("update-product", {data:data})
         }
     })
 })
@@ -60,6 +74,7 @@ router.post('/cancel', (req, res)=>{
         }else{
             res.status(200).json({message:"import cancelled successfully"});
             req.io.emit("import-update",{data:data});
+            req.io.emit("update-product", {data:data})
         }
     })
 })
@@ -71,7 +86,7 @@ router.post('/', async(req, res)=>{
     new ImportCollection({
         supplierName:supp,
         importItems:items,
-        subtotal:subtotal
+        subtotal:parseInt(subtotal)
     }).save()
     .then(result=>{
         res.status(201).json({

@@ -71,7 +71,7 @@ function ImportList() {
   }
 
   return (
-    <Box sx={{p:3}}>
+    <Box className="import_checkList">
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
         <Link underline="hover" color="inherit" href="/">
           Home

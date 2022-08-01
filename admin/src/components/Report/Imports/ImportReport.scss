@@ -1,8 +1,9 @@
-.drawer_action_text{
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    line-height: 2.5;
-    text-transform: uppercase;
-    color: rgb(101, 116, 139);
+.importReport{
+    height: 100%;
+    padding: 10px 40px;
+    width: calc(100vw - 280px);
+    @media (max-width:890px) {
+        padding: 10px;
+        width: 100vw;
+    }
 }

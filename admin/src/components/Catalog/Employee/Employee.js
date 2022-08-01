@@ -120,7 +120,7 @@ function Employee() {
 
       <EmployeeTable data={employee} search={search} handleModalShow={handleModalShow} handleDeleteEmployee={handleDeleteEmployee}/>
 
-      <EmployeeForm addModal={addModal} handleModalClose={handleModalClose} handleButtonSubmit={handleButtonSubmit} handleOnChange={handleOnChange} employeeData={employeeData}/>
+      {/* <EmployeeForm addModal={addModal} handleModalClose={handleModalClose} handleButtonSubmit={handleButtonSubmit} handleOnChange={handleOnChange} employeeData={employeeData}/> */}
     </div>
   )
 }

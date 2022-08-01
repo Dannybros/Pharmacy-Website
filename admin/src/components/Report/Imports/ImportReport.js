@@ -85,7 +85,7 @@ function ImportReport() {
   }
 
   return (
-    <Box sx={{p:{ xs: 0, md: 3}}}>
+    <Box className='importReport'>
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
         <Link underline="hover" color="inherit" href="/">
           Home

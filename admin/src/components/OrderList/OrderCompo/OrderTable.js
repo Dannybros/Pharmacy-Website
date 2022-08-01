@@ -56,7 +56,7 @@ function OrderTable({data, search, handleShowDetails}) {
         <TableBody>
           {data?.length>0 &&
             filterOrder(data, search).map((row) => {
-              const date = moment(row.createdAt).format("MM/DD/YYYY____hh:mm A");
+              const date = moment(row.createdAt).format("MM/DD/YYYY hh:mm A");
               return(
                 <StyledTableRow key={row._id}>
                   <StyledTableCell align="center" style={{position:"relative"}}>
