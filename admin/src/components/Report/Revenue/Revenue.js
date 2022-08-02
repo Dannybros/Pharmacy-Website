@@ -78,12 +78,7 @@ function Revenue() {
     return (
         <Box className="revenueReport">
             <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
-                <Link underline="hover" color="inherit" href="/">
-                Home
-                </Link>
-                <Link underline="hover" color="inherit" href="">
-                Report 
-                </Link>
+                <Typography color="text.primary">Report</Typography>
                 <Typography color="text.primary">Imports</Typography>
             </Breadcrumbs>
 

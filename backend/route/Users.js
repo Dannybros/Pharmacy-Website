@@ -5,9 +5,40 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import * as EmailValidator from 'email-validator';
+import EmployeeCollection from '../model/EmployeeModel.js';
+import ImportCollection from '../model/ImportModel.js';
+import ItemCollection from '../model/ItemModel.js';
+import CategoryCollection from '../model/CategoryModel.js';
+import OrderCollection from '../model/OrderModel.js';
 
 const router = express.Router();
 dotenv.config();
+
+router.get('/home', async(req, res)=>{
+   const employees = await EmployeeCollection.countDocuments({});
+   const customers = await UserCollection.countDocuments({});
+   const items = await ItemCollection.countDocuments({});
+   const types = await CategoryCollection.countDocuments({});
+   const importChecked = await ImportCollection.countDocuments({status: "Checked"})
+   const importCancel = await ImportCollection.countDocuments({status: "Cancelled"})
+   const importPending = await ImportCollection.countDocuments({status: "Pending"})
+   const orderChecked = await OrderCollection.countDocuments({'status.en': "Completed"})
+   const orderCancel = await OrderCollection.countDocuments({status: "Cancelled"})
+   const orderPending = await OrderCollection.countDocuments({status: "Pending"})
+
+    res.status(200).json({
+        emp: employees, 
+        cust: customers, 
+        items: items, 
+        types: types, 
+        importChecked: importChecked, 
+        importCancel:importCancel,
+        importPending:importPending,
+        orderChecked: orderChecked,
+        orderCancel:orderCancel,
+        orderPending:orderPending
+    })
+})
 
 router.post('/admin/login', async(req, res)=>{
     const {username, password} = req.body;
@@ -23,7 +54,7 @@ router.post('/admin/login', async(req, res)=>{
     // //require('crypto').randomBytes(64).toString('hex') from git bash -> type "node" first
     const secret_key = process.env.JWTAUTHKEY
 
-    const user = {name:username, id:existingUser.adminID, type:existingUser.adminType}
+    const user = await {name:username, id:existingUser.adminID}
 
     const token = jwt.sign(user, secret_key, {expiresIn: '5h' });
 

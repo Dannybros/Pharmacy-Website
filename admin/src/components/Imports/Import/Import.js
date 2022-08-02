@@ -92,12 +92,7 @@ function Import() {
   return (
     <Box sx={{p:{ xs: 0, md: 3}}}>
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-        <Link underline="hover" color="inherit" href="">
-          Import
-        </Link>
+        <Typography color="text.primary">Import</Typography>
         <Typography color="text.primary">Order Import</Typography>
       </Breadcrumbs>
 

@@ -89,12 +89,7 @@ function ProductReport() {
   return (
     <Box className="productReport">
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:{ xs: 2, md: 4}}}>
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-        <Link underline="hover" color="inherit" href="">
-          Report 
-        </Link>
+        <Typography color="text.primary">Report</Typography>
         <Typography color="text.primary">Products</Typography>
       </Breadcrumbs>
 
@@ -134,7 +129,7 @@ function ProductReport() {
           >
             <MenuItem value="All">All</MenuItem>
             {categories.map((cat, i)=>(
-              <MenuItem value={cat.Name.en}>{cat.Name.en}</MenuItem>
+              <MenuItem value={cat.Name.en} key={i}>{cat.Name.en}</MenuItem>
             ))}
           </Select>
         </FormControl>

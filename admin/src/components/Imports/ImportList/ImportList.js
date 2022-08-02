@@ -73,12 +73,7 @@ function ImportList() {
   return (
     <Box className="import_checkList">
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-        <Link underline="hover" color="inherit" href="">
-          Import 
-        </Link>
+        <Typography color="text.primary">Order Import</Typography>
         <Typography color="text.primary">New Import List</Typography>
       </Breadcrumbs>
 

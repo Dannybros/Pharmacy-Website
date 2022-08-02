@@ -10,7 +10,8 @@ export const MenuData = [
         title:"Dashboard",
         icon: <HomeIcon />,
         menuValue:0,
-        path:'/'
+        path:'/',
+        access:"employee",
     },
     {
         title:"Catalog",
@@ -43,11 +44,13 @@ export const MenuData = [
         title:"Imports",
         icon: <ImportExportIcon/>,
         menuValue:2,
+        access:"employee",
         submenu:[
             {
                 title:"Check Import",
                 subValue:0,
-                path:'/imports/pending'
+                path:'/imports/pending',
+                access:"employee"
             },
             {
                 title:"Order Import",
@@ -60,16 +63,19 @@ export const MenuData = [
         title:"Order",
         icon: <ShoppingCartIcon/>,
         menuValue:3,
+        access:"employee",
         submenu:[
             {
                 title:"New orders",
                 subValue:0,
-                path:'/order/pending'
+                path:'/order/pending',
+                access:"employee",
             },
             {
                 title:"On delivery",
                 subValue:1,
-                path:'/order/delivery'
+                path:'/order/delivery',
+                access:"employee",
             },
         ]
     },

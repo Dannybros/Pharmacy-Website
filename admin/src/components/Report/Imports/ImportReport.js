@@ -87,12 +87,7 @@ function ImportReport() {
   return (
     <Box className='importReport'>
       <Breadcrumbs aria-label="breadcrumb" sx={{mb:4}}>
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-        <Link underline="hover" color="inherit" href="">
-          Report 
-        </Link>
+        <Typography color="text.primary">Report</Typography>
         <Typography color="text.primary">Imports</Typography>
       </Breadcrumbs>
 
