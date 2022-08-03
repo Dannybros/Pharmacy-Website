@@ -1,9 +1,9 @@
 import React from 'react'
 import {Select, MenuItem, InputLabel, FormControl, Box, Button} from '@mui/material'
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2'
 
-
-function PaymentMethod({handleNext, handleBack, setOrderInfo, orderInfo}) {
+function PaymentMethod({handleNext, handleBack, setOrderInfo, orderInfo, total}) {
   
   const options = ['Credit Card', 'Cash'];
   const {t} = useTranslation();
@@ -13,8 +13,15 @@ function PaymentMethod({handleNext, handleBack, setOrderInfo, orderInfo}) {
   }
 
   const GoNextStep=()=>{
-    if(orderInfo.method!=="") handleNext();
-    else alert("Please Choose Payment Method")
+    if(orderInfo.method!==""){
+      (parseInt(total) < 10000 && orderInfo.method!=="Cash") ? 
+      Swal.fire({
+        title: 'error',
+        text: "Total Payment has be more than 10,000 Kip to pay with Credit Card",
+        icon: 'warning',
+      }): handleNext();
+    } 
+    else alert("Please Choose Payment Method ")
   }
 
   return (

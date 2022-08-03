@@ -12,28 +12,81 @@ import axios from '../axios/axios'
 import Swal from 'sweetalert2'
 import { useStateValue } from '../../Reducer/StateProvider';
 import { useTranslation, Trans } from 'react-i18next';
+import {useStripe, useElements, CardNumberElement, CardCvcElement, CardExpiryElement } from "@stripe/react-stripe-js";
 
-function CC({handleBack, orderInfo}) {
+const inputStyle ={
+    style: {
+        base: {
+            fontFamily: 'san serif',
+            fontSmoothing: "antialiased",
+            fontSize: "18px",
+            "::placeholder": {
+                color: "grey",
+                fontSize:"16px"
+            },
+        },
+        invalid: {
+            fontFamily: 'san serif',
+            color: "#fa755a",
+            iconColor: "#fa755a"
+        }
+    },
+    placeholder:"**** **** **** ****",
+    showIcon:true
+}
 
+const inputCVC ={
+    style: {
+        base: {
+            fontFamily: 'san serif',
+            fontSmoothing: "antialiased",
+            fontSize: "18px",
+            "::placeholder": {
+                color: "grey",
+                fontSize:"16px"
+            }
+        },
+        invalid: {
+            fontFamily: 'san serif',
+            color: "#fa755a",
+            iconColor: "#fa755a"
+        }
+    },
+    placeholder:"CVC"
+}
+
+const inputDate ={
+    style: {
+        base: {
+            fontFamily: 'san serif',
+            fontSmoothing: "antialiased",
+            fontSize: "18px",
+            "::placeholder": {
+                color: "grey",
+                fontSize:"16px"
+            }
+        },
+        invalid: {
+            fontFamily: 'san serif',
+            color: "#fa755a",
+            iconColor: "#fa755a"
+        }
+    },
+    placeholder:"MM/DD"
+}
+
+function CC({handleBack, orderInfo, total}) {
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const navigate = useNavigate();
     const [{cart}, dispatch] =useStateValue();
     const [btnPayLoad, setBtnPayLoad] = useState(false);
     const {t} = useTranslation();
-    
-    const navigate = useNavigate();
 
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        setBtnPayLoad(true)
-        
-        const formData = {...orderInfo, cart:cart}
-
-        if(orderInfo.method==="Credit Card"){
-
-        }else{
-
-            axios.post('/order', formData)
+    const recordOrder=(formData)=>{
+        axios.post('/order', formData)
             .then(res=>{
-                
                 dispatch({
                     type:"Clear_BASKET"
                 });
@@ -55,13 +108,42 @@ function CC({handleBack, orderInfo}) {
             })
 
             setBtnPayLoad(false)
+    }
+
+    const handleSubmit=async(e)=>{
+        e.preventDefault();
+        setBtnPayLoad(true)
+        
+        const formData = {...orderInfo, cart:cart}
+
+        if(orderInfo.method==="Credit Card"){
+            const response = await axios.post('/stripe/clientKey', {price:parseInt(total) * 100});
+
+            const key = await response?.data?.client_secret
+
+            const {paymentIntent, error} = await stripe.confirmCardPayment(
+                key, {
+                    payment_method: {
+                        card:elements.getElement(CardNumberElement),
+                    }
+                }
+            )
+
+            if (error && paymentIntent.status !== "succeeded") {
+                alert(error.message)
+                axios.post('/stripe/cancel', {id:response.data.id})
+                return null
+            }
         }
+
+        recordOrder(formData);
     }
 
     return (
         <form className='CC_form' onSubmit={handleSubmit}>
             {orderInfo.method==="Credit Card"?
                 <>
+                 {/* <CardElement id="card-element" /> */}
                 <div className='card_img__list'>
                     <img src={masterCard} alt="masterCard"/>
                     <img src={visa} alt="visaCard"/>
@@ -75,7 +157,7 @@ function CC({handleBack, orderInfo}) {
                         <label className='card-name' htmlFor="card-name">
                             {t('Payment.stepper.step3.method1.input1')}:
                         </label>
-                        <input  className='form-control' type="text" name="cardName" id="card-name" placeholder="Card Name*" />
+                        <CardNumberElement className='form-control py-2' options={inputStyle}/>
                     </Col>
                 </Row>
 
@@ -84,25 +166,24 @@ function CC({handleBack, orderInfo}) {
                         <label>
                             {t('Payment.stepper.step3.method1.input2')}:
                         </label>
-                        <input className='form-control' type="text" name="cardNumber" id="card-name" placeholder="Card Number*" />
+                        <CardExpiryElement className='form-control py-2' options={inputDate}/>
                     </Col>
                     <Col className="my-3" sm={6} xs={12}>
                         <label>
                             {t('Payment.stepper.step3.method1.input3')}:
                         </label>
-                        <input className='form-control' type="text" name="cardName" id="card-name" placeholder="Card Name*"/>
+                        <CardCvcElement className='form-control py-2' options={inputCVC}/>
                     </Col>
                 </Row>
                 </>:
                 <p className='my-3'>
                     <Trans 
-                     i18nKey="Payment.stepper.step3.method2" 
-                     values={{ method: orderInfo.method, redirect:"About Us"}}
-                     components={{
+                    i18nKey="Payment.stepper.step3.method2" CardNumberElement
+                    values={{ method: orderInfo.method, redirect:"About Us"}}
+                    components={{
                         Link1: <Link to='/about' title="My link1" />
                     }}
-                     />
-                    {/* {t('Payment.stepper.step3.method2', {method:<b>{orderInfo.method}</b>, redirect:<a href="/about">About Us</a>})} */}
+                    />
                 </p>
             }
 
@@ -114,7 +195,7 @@ function CC({handleBack, orderInfo}) {
                     {t('Payment.stepper.btnBack')}
                 </Button>
             </div>
-        </form> 
+        </form>
     )
 }
 
