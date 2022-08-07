@@ -3,7 +3,7 @@ import './Product.scss';
 import '../../Home/Home.scss'
 import Swal from 'sweetalert2'
 import {Rating, Stack, Typography} from '@mui/material'
-import {Row, Col, Button} from 'react-bootstrap'
+import {Row, Col, Button, Modal} from 'react-bootstrap'
 import Magnifier from "react-magnifier";
 import {useParams} from 'react-router-dom'
 import { useStateValue } from '../../../Reducer/StateProvider';
@@ -21,6 +21,8 @@ function Product() {
   const [rating, setRating] = useState(0);
   const [collapseText, setCollapseText] = useState('-webkit-box');
   const [collapseTextMsg, setCollapseTextMsg] = useState('Show More 🔼');
+  const [amount, setAmount] = useState(0);
+  const [modalAmount, setModalAmount] = useState(false);
   const {t} = useTranslation();
   
   useEffect(() => {
@@ -38,7 +40,6 @@ function Product() {
     const fetchRating =async()=>{
       await axios.post('/review/overall-rating', {reviewTo:productId})
       .then(res=>{
-        console.log(res.rating);
         setRating(res.data.rating);
       })
     }
@@ -57,16 +58,25 @@ function Product() {
   }
 
   const handleAddToCart =async()=>{
-    await dispatch({
-      type:"ADD_TO_BASKET",
-      item: data,
-    });
+    if (data.quantity < amount){
+      alert("We don't have that much amount")
+    }else{
+      if(amount>0){
+        await dispatch({
+          type:"ADD_TO_BASKET",
+          item: data,
+          amount:amount,
+        });
     
-    Swal.fire({
-      title: 'success',
-      text: "Added to Basket !",
-      icon: 'success',
-    })
+        setModalAmount(false)
+        
+        Swal.fire({
+          title: 'success',
+          text: "Added to Basket !",
+          icon: 'success',
+        })
+      } else alert("Please State Amount higher than 0")
+    }
   }
 
   function checkItemInCart(id){
@@ -74,7 +84,7 @@ function Product() {
     if(index <0) return false
     return true
   }
- 
+
   return (
     <div className='product_detail_page'>
       {data!==null&&
@@ -131,8 +141,10 @@ function Product() {
             </Col>
 
             <Col sm={2} xs={12} className="add_cart_box">
-            <p>  {t('ProductInfo.alert')}:  </p>
-            <Button variant='warning' disabled={checkItemInCart(data._id)} onClick={handleAddToCart}>  {t('Shop.btn2')}: </Button>
+              <p>  {t('ProductInfo.alert')}:  </p>
+              <Button variant='warning' disabled={checkItemInCart(data._id)} onClick={()=>setModalAmount(true)}>  
+                {t('Shop.btn2')}
+              </Button>
             </Col>
         </Row>
       }
@@ -140,6 +152,25 @@ function Product() {
       <Review id={productId}/>
       
       <ReviewList id="shop"/>
+
+      <Modal
+        show={modalAmount}
+        onHide={() => setModalAmount(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            State Amount ({data?.quantity })
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input type="number" className='form-control' name="amount" value={amount} onChange={(e)=>setAmount(e.target.value)}/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleAddToCart}>Add</Button>
+        </Modal.Footer>
+      </Modal>
      
     </div>
   )

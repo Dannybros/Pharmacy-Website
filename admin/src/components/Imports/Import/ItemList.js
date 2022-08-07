@@ -30,15 +30,7 @@ function ItemList({items, setCart, cart}) {
     const handleOnChange=(e)=>{
         setDetails({...details, [e.target.name]:e.target.value})
     }
-
-    const onlyNumber = (event) => {
-        const keyCode = event.keyCode || event.which;
-        const keyValue = String.fromCharCode(keyCode);
-        if (!(new RegExp("[0-9]").test(keyValue)))
-          event.preventDefault();
-        return;
-      }
-
+    
     function checkItemInCart(id){
         const index = cart.findIndex(prod => prod._id === id);
         if(index <0) return false

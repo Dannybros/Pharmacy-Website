@@ -38,7 +38,7 @@ const reducer = (state, action)=>{
             };
 
         case 'ADD_TO_BASKET':
-            updatedCart.push({ ...action.item, quantity: 1 });
+            updatedCart.push({ ...action.item, quantity: action.amount });
             return{
                 ...state,
                 cart: updatedCart,
