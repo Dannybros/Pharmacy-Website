@@ -47,9 +47,7 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
             })
         })
     }
-
-    console.log(selectedImport);
-
+    
   return (
     <>
     <Drawer
@@ -135,7 +133,7 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row._id}
+                                    {row.name}
                                 </TableCell>
                                 <TableCell align="right">{(row.buyingPrice).toLocaleString()} KIP</TableCell>
                                 <TableCell align="right">{row.importAmount}</TableCell>

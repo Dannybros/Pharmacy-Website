@@ -36,7 +36,7 @@ function SideBar({container, mobileOpen, handleDrawerToggle}) {
           }}
           open
         >
-          <Menu/>
+        <Menu/>
         </Drawer>
       </Box>
   );

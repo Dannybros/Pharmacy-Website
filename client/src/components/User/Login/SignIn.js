@@ -101,8 +101,8 @@ function SignIn() {
           <Row className='login_input_field'>
             {signUpState ?
               <>
-                <Col xs={6}>
-                  <input type="text" name='name' placeholder='First Name...' value={formData.name} autoComplete="on" onChange={handleOnChange}/>
+                <Col xs={12}>
+                  <input type="text" name='name' placeholder='Name...' value={formData.name} autoComplete="on" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
                   <input type="date" name='bod' placeholder='Birthday...' value={formData.bod} onChange={handleOnChange}/>

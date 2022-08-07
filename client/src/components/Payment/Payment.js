@@ -18,7 +18,9 @@ function Payment() {
   const [{user}] = useStateValue();
   const {t} = useTranslation();
 
-  const initialOrder={userID:user._id, name:user.name, phone:"", address:{addr:"", coords:{lat:"", lng:""}}, method:"", total:total}
+  console.log(user);
+
+  const initialOrder={userID:user._id, name:user.firstName + " " + user.lastName, phone:"", address:{addr:"", coords:{lat:"", lng:""}}, method:"", total:total}
 
   const [orderInfo, setOrderInfo] = useState(initialOrder);
   const [activeStep, setActiveStep] = useState(0);

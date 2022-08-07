@@ -239,8 +239,7 @@
     "User":{
         "setting":{
             "heading":"User Information",
-            "list1":"First Name",
-            "list2":"Last Name",
+            "list1":"Name",
             "list3":"Birthday",
             "list4":"Email",
             "list5":"Username",

@@ -78,7 +78,8 @@ router.post('/', async(req, res)=>{
     await new AdminsCollection({
         username:EmployeeName,
         password: await bcrypt.hash(EmployeeName, 10),
-        adminID:newEmpID
+        adminID:newEmpID,
+        adminType:"employee"
     }).save()
 
     const employee = new EmployeeCollection({

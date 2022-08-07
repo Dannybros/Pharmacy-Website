@@ -12,8 +12,6 @@ import {Toast, ToastContainer} from 'react-bootstrap'
 import axios from '../axios'
 import {useNavigate} from 'react-router-dom'
 import { useStateValue } from '../../context/StateProvider';
-import { useLocalStorage } from '../../context/useLocalStorage';
-
 const theme = createTheme();
 
 const mystyle = {
@@ -29,10 +27,6 @@ const mystyle = {
 };
 
 export default function SignIn() {
-
-    const [activeMainMenu, setActiveMainMenu] = useLocalStorage("MainMenu")
-    const [activeSubMenu, setActiveSubMenu] = useLocalStorage("SubMenu");
-
     const [{user}, dispatch] = useStateValue();
     
     const navigate = useNavigate();
@@ -41,6 +35,15 @@ export default function SignIn() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        dispatch({
+            type:"SET_MENU",
+            mainMenu:0
+        })
+        dispatch({
+            type:"SET_SUBMENU",
+            subMenu:null
+        })
+
         const data = new FormData(event.currentTarget);
         axios.post('/user/admin/login', {username:data.get('name'), password: data.get('password'),})
         .then(async(res)=>{
@@ -48,8 +51,7 @@ export default function SignIn() {
                 type:"ADD_USER",
                 token:res.data.token
             })
-            await setActiveMainMenu(0)
-            setActiveSubMenu(null)
+            
             navigate('../', { replace: true });
         })
         .catch((error)=>{
@@ -72,7 +74,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-        <div style={mystyle} value={activeMainMenu + "" + activeSubMenu}>
+        <div style={mystyle}>
         <ToastContainer position="top-center" className="p-3">
             <ThrowToast/>
         </ToastContainer>

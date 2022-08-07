@@ -2,11 +2,8 @@ import React from 'react'
 import {Divider, List, ListSubheader, Toolbar} from '@mui/material'
 import {MenuData} from './MenuData'
 import MenuList from './MenuList';
-import {useLocalStorage} from '../../context/useLocalStorage'
 
 function Menu() {
-
-    const [activeMainMenu, setActiveMainMenu] = useLocalStorage("MainMenu", 0)
 
   return (
     <div style={{background:"#242D37", height:"100%"}}>
@@ -23,7 +20,7 @@ function Menu() {
             }
         >
             {MenuData.map((menu, i)=>{
-                return( <MenuList menu={menu} key={i} activeMainMenu={activeMainMenu} setActiveMainMenu={setActiveMainMenu}/> )
+                return( <MenuList menu={menu} key={i}/> )
             })}
         </List>
     </div>

@@ -5,37 +5,44 @@ import {List, ListItemButton, ListItemText, ListItemIcon, Collapse} from '@mui/m
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import { useLocalStorage } from '../../context/useLocalStorage';
 import { useStateValue } from '../../context/StateProvider';
 import jwt_decode from "jwt-decode";
 
-function MenuList({menu, activeMainMenu, setActiveMainMenu}) {
+function MenuList({menu}) {
   
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [activeSubMenu, setActiveSubMenu] = useLocalStorage("SubMenu", null);
-  const [{user}, dispatch] = useStateValue();
+  const [{user, mainMenu, subMenu}, dispatch] = useStateValue();
   const admin = user? jwt_decode(user) : user
 
   const handleClickMainMenu = () => {
     if(menu.submenu) setOpen(!open)
     else {
       navigate(menu.path);
-      setActiveMainMenu(menu.menuValue)
+      dispatch({
+        type:"SET_MENU",
+        mainMenu:menu.menuValue
+      })
     }  
   };
 
-  const handleClickSubMenu=(submenu)=>{
+  const handleClickSubMenu=async(submenu)=>{
     navigate(submenu.path)
-    setActiveMainMenu(menu.menuValue)
-    setActiveSubMenu(submenu.subValue)
+    await dispatch({
+      type:"SET_MENU",
+      mainMenu:menu.menuValue
+    })
+    dispatch({
+      type:"SET_SUBMENU",
+      subMenu:submenu.subValue
+    })
   }
 
   return (
     <React.Fragment>
       {(menu.access || admin?.id==="admin") &&
 
-        <ListItemButton onClick={handleClickMainMenu} className={activeMainMenu===menu.menuValue? "menu active" : "menu"} sx={{background:"#242D37", color:"#b3cbdd"}}>
+        <ListItemButton onClick={handleClickMainMenu} className={mainMenu===menu.menuValue? "menu active" : "menu"} sx={{background:"#242D37", color:"#b3cbdd"}}>
             <ListItemIcon sx={{transform: "scale(0.8)"}}>
               {menu.icon}
             </ListItemIcon>
@@ -50,12 +57,12 @@ function MenuList({menu, activeMainMenu, setActiveMainMenu}) {
             menu.submenu.map((submenu, i)=>{
              return (submenu.access || admin?.id==="admin") &&
               (
-                  <ListItemButton sx={{ pl: 4 }} key={i} onClick={()=>handleClickSubMenu(submenu)} className={activeMainMenu===menu.menuValue&& activeSubMenu===submenu.subValue? "subMenu active" : "subMenu"}>
-                    <ListItemIcon  sx={{color:'white' }}>
-                        <KeyboardDoubleArrowRightIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={submenu.title} />
-                  </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} key={i} onClick={()=>handleClickSubMenu(submenu)} className={mainMenu===menu.menuValue&& subMenu===submenu.subValue? "subMenu active" : "subMenu"}>
+                  <ListItemIcon  sx={{color:'white' }}>
+                      <KeyboardDoubleArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={submenu.title} />
+                </ListItemButton>
               )
             })
           }

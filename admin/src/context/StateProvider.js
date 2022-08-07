@@ -8,6 +8,8 @@ export const StateProvider =({reducer, initialState, children})=>{
     
     useEffect(() => {
         localStorage.setItem('Medicine-Admin-User', JSON.stringify(redux[0].user))
+        localStorage.setItem('Medicine-Admin-MainMenu', JSON.stringify(redux[0].mainMenu))
+        localStorage.setItem('Medicine-Admin-SubMenu', JSON.stringify(redux[0].subMenu))
     }, [redux])
 
     return (

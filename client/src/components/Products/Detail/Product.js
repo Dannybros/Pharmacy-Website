@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import './Product.scss';
 import '../../Home/Home.scss'
+import Swal from 'sweetalert2'
 import {Rating, Stack, Typography} from '@mui/material'
-import {Row, Col, Button, Modal} from 'react-bootstrap'
+import {Row, Col, Button} from 'react-bootstrap'
 import Magnifier from "react-magnifier";
-import {useParams, useNavigate} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import { useStateValue } from '../../../Reducer/StateProvider';
 import axios from '../../axios/axios'
 import Review from './Review';
@@ -14,14 +15,12 @@ import { useTranslation } from 'react-i18next';
 function Product() {
 
   const {productId} = useParams();
-  const navigate = useNavigate();
 
   const [{cart, lang}, dispatch] = useStateValue();
   const [data, setData] = useState(null);
   const [rating, setRating] = useState(0);
   const [collapseText, setCollapseText] = useState('-webkit-box');
   const [collapseTextMsg, setCollapseTextMsg] = useState('Show More 🔼');
-  const [toastMsg, setToastMsg] = useState(false);
   const {t} = useTranslation();
   
   useEffect(() => {
@@ -47,14 +46,6 @@ function Product() {
     fetchRating();
   }, [productId])
 
-
-  const handleClose = () => {
-    setToastMsg(false);
-    navigate(-1);
-  };
-
-  const handleShow = () => setToastMsg(true);
-
   const handleCollapseText = ()=>{
     if(collapseText !== "-webkit-box"){
       setCollapseText('-webkit-box');
@@ -70,8 +61,12 @@ function Product() {
       type:"ADD_TO_BASKET",
       item: data,
     });
-
-    handleShow();
+    
+    Swal.fire({
+      title: 'success',
+      text: "Added to Basket !",
+      icon: 'success',
+    })
   }
 
   function checkItemInCart(id){
@@ -145,18 +140,6 @@ function Product() {
       <Review id={productId}/>
       
       <ReviewList id="shop"/>
-
-      <Modal show={toastMsg} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>Message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{data?.name.en} has been added to cart successfully!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose} style={{width:"100px"}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
      
     </div>
   )

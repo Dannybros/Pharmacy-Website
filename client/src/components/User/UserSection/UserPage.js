@@ -18,6 +18,11 @@ function UserPage() {
         setUserInfo({...userInfo, [e.target.name]: e.target.value});
     }
 
+    const handelEditState=()=>{
+        setEditState(true)
+        setUserInfo({...user, pw:""});
+    }
+
     const btnDefault = ()=>{
         setUserInfo({...user, pw:""})
     }
@@ -80,12 +85,12 @@ function UserPage() {
             <Row>
                 <Col xs={6}>
                     <label>ID</label>
-                    <input type="text" name='id' value={userInfo._id} className='form-control' placeholder='First Name*' autoComplete="on" onChange={handleOnChange} disabled/>
+                    <input type="text" name='id' value={userInfo._id} className='form-control' placeholder='ID*' autoComplete="on" onChange={handleOnChange} disabled/>
                 </Col>
                 <div/>
                 <Col xs={6}>
                     <label>{t('User.setting.list1')}</label>
-                    <input type="text" name='name' value={userInfo.name} className='form-control' placeholder='First Name*' autoComplete="on" onChange={handleOnChange} disabled={!editState&& true}/>
+                    <input type="text" name='name' value={userInfo.name} className='form-control' placeholder='Name*' autoComplete="on" onChange={handleOnChange} disabled={!editState&& true}/>
                 </Col>
                 <Col xs={6}>
                     <label>{t('User.setting.list3')}</label>
@@ -106,7 +111,7 @@ function UserPage() {
                 {
                     editState&&
                     <Col xs={6}>
-                        <label>{t('User.setting.lis7')}</label>
+                        <label>{t('User.setting.list7')}</label>
                         <input type="text" name='pw' placeholder='Password...' className='form-control' autoComplete="off" onChange={handleOnChange} value={userInfo.pw}/>
                     </Col>
                 }
@@ -116,7 +121,7 @@ function UserPage() {
             <div className='d-flex mt-4 btn_box'>
                 {
                     !editState?
-                    <Button variant='success' className='login_button' onClick={()=>setEditState(true)}>
+                    <Button variant='success' className='login_button' onClick={handelEditState}>
                         {t('User.setting.btnEdit')}
                     </Button>:
                     <>

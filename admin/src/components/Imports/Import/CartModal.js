@@ -73,15 +73,15 @@ function CartModal({openCart, handleCloseCart, cart, setCart}) {
         </Modal.Header>
         <Modal.Body>
             <Form.Select ref={supp} className="form-control">
-                <option selected disabled > -- select an option -- </option>
+                <option selected disabled > -- Select Supplier -- </option>
                 {suppliers.map((sup, i)=>(
                     <option key={i}>
                         {sup.name}
                     </option>
                 ))}
             </Form.Select>
-            <Divider sx={{mt:2}}/>
-            <TableContainer component={Paper}>
+            <Divider sx={{my:2}}/>
+            <TableContainer component={Paper} variant="outlined">
                 <Table sx={{ minWidth: 700 }} aria-label="spanning table">
                 <TableHead>
                     <TableRow>

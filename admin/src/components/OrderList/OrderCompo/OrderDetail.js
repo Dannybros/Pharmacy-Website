@@ -1,16 +1,20 @@
-import React, {useEffect, useState, Fragment} from 'react'
+import React, {useEffect, useState, Fragment, useRef} from 'react'
 import {Modal, Row, Col} from 'react-bootstrap'
 import axios from '../../axios'
 import { styled } from '@mui/material/styles';
 import {Button, Divider, List, ListItem, ListItemText, TextField, Tooltip, Typography, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Paper, FormControl, MenuItem, Select, InputLabel} from '@mui/material'
 import { useStateValue } from '../../../context/StateProvider';
 import jwt_decode from 'jwt-decode'
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.selected,
 }));
 
 function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report, handleCancel}) {
+
+    const printRef = useRef();
 
     const [employee, setEmployee] = useState([]);
     const [{user}] = useStateValue();
@@ -32,10 +36,30 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
         setSelectedEmployee(event.target.value);
     };
 
+    const handleDownloadPdf = async () => {
+        const element = printRef.current;
+        const canvas = await html2canvas(element);
+        const data = canvas.toDataURL('image/png');
+    
+        const pdf = new jsPDF();
+        const imgProperties = pdf.getImageProperties(data);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight =
+          (imgProperties.height * pdfWidth) / imgProperties.width;
+    
+        pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`order-${data._id}.pdf`);
+    };
+
+    const handleClickClose=()=>{
+        setSelectedEmployee("");
+        handleCloseDetails();
+    }
+
   return (
     <Modal
         show={showDetail}
-        onHide={handleCloseDetails}
+        onHide={handleClickClose}
         size="lg"
       >
         <Modal.Header closeButton>
@@ -44,7 +68,7 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
           </Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
+        <Modal.Body ref={printRef}>
             <Typography variant="h6" component="div">
                <b>Details</b>
             </Typography>
@@ -67,7 +91,7 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                                 primary={
                                     <Fragment> <Typography component="span" color="#757ce8"> {data?.customerName} </Typography> </Fragment>
                                 } 
-                                secondary="adds"
+                                secondary={data?.customerAddress.addr? data?.customerAddress.addr : data?.customerAddress.coords.lat + " " + data?.customerAddress.coords.lng}
                             />
                         </ListItem>
                     </Col>
@@ -127,18 +151,25 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                             return(
                                 <TableRow key={item._id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row" style={{display:"flex"}}>
-                                        <img className="order_detail_img" src={item.img} alt=""/>
+                                        {!report&&
+                                            <img className="order_detail_img" src={item.img} alt=""/>
+                                        }
                                         <ListItemText
                                             primary={item?.name.en}
                                             secondary={item._id}
                                         />
                                     </TableCell>
-                                    <TableCell align="center"> ${item.price}</TableCell>
+                                    <TableCell align="center"> {item.price} KIP</TableCell>
                                     <TableCell align="center">{item.quantity}</TableCell>
-                                    <TableCell align="center">${item.quantity * item.price}</TableCell>
+                                    <TableCell align="center">{item.quantity * item.price} KIP</TableCell>
                                 </TableRow>
                             )
                         })}
+                        <TableRow>
+                            <TableCell rowSpan={3} />
+                            <TableCell colSpan={2}>Subtotal</TableCell>
+                            <TableCell align="right">{data?.orderTotal} KIP</TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -175,11 +206,12 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
             </Row>
             <Divider/>
         </Modal.Body>
-        
-        {!report&&
-            <Modal.Footer>
+       
+        <Modal.Footer>
+            {!report?
+            <>
                 <Tooltip title="Only Employee Who Took Order, Can Cancel or Complete Order" placement="top-end">
-                    <Button color="warning" variant='contained' onClick={handleCloseDetails}>Close</Button>
+                    <Button color="warning" variant='contained' onClick={handleClickClose}>Close</Button>
                 </Tooltip>
                 <Button 
                 color='error' 
@@ -194,8 +226,10 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
                     disabled={data?.status.en==="On Delivery" && jwt_decode(user)?.name !==data?.employeeName}>
                     {data?.status.en==="Pending"? "Start Delivery" : "Complete Order"}
                 </Button>
-            </Modal.Footer>
-        }
+            </>:
+            <Button onClick={handleDownloadPdf}>Print PDF</Button>
+            }   
+        </Modal.Footer>
 
       </Modal>
   )
