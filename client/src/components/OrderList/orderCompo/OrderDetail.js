@@ -41,12 +41,12 @@ function OrderDetail({viewDetail, setViewDetail, data}) {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title">
-            {t('OrderDetail.title')} 
-          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body ref={printRef}>
+            <Typography variant="h4" component="div" sx={{mb:2}}>
+               <strong>{t('OrderDetail.title')} </strong> 
+            </Typography>
             <Typography variant="h6" component="div">
                <b>{t('OrderDetail.part1.heading')}</b>
             </Typography>

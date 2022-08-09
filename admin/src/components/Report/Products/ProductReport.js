@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import './ProductReport.scss'
 import axios from '../../axios'
-import {Box, Breadcrumbs, Link, Typography, TextField, InputAdornment, Paper, FormControl, MenuItem, InputLabel, Select} from '@mui/material'
+import {Box, Breadcrumbs, Typography, TextField, InputAdornment, Paper, FormControl, MenuItem, InputLabel, Select} from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import Swal from 'sweetalert2'
 import ProductTable from './ProductTable';
+import ProductReview from './ProductReview';
 
 function ProductReport() {
 
   const [productFilter, setProductFilter] = useState({search:"", cat:"All", sort:0})
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [modalShow, setModalShow]= useState({state:false, id:""});
 
   useEffect(() => {
     const fetchProducts= async()=>{
@@ -149,7 +151,9 @@ function ProductReport() {
         </FormControl>
       </Box>
 
-      <ProductTable data={filterData(products, productFilter)}/>
+      <ProductTable data={filterData(products, productFilter)} setModalShow={setModalShow}/>
+
+      <ProductReview setModalShow={setModalShow} modalShow={modalShow}/>
     </Box>
   )
 }

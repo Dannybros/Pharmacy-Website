@@ -26,6 +26,11 @@ function NavBar({items}) {
   const [modalShow, setModalShow] = useState(false);
   const [searchItemID, setSearchItemID] = useState('');
 
+  
+  useEffect(() => {
+   document.title="MEDICINE SHOP"
+  }, [])
+
   useEffect(() => {
 
     if(!socket) return null;

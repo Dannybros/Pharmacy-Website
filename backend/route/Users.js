@@ -172,7 +172,7 @@ router.post('/update/info', async (req, res)=>{
     const {_id, email, birthday, username, pw, name, hint } = req.body;
 
     //check if there is empty fields
-    if(email=='' || birthday=='' || username=='' || pw=='' || name=='' || hint==''){
+    if(email=='' || birthday=='' || username=='' || name=='' || hint==''){
         return res.status(400).json({message: "Please fil in all the fields"});
     }
 
@@ -201,8 +201,12 @@ router.post('/update/info', async (req, res)=>{
 
     if(existingUserName) return res.status(400).json({message: "username already exit!"});
 
-    //crypt new password
-    const newPw = await bcrypt.hash(pw, 10);
+    const currentUser = await UserCollection.findById({_id:_id});
+
+    let newPw;
+
+    if(pw!=="") newPw = await bcrypt.hash(pw, 10);
+    else newPw = currentUser.password;
 
     //update all the info except id
     UserCollection.findByIdAndUpdate(_id, {

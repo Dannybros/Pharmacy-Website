@@ -13,7 +13,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-export default function ProductTable({data}) {
+export default function ProductTable({data, setModalShow}) {
+  
+  const handleOpenModal = (id)=>{
+    setModalShow({state:true, id:id});
+  }
+  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 600 }} aria-label="customized table">
@@ -28,25 +33,25 @@ export default function ProductTable({data}) {
           </TableRow>
         </TableHead>
         <TableBody>
-            {data!==null &&
-                data.map((item)=>{
-                return(
-                  <TableRow key={item._id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                      <TableCell component="th" scope="row" style={{display:"flex"}}>
-                          <img className="order_detail_img" src={item.img} alt=""/>
-                          <ListItemText
-                              primary={item?.name.en}
-                              secondary={item._id}
-                          />
-                      </TableCell>
-                      <TableCell align="center"> {item.type.en}</TableCell>
-                      <TableCell align="center"> ${item.price.toLocaleString()}</TableCell>
-                      <TableCell align="center">{item.quantity}</TableCell>
-                      <TableCell align="center">{item.brand}</TableCell>
-                      <TableCell align="center">{item.expireDate}</TableCell>
-                  </TableRow>
-                )
-            })}
+          {data!==null &&
+            data.map((item)=>{
+            return(
+            <TableRow key={item._id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }} onClick={()=>handleOpenModal(item._id)}>
+                <TableCell component="th" scope="row" style={{display:"flex"}}>
+                    <img className="order_detail_img" src={item.img} alt=""/>
+                    <ListItemText
+                        primary={item?.name.en}
+                        secondary={item._id}
+                    />
+                </TableCell>
+                <TableCell align="center"> {item.type.en}</TableCell>
+                <TableCell align="center"> {item.price.toLocaleString()} KIP</TableCell>
+                <TableCell align="center">{item.quantity}</TableCell>
+                <TableCell align="center">{item.brand}</TableCell>
+                <TableCell align="center">{item.expireDate}</TableCell>
+            </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>

@@ -4,55 +4,33 @@ import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../../../Reducer/StateProvider';
 import { useTranslation } from 'react-i18next';
 
-function ProductGrid({data, setShowToast}) {
+function ProductGrid({data}) {
   const navigate = useNavigate();
   const {t} = useTranslation();
 
-  const [{cart, lang}, dispatch] = useStateValue();
-  
-  const AddToCart =(data)=>{
-      if(checkItemInCart(data.id)){
-        setShowToast(true)
-      }else{
-        dispatch({
-          type:"ADD_TO_BASKET",
-          item: data,
-        });
-      }
-  }
-  
-  function checkItemInCart(id){
-      const index = cart.findIndex(prod => prod._id === id);
-      if(index <0) return false
-      return true
-  }
-  
+  const [{lang}] = useStateValue();
+
   return (
     <Row>
         {data.map((item, i)=>{
             return(
-                <Col lg={3} md={4} sm={6} xs={6} className="product_item_box" key={i}>
-                  <div className='product'>
-                    <img src={item.img} alt=""/>
-                    <div className='product_info_box'>
-                      <h4>{item.name[lang]}</h4>
-                      <p>
-                        <span>{item.price} KIP</span>
-                        <span style={{fontSize:"14px"}}>
-                          <em>{item.type[lang]}</em>
-                        </span>
-                      </p>
-                      <div className='d-flex justify-content-between'>
-                        <Button variant='primary' onClick={()=>navigate(`../product/${item._id}`)}>
-                          {t('Shop.btn1')}
-                        </Button>
-                        <Button variant='success' onClick={()=>AddToCart(item)} disabled={item.quantity<5? true : checkItemInCart(item._id)}> 
-                          {item.quantity<5? t('Home.Shop.btn3') : t('Shop.btn2')}
-                        </Button>
-                      </div>
-                    </div>
+              <Col lg={3} md={4} sm={6} xs={6} className="product_item_box" key={i}>
+                <div className='product'>
+                  <img src={item.img} alt=""/>
+                  <div className='product_info_box'>
+                    <h4>{item.name[lang]}</h4>
+                    <p>
+                      <span>{item.price} KIP</span>
+                      <span style={{fontSize:"14px"}}>
+                        <em>{item.type[lang]}</em>
+                      </span>
+                    </p>
+                    <Button variant='primary' className="w-100" onClick={()=>navigate(`../product/${item._id}`)}>
+                      {t('Shop.btn1')}
+                    </Button>
                   </div>
-                </Col>
+                </div>
+              </Col>
             )
         })}
     </Row>

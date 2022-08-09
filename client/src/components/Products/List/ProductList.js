@@ -90,7 +90,7 @@ function ProductList() {
                 {openCatDD && <CategoryDropDown catList={catList} setCategoryTitle={setCategoryTitle}/>}
             </div>
           </div>
-          <ProductGrid data={filterItems(items)} setShowToast={setShowToast}/>
+          <ProductGrid data={filterItems(items)}/>
           
         </Row>
       </Container>

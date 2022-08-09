@@ -151,7 +151,7 @@ function Product() {
 
       <Review id={productId}/>
       
-      <ReviewList id="shop"/>
+      <ReviewList id={productId}/>
 
       <Modal
         show={modalAmount}
