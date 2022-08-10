@@ -150,8 +150,8 @@
                 "title":"Payment",
                 "method1":{
                     "input1":"Card Name",
-                    "input2":"Card Number",
-                    "input3":"Card Expire"
+                    "input2":"Card Expire",
+                    "input3":"Card CVC"
                 },
                 "method2":"For Payment with <strong>{{method}}</strong>, Please do payment transaction delivery employee. For Detail Information, please go to <Link1>{{redirect}}</Link1> page.",
                 "btnAddr2":"Other Location"

@@ -39,7 +39,7 @@ function CartModal({openCart, handleCloseCart, cart, setCart}) {
   
     const handleImport=()=>{
         const supplierName = supp.current.value;
-        if(supplierName==="-- select an option --"){
+        if(supplierName==="-- Select Supplier --"){
             alert("Please choose Supplier")
         }else{
             axios.post('/imports', {supp:supplierName, items:cart, subtotal:totalCart})
@@ -57,7 +57,7 @@ function CartModal({openCart, handleCloseCart, cart, setCart}) {
 
     const totalCart = cart.reduce((total, currentItem)=>{
         total += currentItem.buyingPrice * currentItem.importAmount;
-        return total.toLocaleString();
+        return total;
     }, 0)
 
     return (
@@ -73,7 +73,7 @@ function CartModal({openCart, handleCloseCart, cart, setCart}) {
         </Modal.Header>
         <Modal.Body>
             <Form.Select ref={supp} className="form-control">
-                <option selected disabled > -- Select Supplier -- </option>
+                <option selected disabled >-- Select Supplier --</option>
                 {suppliers.map((sup, i)=>(
                     <option key={i}>
                         {sup.name}
@@ -107,9 +107,9 @@ function CartModal({openCart, handleCloseCart, cart, setCart}) {
                     {cart.map((row) => (
                     <TableRow key={row._id}>
                         <TableCell>{row.name}</TableCell>
-                        <TableCell align="right">{row.buyingPrice} KIP</TableCell>
+                        <TableCell align="right">{row.buyingPrice.toLocaleString()} KIP</TableCell>
                         <TableCell align="right">{row.importAmount}</TableCell>
-                        <TableCell align="right">{row.buyingPrice * row.importAmount} KIP</TableCell>
+                        <TableCell align="right">{(row.buyingPrice * row.importAmount).toLocaleString()} KIP</TableCell>
                         <TableCell align="right">
                             <Button variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={()=>handleDeleteCart(row._id)}>
                                 Delete
@@ -122,7 +122,7 @@ function CartModal({openCart, handleCloseCart, cart, setCart}) {
                         <TableCell rowSpan={3} />
                         <TableCell><b>Subtotal</b></TableCell>
                         <TableCell colSpan={2} align="right">
-                            <b>{totalCart} KIP</b>
+                            <b>{totalCart.toLocaleString()} KIP</b>
                         </TableCell>
                     </TableRow>
                 </TableBody>

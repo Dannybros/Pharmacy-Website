@@ -72,7 +72,7 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
             <Typography variant="h6" component="div">
                <b>Details</b>
             </Typography>
-            <List dense={true} sx={{width:300}}>
+            <List dense={true} sx={{width:500}}>
                 <Row>
                     <Col xs={6}>
                         <ListItem> <ListItemText primary="ID"/> </ListItem>

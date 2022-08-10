@@ -41,25 +41,6 @@ export const MenuData = [
         ]
     },
     {
-        title:"Imports",
-        icon: <ImportExportIcon/>,
-        menuValue:2,
-        access:"employee",
-        submenu:[
-            {
-                title:"Check Import",
-                subValue:0,
-                path:'/imports/pending',
-                access:"employee"
-            },
-            {
-                title:"Order Import",
-                subValue:1,
-                path:'/import/order'
-            },
-        ]
-    },
-    {
         title:"Order",
         icon: <ShoppingCartIcon/>,
         menuValue:3,
@@ -76,6 +57,25 @@ export const MenuData = [
                 subValue:1,
                 path:'/order/delivery',
                 access:"employee",
+            },
+        ]
+    },
+    {
+        title:"Imports",
+        icon: <ImportExportIcon/>,
+        menuValue:2,
+        access:"employee",
+        submenu:[
+            {
+                title:"Check Import",
+                subValue:0,
+                path:'/imports/pending',
+                access:"employee"
+            },
+            {
+                title:"Order Import",
+                subValue:1,
+                path:'/import/order'
             },
         ]
     },

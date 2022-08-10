@@ -15,7 +15,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/pending', (req, res)=>{
-    OrderCollection.find({'status.en':"Pending"}, (err, data)=>{
+    OrderCollection.find({'status.en':"Pending"}).sort({_id:-1}).exec((err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{
@@ -40,7 +40,7 @@ router.get('/revenue/complete', async(req, res)=>{
 
 
 router.get('/delivery', (req, res)=>{
-    OrderCollection.find({'status.en':"On Delivery"}, (err, data)=>{
+    OrderCollection.find({'status.en':"On Delivery"}).sort({_id:-1}).exec((err, data)=>{
         if(err){
             res.status(500).send(err);
         }else{

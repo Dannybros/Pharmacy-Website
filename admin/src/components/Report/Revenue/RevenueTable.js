@@ -60,7 +60,7 @@ function RevenueTable({data, type}) {
               <StyledTableCell component="th" scope="row">
                 {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.total}</StyledTableCell>
+              <StyledTableCell align="right">{row.total.toLocaleString() + " KIP"}</StyledTableCell>
               <StyledTableCell align="right">{moment(row.date).format('YYYY-MM-DD')}</StyledTableCell>
             </StyledTableRow>
           ))}

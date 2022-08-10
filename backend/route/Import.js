@@ -83,10 +83,12 @@ router.post('/', async(req, res)=>{
 
     const {supp, items, subtotal} = req.body;
 
+
+
     new ImportCollection({
         supplierName:supp,
         importItems:items,
-        subtotal:parseInt(subtotal)
+        subtotal:subtotal
     }).save()
     .then(result=>{
         res.status(201).json({

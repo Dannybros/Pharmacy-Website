@@ -56,7 +56,7 @@ function ProfileMenu({user, handleLogOut}) {
 
     return (
     <div className='user_box' style={{ display: 'flex', flexDirection:"column", alignItems: 'center', justifyContent:"center", textAlign: 'center' }}>
-        <Box >
+      <Box >
             <Tooltip title="Account settings">
                 <IconButton
                   sx={{p:0}}

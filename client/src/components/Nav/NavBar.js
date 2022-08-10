@@ -3,7 +3,8 @@ import './NavBar.scss';
 import SideBar from './SideBar/SideBar';
 import {Button, Modal, Form} from 'react-bootstrap';
 import {NavLink, useNavigate} from 'react-router-dom'
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField, Badge } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -17,6 +18,15 @@ import {useStateValue } from '../../Reducer/StateProvider';
 import {useTranslation} from 'react-i18next'
 import ProfileMenu from './ProfileMenu';
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: -3,
+    top: 6,
+    border: `2px solid ${theme.palette.secondary.dark}`,
+    padding: '0 4px',
+  },
+}));
+
 function NavBar({items}) {
   const navigate = useNavigate();
 
@@ -25,10 +35,9 @@ function NavBar({items}) {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [searchItemID, setSearchItemID] = useState('');
-
   
   useEffect(() => {
-   document.title="MEDICINE SHOP"
+    document.title="MEDICINE SHOP"
   }, [])
 
   useEffect(() => {
@@ -85,14 +94,15 @@ function NavBar({items}) {
 
           <Selector/>
 
-          <div className='cart_box' onClick={goToCart}>
-            <ShoppingCartIcon className='cart_icon'/>
-            <span className='cart_number'>
-              {cart.reduce((count, curItem) => {
-                return count + curItem.quantity;
-              }, 0)}
-            </span>
-          </div>
+          <StyledBadge 
+            badgeContent={cart.reduce((count, curItem) => {
+              return count + parseInt(curItem.quantity);
+            }, 0)} 
+            max={20} 
+            color="success"
+            onClick={goToCart}>
+            <ShoppingCartIcon color="white" />
+          </StyledBadge>
            
           {/* search box only for phone size */}
           <div className='tablet_search_box' onClick={handleModalShow}>
