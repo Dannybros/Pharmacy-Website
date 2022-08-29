@@ -104,7 +104,7 @@ function Product() {
                 <label>
                   {t('ProductInfo.list1')}:
                 </label>  
-                <div className='space_indent'><span className="price_tag">{data?.price} KIP</span></div>
+                <div className='space_indent'><span className="price_tag">{data?.price.toLocaleString()} KIP</span></div>
             </div>
 
             <div className='product_list_box'>
@@ -161,7 +161,7 @@ function Product() {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            State Amount ({data?.quantity })
+            State Amount ({data?.quantity})
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

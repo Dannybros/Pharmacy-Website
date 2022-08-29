@@ -102,24 +102,31 @@ function SignIn() {
             {signUpState ?
               <>
                 <Col xs={12}>
+                  <label>Name:</label>
                   <input type="text" name='name' placeholder='Name...' value={formData.name} autoComplete="on" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
+                  <label>BirthDay:</label>
                   <input type="date" name='bod' placeholder='Birthday...' value={formData.bod} onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
+                  <label>Email:</label>
                   <input type="text" name='email' placeholder='Email...' value={formData.email} autoComplete="off" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={12}>
+                  <label>Username:</label>
                   <input type="text" name='username' placeholder='Username...' value={formData.username} autoComplete="off" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
+                  <label>Password:</label>
                   <input type="password" name='password' placeholder='Password...' value={formData.password} autoComplete="off" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={6}>
+                  <label>Confirm Password:</label>
                   <input type="password" name='cPassword' placeholder='Confirm Password...' value={formData.cPassword} autoComplete="off" onChange={handleOnChange}/>
                 </Col>
                 <Col xs={12}>
+                  <label>Hint:</label>
                   <input type="text" name='hint' placeholder='Hint in case of forgetting password*' value={formData.hint} autoComplete="off" onChange={handleOnChange}/>
                 </Col>
               </>:

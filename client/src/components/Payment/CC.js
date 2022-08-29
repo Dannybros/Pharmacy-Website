@@ -86,28 +86,28 @@ function CC({handleBack, orderInfo, total}) {
 
     const recordOrder=(formData)=>{
         axios.post('/order', formData)
-            .then(res=>{
-                dispatch({
-                    type:"Clear_BASKET"
-                });
+        .then(res=>{
+            dispatch({
+                type:"Clear_BASKET"
+            });
 
-                Swal.fire({
-                    title: 'success',
-                    text: res.data.message,
-                    icon: 'success',
+            Swal.fire({
+                title: 'success',
+                text: res.data.message,
+                icon: 'success',
+            })
+
+            navigate('/order_list');
+        })
+        .catch(err=>{
+            Swal.fire({
+                title: 'error',
+                text: err.response.data.message,
+                icon: 'warning',
                 })
+        })
 
-                navigate('/order_list');
-            })
-            .catch(err=>{
-                Swal.fire({
-                    title: 'error',
-                    text: err.response.data.message,
-                    icon: 'warning',
-                  })
-            })
-
-            setBtnPayLoad(false)
+        setBtnPayLoad(false)
     }
 
     const handleSubmit=async(e)=>{

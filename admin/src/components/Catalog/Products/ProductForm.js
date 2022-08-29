@@ -5,6 +5,7 @@ import {Button, Row, Col, Modal, Form} from 'react-bootstrap'
 function ProductForm({showModal, handleClose, handleObjectChange, handleOnChange, handleBtnSubmit, productInfo}) {
 
   const [categories, setCategories] = useState([]);
+  
   useEffect(() => {
     const fetchCategory= async()=>{
       await axios.get('/category')
@@ -34,7 +35,7 @@ function ProductForm({showModal, handleClose, handleObjectChange, handleOnChange
             </Col>
             <Col sm={6} className="mb-3">
               <label className='mb-1'>Product Type:</label> <br/>
-              <Form.Select name="type" onChange={handleObjectChange} defaultValue={"default"}>
+              <Form.Select name="type" onChange={handleObjectChange} defaultValue={productInfo.type.en!==""? productInfo.type.en + "_" + productInfo.type.la : "default"}>
                 <option disabled value={"default"}> -- select an option -- </option>
                 {categories.length>0&&
                   categories.map((item, i)=>{

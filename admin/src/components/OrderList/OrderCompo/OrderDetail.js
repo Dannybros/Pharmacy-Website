@@ -48,7 +48,7 @@ function OrderDetail({data, showDetail, handleCloseDetails, handleSubmit, report
           (imgProperties.height * pdfWidth) / imgProperties.width;
     
         pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`order-${data._id}.pdf`);
+        pdf.save(`order-Bill.pdf`);
     };
 
     const handleClickClose=()=>{

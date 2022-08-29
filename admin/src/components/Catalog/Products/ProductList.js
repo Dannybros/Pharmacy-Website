@@ -32,11 +32,11 @@ function ProductList({handleShow, handleDelete, data, search}) {
                 return(
                 <Row key={i}>
                     <Col xs={2} md={2} lg={1} className="card-table-cell"> 
-                        <img src={item.img} alt=""/>
+                        <img src={item?.img} alt=""/>
                     </Col>
-                    <Col xs={3} md={3} lg={4} className="card-table-cell"> {item.name.en} </Col>
-                    <Col xs={2} className="card-table-cell"> {item.quantity} </Col>
-                    <Col xs={2} className="card-table-cell"> {item.price.toLocaleString()} KIP</Col>
+                    <Col xs={3} md={3} lg={4} className="card-table-cell"> {item?.name.en} </Col>
+                    <Col xs={2} className="card-table-cell"> {item?.quantity} </Col>
+                    <Col xs={2} className="card-table-cell"> {item?.price.toLocaleString()} KIP</Col>
                     <Col xs={3} className="card-table-cell"> 
                         <Button className='card_table_icon' variant='primary' name="update" onClick={()=>handleShow(item)}><CreateIcon/></Button>
                         &nbsp; &nbsp;

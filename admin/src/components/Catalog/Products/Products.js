@@ -16,7 +16,6 @@ const initialProductInfo = {name:{en:"", la:""}, type:{en:"", la:""}, price:"", 
 
 function Products() {
 
-  // const [socket, setSocket] = useState();
   const [{socket}] = useStateValue();
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState();
@@ -37,12 +36,6 @@ function Products() {
   }, [])
   
   useEffect(() => {
-    if (socket==null) return
-
-    socket.on("new-products", (data)=>{
-      setProducts(oldArray => [...oldArray, data.data]);
-    })
-
     socket.on("receive_message", (data)=>{
       alert(data.message);
     })
@@ -55,13 +48,13 @@ function Products() {
       const updatedItem = data.data;
       setProducts(oldItems=>{
         return oldItems.map(item => {
-          return item._id === updatedItem._id ? { ...updatedItem} : item
+          return item?._id === updatedItem._id ? { ...updatedItem} : item
         })
       })
     })
 
   }, [socket])  
-
+  
   const handleClose = () => {
     setShowModal(false);
     setSelectedItem(false);
@@ -114,6 +107,7 @@ function Products() {
     axios.post(apiURL, data)
     .then(res=>{
       setShowModal(false);
+      !selectedItem&& setProducts(oldArray => [...oldArray, res.data.data]);
       Swal.fire({
         title: 'success',
         text: res.data.message,
@@ -121,7 +115,7 @@ function Products() {
       })
     })
     .catch((error)=>{
-      // deleteObject(ref(storage, data.imgUrl))
+      deleteObject(ref(storage, data.imgUrl))
       Swal.fire({
         title: 'error',
         text: error.response.data.message,
@@ -151,16 +145,16 @@ function Products() {
         const uploadTask = uploadBytesResumable(storageRef, productInfo.imgFile);
      
         uploadTask.on(
-            "state_changed",
-            (snapShot) => {
-            },
-            (err) => console.log(err),
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then(fireBaseUrl  => {
-                  let formData = {...productInfo, imgUrl:fireBaseUrl}
-                  uploadInfoToBackend(formData)
-                });
-            }
+          "state_changed",
+          (snapShot) => {
+          },
+          (err) => console.log(err),
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(fireBaseUrl  => {
+              let formData = {...productInfo, imgUrl:fireBaseUrl}
+              uploadInfoToBackend(formData)
+            });
+          }
         ); 
       }
     }

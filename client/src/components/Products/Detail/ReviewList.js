@@ -83,7 +83,7 @@ function ReviewList({id}) {
                     primary={row.name}
                     secondary={
                         <React.Fragment>
-                            <Rating value={row.value}/> <br/>
+                            <Rating value={row.value} readOnly/> <br/>
                             <Typography variant='span'>
                                {row.des}
                             </Typography>

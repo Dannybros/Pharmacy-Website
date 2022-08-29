@@ -14,7 +14,7 @@ export const MenuData = [
         access:"employee",
     },
     {
-        title:"Catalog",
+        title:"Manage",
         icon: <LocalOfferIcon/>,
         menuValue:1,
         submenu:[

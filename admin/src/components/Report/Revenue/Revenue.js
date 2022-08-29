@@ -89,7 +89,7 @@ function Revenue() {
                     <DatePicker
                         label="Date From"
                         value={value.start}
-                        maxDate={new Date()}
+                        maxDate={moment().subtract(1, 'days').toDate()}
                         onChange={(newValue) => {
                         setValue({...value, start:newValue});
                         }}

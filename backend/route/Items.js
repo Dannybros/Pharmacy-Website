@@ -59,7 +59,7 @@ router.post('/update', (req,res)=>{
             if(err){
                 res.status(500).json({message:"Updated Failed. Please Try Again"})
             }else{
-                res.status(201).json({message:"Updated Success"})
+                res.status(201).json({message:"Updated Success", data:data})
                 req.io.emit("update-product", {data:data});
             }
         })
@@ -87,11 +87,12 @@ router.post('/', async(req, res)=>{
             img:imgUrl
         }).save()
         .then(result=>{
-            res.status(201).json({
-                message:"New Medicine registered successfully"
-            })
-    
             req.io.emit("new-products",{data:result});
+
+            res.status(201).json({
+                message:"New Medicine registered successfully",
+                data:result
+            })
         })
         .catch(err=>{
             res.status(500).json({

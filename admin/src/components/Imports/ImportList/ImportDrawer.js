@@ -44,7 +44,6 @@ function ImportDrawer({openDrawer, handleDrawerClose, selectedImport}) {
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: { xs: "90%", md: 500},
-            marginTop:{ xs: 0, md: '65px'}
           },
         }}
         variant="persistent"
